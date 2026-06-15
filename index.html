@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Igor Shuryak, MD, PhD &middot; Mechanistic &amp; Causal Machine Learning for Radiation Oncology</title>
+  <meta name="description" content="Igor Shuryak, MD, PhD, at Columbia University integrating mechanistic radiobiology with causal inference and machine learning for radiation oncology, moving from prediction to intervention." />
+  <meta name="author" content="Igor Shuryak" />
+
+  <!-- Favicon: inline SVG monogram (no external file needed) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a4d8c'/%3E%3Ctext x='50%25' y='50%25' dy='.34em' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='700' fill='white'%3EIS%3C/text%3E%3C/svg%3E" />
+
+  <!-- Open Graph / social preview. NOTE: update og:url and og:image to your live domain if it is not ishuryak.github.io -->
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Igor Shuryak, MD, PhD: Mechanistic &amp; Causal Machine Learning for Radiation Oncology" />
+  <meta property="og:description" content="Integrating mechanistic radiobiology with causal inference and machine learning for radiation oncology, from prediction to intervention." />
+  <meta property="og:url" content="https://ishuryak.github.io/" />
+  <meta property="og:image" content="https://ishuryak.github.io/headshot.jpg" />
+  <meta property="og:image:alt" content="Portrait of Igor Shuryak, MD, PhD" />
+
+  <!-- Twitter / X card -->
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Igor Shuryak, MD, PhD: Mechanistic &amp; Causal Machine Learning for Radiation Oncology" />
+  <meta name="twitter:description" content="Integrating mechanistic radiobiology with causal inference and machine learning for radiation oncology, from prediction to intervention." />
+  <meta name="twitter:image" content="https://ishuryak.github.io/headshot.jpg" />
+
+  <style>
+    :root {
+      --ink: #16202b;
+      --muted: #51606e;
+      --accent: #0a4d8c;
+      --accent-soft: #eaf1f8;
+      --line: #d9e0e7;
+      --bg: #ffffff;
+      --bg-alt: #f6f8fa;
+      --max: 880px;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background: var(--bg);
+      font: 19px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover, a:focus { text-decoration: underline; }
+
+    /* Accessibility: skip link */
+    .skip {
+      position: absolute; left: -999px; top: 0;
+      background: var(--accent); color: #fff; padding: 10px 16px; z-index: 100;
+    }
+    .skip:focus { left: 8px; top: 8px; }
+
+    .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
+
+    /* Header / hero */
+    header.hero {
+      background: linear-gradient(180deg, #f3f7fb 0%, #ffffff 100%);
+      border-bottom: 1px solid var(--line);
+      padding: 40px 0 30px;
+    }
+    .hero-inner { display: flex; align-items: center; gap: 30px; }
+    .headshot { width: 156px; height: 156px; border-radius: 50%; object-fit: cover; object-position: center 18%; border: 4px solid #fff; box-shadow: 0 3px 14px rgba(16,32,43,0.18); flex-shrink: 0; }
+    .hero-text { min-width: 0; }
+    .hero h1 { font-size: 2.5rem; line-height: 1.12; margin: 0 0 8px; letter-spacing: -0.01em; }
+    .hero .affil { color: var(--muted); font-size: 1.08rem; margin: 0 0 16px; }
+    .contact-row { display: flex; flex-wrap: wrap; gap: 10px 18px; font-size: 1rem; }
+    .contact-row a, .contact-row span { color: var(--muted); }
+    .contact-row a { color: var(--accent); }
+
+    /* Nav */
+    nav.toc {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,255,255,0.94);
+      backdrop-filter: saturate(180%) blur(8px);
+      border-bottom: 1px solid var(--line);
+    }
+    nav.toc ul { list-style: none; display: flex; flex-wrap: wrap; gap: 4px 22px; margin: 0; padding: 12px 24px; max-width: var(--max); margin: 0 auto; font-size: 1rem; font-weight: 600; }
+    nav.toc a { color: var(--muted); }
+    nav.toc a:hover { color: var(--accent); }
+
+    section { padding: 34px 0; border-bottom: 1px solid var(--line); }
+    section:last-of-type { border-bottom: none; }
+    h2 { font-size: 1.7rem; margin: 0 0 16px; letter-spacing: -0.01em; }
+    h2 .num { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 10px; font-size: 1.1rem; vertical-align: 2px; }
+    p { margin: 0 0 14px; }
+    .lead { font-size: 1.2rem; }
+
+    /* Research cards */
+    .cards { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .cards > a.card:last-child:nth-child(odd) { grid-column: 1 / -1; justify-self: center; width: calc(50% - 8px); }
+    .card { display: block; background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px; padding: 18px 20px; color: var(--ink); transition: border-color 0.15s, box-shadow 0.15s, transform 0.15s; }
+    a.card:hover, a.card:focus { text-decoration: none; border-color: var(--accent); box-shadow: 0 3px 12px rgba(16,32,43,0.10); transform: translateY(-2px); }
+    .card h3 { margin: 0 0 6px; font-size: 1.16rem; color: var(--accent); }
+    a.card:hover h3, a.card:focus h3 { text-decoration: underline; }
+    .card p { margin: 0; font-size: 1.04rem; color: var(--ink); }
+
+    /* Publications */
+    ol.pubs { margin: 0; padding-left: 0; list-style: none; counter-reset: pub; }
+    ol.pubs li { position: relative; padding: 0 0 16px 34px; margin-bottom: 16px; border-bottom: 1px dotted var(--line); counter-increment: pub; }
+    ol.pubs li:last-child { border-bottom: none; }
+    ol.pubs li::before {
+      content: counter(pub); position: absolute; left: 0; top: 1px;
+      width: 24px; height: 24px; border-radius: 50%;
+      background: var(--accent-soft); color: var(--accent);
+      font-size: 0.8rem; font-weight: 700; display: flex; align-items: center; justify-content: center;
+    }
+    .pub-title { font-weight: 600; }
+    .pub-venue { color: var(--muted); font-size: 1rem; }
+    .me { border-bottom: 2px solid var(--accent); }
+
+    /* Contributions to Science */
+    .contrib { margin-bottom: 24px; scroll-margin-top: 64px; }
+    .contrib:last-child { margin-bottom: 0; }
+    .contrib h3 { font-size: 1.28rem; margin: 0 0 3px; color: var(--ink); }
+    .contrib-sub { font-size: 0.92rem; color: var(--muted); font-style: italic; margin: 0 0 10px; }
+    .contrib > p { margin: 0 0 12px; }
+    .why { background: var(--bg-alt); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 10px 16px; margin: 0 0 14px; font-size: 1.02rem; }
+    .why strong { color: var(--accent); }
+    .contrib-pubs { list-style: none; margin: 0; padding: 0; }
+    .contrib-pubs li { padding: 2px 0 0 16px; margin-bottom: 14px; border-left: 3px solid var(--accent-soft); }
+    .contrib-pubs li:last-child { margin-bottom: 0; }
+    .takeaway { color: var(--muted); font-size: 0.98rem; }
+
+    /* Lists */
+    ul.plain { padding-left: 20px; margin: 0 0 16px; }
+    ul.plain li { margin-bottom: 8px; }
+
+    .pill { display: inline-block; background: var(--accent-soft); color: var(--accent); border-radius: 999px; padding: 3px 12px; font-size: 0.82rem; font-weight: 600; margin: 0 6px 6px 0; }
+
+    /* Contact */
+    .contact-box { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 10px; padding: 22px 24px; }
+
+    footer { padding: 30px 0 50px; color: var(--muted); font-size: 0.86rem; }
+    footer p { margin: 0 0 8px; }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.1rem; }
+      .hero-inner { flex-direction: column; text-align: center; gap: 18px; }
+      .contact-row { justify-content: center; }
+      .cards { grid-template-columns: 1fr; }
+      .cards > a.card:last-child:nth-child(odd) { grid-column: auto; justify-self: stretch; width: auto; }
+      nav.toc ul { gap: 4px 16px; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="hero">
+    <div class="wrap hero-inner">
+      <img class="headshot" src="headshot.jpg" width="500" height="500" alt="Portrait of Igor Shuryak" />
+      <div class="hero-text">
+      <h1>Igor Shuryak, MD, PhD</h1>
+      <p class="affil">Associate Professor, Center for Radiological Research, Department of Radiation Oncology, Columbia University Irving Medical Center</p>
+      <div class="contact-row">
+        <a href="mailto:is144@cumc.columbia.edu">is144@cumc.columbia.edu</a>
+        <span>&middot;</span>
+        <a href="https://scholar.google.com/citations?hl=en&amp;user=PFYxEhwAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a>
+      </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Section navigation">
+    <ul>
+      <li><a href="#about">Background</a></li>
+      <li><a href="#contributions">Research</a></li>
+      <li><a href="#software">Software</a></li>
+      <li><a href="#talks">Talks &amp; Honors</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+
+      <section id="about">
+        <h2><span class="num">01</span>Background and Research Focus</h2>
+        <p class="lead">I am a computational radiation biologist and biomedical scientist at Columbia University, working at the intersection of <strong>mechanistic modeling of radiation effects, cancer radiotherapy modeling and optimization, causal inference, and machine learning</strong>.</p>
+        <p>For more than fifteen years I have built quantitative models that connect biological mechanism to outcome: for cancer treatment response, survival, carcinogenesis, and other radiation effects. <strong>My current focus is integrating mechanistic radiobiological models with modern causal inference, moving from prediction (&ldquo;what will happen?&rdquo;) to intervention (&ldquo;what should we do?&rdquo;).</strong> Combining first-principles radiobiology with formal causal estimation remains uncommon, and it can sharpen how radiotherapy and radiation-risk decisions are made.</p>
+        <p>I hold an M.D. from SUNY Downstate (Distinction in Research) and a Ph.D. (with distinction) in Environmental Health Sciences from Columbia University, where I developed new mechanistic models of radiation-induced carcinogenesis. I am the author of 135+ peer-reviewed publications (h-index 37, &gt;5,900 citations as of 2026; see <a href="https://scholar.google.com/citations?hl=en&amp;user=PFYxEhwAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a> for current metrics) and have helped secure and lead federally funded programs across the NIH, NASA, and the Department of Defense.</p>
+        <p>I am also committed to mentoring the next generation of quantitative radiation scientists, from undergraduates through postdoctoral fellows; trainees I have mentored have presented first-author work at venues such as NeurIPS.</p>
+        <div>
+          <span class="pill">Mechanistic radiobiology</span>
+          <span class="pill">Causal inference</span>
+          <span class="pill">Machine learning</span>
+          <span class="pill">Survival analysis</span>
+          <span class="pill">Equation discovery</span>
+          <span class="pill">Precision radiotherapy</span>
+          <span class="pill">Radioligand therapy</span>
+          <span class="pill">Biodosimetry</span>
+        </div>
+      </section>
+
+      <section id="contributions">
+        <h2><span class="num">02</span>Contributions to Science</h2>
+        <p class="lead">Every one of these directions is fundamentally collaborative and depends on strong team effort, spanning clinicians, experimentalists, statisticians, and trainees. The threads below are framed around my own modeling and analysis, but the science belongs to these partnerships, and I am grateful to my collaborators and mentors in each of these areas.</p>
+        <p>Select a thread to jump to its narrative and representative papers.</p>
+        <div class="cards">
+          <a class="card" href="#contrib-1">
+            <h3>Mechanistic modeling + causal machine learning for radiotherapy</h3>
+            <p>Integrating mechanistic biologically effective dose with causal machine learning (Double Machine Learning, Targeted Maximum Likelihood Estimation, causal forests, and orthogonal survival learners) to estimate radiotherapy treatment effects and personalize treatment planning.</p>
+          </a>
+          <a class="card" href="#contrib-2">
+            <h3>DNA repair &amp; chromosome aberrations</h3>
+            <p>Mechanistic models linking DNA double-strand-break repair and misrepair into chromosome aberrations to the curvature of the radiation dose-response and the linear&ndash;quadratic model used throughout radiotherapy.</p>
+          </a>
+          <a class="card" href="#contrib-3">
+            <h3>Radiopharmaceutical pharmacokinetics modeling</h3>
+            <p>Continuous-distribution models of radionuclide uptake and clearance that improve absorbed-dose estimation for targeted radionuclide and radioligand therapy.</p>
+          </a>
+          <a class="card" href="#contrib-4">
+            <h3>Radiation carcinogenesis &amp; second cancers</h3>
+            <p>Multi-scale models coupling DNA damage, cell killing, and repopulation with initiation, promotion, and clonal growth to quantify second-cancer risk from radiotherapy.</p>
+          </a>
+          <a class="card" href="#contrib-5">
+            <h3>Risk from medical &amp; diagnostic radiation</h3>
+            <p>Biologically grounded estimates of cancer and cardiovascular risk from diagnostic imaging and radiotherapy that account for a patient&rsquo;s realistic remaining life expectancy.</p>
+          </a>
+          <a class="card" href="#contrib-6">
+            <h3>Machine learning for radiation biodosimetry</h3>
+            <p>Combining cytogenetic, protein, and gene-expression biomarkers into ML models that reconstruct an individual&rsquo;s dose after partial-body or mixed neutron&ndash;photon exposures, enabling medical triage in response to accidental or malicious mass radiation events.</p>
+          </a>
+          <a class="card" href="#contrib-7">
+            <h3>Mechanisms of radiation resistance</h3>
+            <p>Quantitative models of radiation-resistance mechanisms (antioxidant defenses, DNA-repair capacity) in organisms that survive extreme radiation, informing radioprotection and astrobiology.</p>
+          </a>
+        </div>
+
+        <div class="contrib" id="contrib-1">
+          <h3>1. Personalizing radiotherapy with mechanistic models and causal AI</h3>
+          <p class="contrib-sub">Integration of mechanistic radiobiological modeling with causal machine learning for radiotherapy outcomes</p>
+          <p>The field has long had mechanistic dose-response models and, separately, machine-learning prediction of outcomes, but few methods combine the biological grounding of mechanism with causal, rather than purely predictive, inference about treatment effects. I integrate mechanistic biologically effective dose (BED) features (accelerated tumor repopulation, overdispersion-corrected lethal-lesion statistics) with causal machine learning (Double Machine Learning, Targeted Maximum Likelihood Estimation, causal forests, and orthogonal survival learners, including the CAST framework), and complement hand-built models with data-driven equation discovery. Recent applications include radiation dose escalation in locally advanced non-small cell lung cancer (National Cancer Database; ASTRO 2026), time-varying radiotherapy and chemotherapy effects in lower-grade gliomas (CAST; TCGA and CGGA), and the RADCURE head and neck cancer cohort.</p>
+          <p class="why"><strong>Why it matters:</strong> About half of all cancer patients receive radiotherapy, yet most evidence describes average effects across trial populations. Causal machine learning offers flexible, data-driven estimation of individualized treatment effects, for both tumor control and toxicity, from clinical-trial and real-world data such as registries and electronic health records. Used carefully, with attention to confounding and the assumptions these methods require, it can help tailor dose and fractionation to individual patient profiles and extract treatment-relevant evidence from data already collected in the clinic.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Understanding the impact of radiotherapy fractionation on overall survival in a large head and neck squamous cell carcinoma dataset: combining mechanistic and machine learning models.</span>
+              <span class="me">Shuryak I</span>, Wang E, Brenner DJ. <span class="pub-venue"><em>Front. Oncol.</em> 14:1422211 (2024). <a href="https://doi.org/10.3389/fonc.2024.1422211" target="_blank" rel="noopener">doi:10.3389/fonc.2024.1422211</a></span>
+              <br /><em class="takeaway">A hybrid mechanistic-plus-ML approach relates radiotherapy fractionation to survival beyond what either method captures alone.</em>
+            </li>
+            <li>
+              <span class="pub-title">Estimating temporal treatment-effect patterns of radiotherapy and chemotherapy in lower-grade gliomas using causal machine learning.</span>
+              Yang E, Agrawal S, Kinslow CJ, Cheng SK, Yang L, Wang E, Wang TJ, Kachnic LA, Brenner DJ, <span class="me">Shuryak I</span>. <span class="pub-venue"><em>Scientific Reports</em> (2026). <a href="https://doi.org/10.1038/s41598-026-54656-0" target="_blank" rel="noopener">doi:10.1038/s41598-026-54656-0</a></span>
+              <br /><em class="takeaway">Applies the CAST framework to map how radiotherapy and chemotherapy benefits in lower-grade gliomas shift across follow-up, with E-values indicating robustness to unmeasured confounding.</em>
+            </li>
+            <li>
+              <span class="pub-title">A competing risks machine learning study of neutron dose, fractionation, age, and sex effects on mortality in 21,000 mice.</span>
+              Wang E, <span class="me">Shuryak I</span>, Brenner DJ. <span class="pub-venue"><em>Scientific Reports</em> 14:17974 (2024). <a href="https://doi.org/10.1038/s41598-024-68717-9" target="_blank" rel="noopener">doi:10.1038/s41598-024-68717-9</a></span>
+              <br /><em class="takeaway">Disentangles how dose, age, and sex drive cancer versus non-cancer death in a very large radiation-exposure dataset.</em>
+            </li>
+            <li>
+              <span class="pub-title">Dose dependence of accelerated repopulation in head and neck cancer: supporting evidence and clinical implications.</span>
+              <span class="me">Shuryak I</span>, Hall EJ, Brenner DJ. <span class="pub-venue"><em>Radiother. Oncol.</em> 127(1):20&ndash;26 (2018). <a href="https://pubmed.ncbi.nlm.nih.gov/29534828/" target="_blank" rel="noopener">PMID:29534828</a></span>
+              <br /><em class="takeaway">Quantifies how tumor repopulation during treatment depends on dose, with direct implications for fractionation schedules.</em>
+            </li>
+            <li>
+              <span class="pub-title">High-dose and fractionation effects in stereotactic radiation therapy: analysis of tumor control data from 2,965 patients.</span>
+              <span class="me">Shuryak I</span>, Carlson DJ, Brown JM, Brenner DJ. <span class="pub-venue"><em>Radiother. Oncol.</em> 115(3):327&ndash;334 (2015). <a href="https://pubmed.ncbi.nlm.nih.gov/26058991/" target="_blank" rel="noopener">PMID:26058991</a></span>
+              <br /><em class="takeaway">Pools tumor-control data across thousands of patients to characterize how dose and fractionation shape stereotactic radiotherapy outcomes.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-2">
+          <h3>2. DNA repair and chromosome aberrations</h3>
+          <p class="contrib-sub">Mechanistic modeling of DNA double-strand-break repair and chromosome-aberration formation underlying the radiation dose-response</p>
+          <p>DNA double-strand breaks are the critical lesions for radiation cell killing, and their repair follows complex, multi-component time kinetics: fast- and slow-rejoining components plus a residual unrejoinable fraction whose balance shifts with dose and dose rate. How breaks are repaired, and misrepaired into chromosome aberrations, sets the shape of the radiation dose-response, especially at the high doses that matter most for modern radiotherapy. I developed quantitative models of double-strand-break rejoining kinetics and linked break induction, competition during rejoining, and overdispersion of lethal lesions to the curvature of the dose-response, with direct implications for the linear&ndash;quadratic model used throughout radiotherapy.</p>
+          <p class="why"><strong>Why it matters:</strong> The linear&ndash;quadratic model is the workhorse of clinical radiotherapy dose calculation. Understanding from chromosome-level mechanism why it holds, and where it breaks down at the high doses used in treatment, feeds directly into the mechanistic biologically effective dose features used in the radiotherapy work above (thread 1).</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">New insight into quantitative modeling of DNA double-strand-break rejoining.</span>
+              Herr L, <span class="me">Shuryak I</span>, Friedrich T, Scholz M, Durante M, Brenner DJ. <span class="pub-venue"><em>Radiat. Res.</em> 184(3):280&ndash;295 (2015). <a href="https://doi.org/10.1667/RR14060.1" target="_blank" rel="noopener">doi:10.1667/RR14060.1</a></span>
+              <br /><em class="takeaway">Resolves how the fast, slow, and unrejoinable components of double-strand-break repair combine, refining the kinetics that shape the dose-response.</em>
+            </li>
+            <li>
+              <span class="pub-title">Mechanistic modeling of dose and dose-rate dependences of radiation-induced DNA double-strand-break rejoining kinetics in <em>Saccharomyces cerevisiae</em>.</span>
+              <span class="me">Shuryak I</span>. <span class="pub-venue"><em>PLoS One</em> 11(1):e0146407 (2016). <a href="https://doi.org/10.1371/journal.pone.0146407" target="_blank" rel="noopener">doi:10.1371/journal.pone.0146407</a></span>
+              <br /><em class="takeaway">Shows that the slow and unrejoinable break fractions rise with dose and dose rate, a mechanism that bends the high-dose dose-response.</em>
+            </li>
+            <li>
+              <span class="pub-title">Accounting for overdispersion of lethal lesions in the linear quadratic model improves performance at both high and low radiation doses.</span>
+              <span class="me">Shuryak I</span>, Cornforth MN. <span class="pub-venue"><em>Int. J. Radiat. Biol.</em> 97(1):50&ndash;59 (2021). <a href="https://doi.org/10.1080/09553002.2020.1784489" target="_blank" rel="noopener">doi:10.1080/09553002.2020.1784489</a></span>
+              <br /><em class="takeaway">Adding overdispersion of lethal lesions to the linear&ndash;quadratic model improves its fit across the full dose range, including therapeutic doses.</em>
+            </li>
+            <li>
+              <span class="pub-title">Robbing Peter to pay Paul: competition for radiogenic breaks during rejoining diminishes curvature in the dose response for simple chromosome exchanges.</span>
+              <span class="me">Shuryak I</span>, Loucas BD, Cornforth MN. <span class="pub-venue"><em>Radiat. Res.</em> 196(2):147&ndash;155 (2021). <a href="https://doi.org/10.1667/RADE-20-00253.1" target="_blank" rel="noopener">doi:10.1667/RADE-20-00253.1</a></span>
+              <br /><em class="takeaway">Explains why dose-response curvature for chromosome exchanges flattens, from competition among breaks during repair.</em>
+            </li>
+            <li>
+              <span class="pub-title">Dose-dependent transmissibility of chromosome aberrations in human lymphocytes at first mitosis. II. Biological effectiveness of heavy charged particles versus gamma rays.</span>
+              Cornforth M, Loucas B, <span class="me">Shuryak I</span>. <span class="pub-venue"><em>Radiat. Res.</em> 199(3):283&ndash;289 (2023). <a href="https://doi.org/10.1667/RADE-22-00141.1" target="_blank" rel="noopener">doi:10.1667/RADE-22-00141.1</a></span>
+              <br /><em class="takeaway">Compares how heavy charged particles and gamma rays differ in producing transmissible chromosome damage, relevant to particle therapy.</em>
+            </li>
+            <li>
+              <span class="pub-title">High-throughput measurement of &gamma;-H2AX double-strand-break repair kinetics in a healthy human population.</span>
+              Sharma PM, Ponnaiya B, Taveras M, <span class="me">Shuryak I</span>, Turner H, Brenner DJ. <span class="pub-venue"><em>PLoS One</em> 10(3):e0121083 (2015). <a href="https://doi.org/10.1371/journal.pone.0121083" target="_blank" rel="noopener">doi:10.1371/journal.pone.0121083</a></span>
+              <br /><em class="takeaway">Measures individual variation in DNA double-strand-break repair speed across a healthy population.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-3">
+          <h3>3. Modeling radiopharmaceutical pharmacokinetics</h3>
+          <p class="contrib-sub">Continuous-distribution models of radionuclide biokinetics for targeted radionuclide and radioligand therapy</p>
+          <p>Targeted radionuclide therapy delivers radiation to the tumor from inside the body, so its effect depends on how the radiopharmaceutical distributes and clears over time. I developed methods that represent biokinetics as continuous probability distributions of rates, rather than a few discrete compartments, better capturing heterogeneous uptake and clearance and sharpening absorbed-dose estimation for radiopharmaceuticals.</p>
+          <p class="why"><strong>Why it matters:</strong> Radioligand therapy is one of the fastest-growing areas of oncology. Realistic pharmacokinetic modeling of where the dose goes and how long it stays underpins both efficacy and normal-tissue safety in this emerging treatment class.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">New approaches for modeling radiopharmaceutical pharmacokinetics using continuous distributions of rates.</span>
+              <span class="me">Shuryak I</span>, Dadachova E. <span class="pub-venue"><em>J. Nucl. Med.</em> 56(10):1622&ndash;1628 (2015). <a href="https://doi.org/10.2967/jnumed.115.160515" target="_blank" rel="noopener">doi:10.2967/jnumed.115.160515</a></span>
+              <br /><em class="takeaway">Represents radiopharmaceutical kinetics as continuous rate distributions, capturing heterogeneous uptake and clearance better than discrete compartments.</em>
+            </li>
+            <li>
+              <span class="pub-title">Usefulness of continuous probability distributions of rates for modelling radionuclide biokinetics in humans and animals.</span>
+              <span class="me">Shuryak I</span>, Dadachova E. <span class="pub-venue"><em>Scientific Reports</em> 9:1218 (2019). <a href="https://doi.org/10.1038/s41598-018-38046-9" target="_blank" rel="noopener">doi:10.1038/s41598-018-38046-9</a></span>
+              <br /><em class="takeaway">Extends the continuous-distribution approach to radionuclide biokinetics across species.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-4">
+          <h3>4. Predicting the second cancers that radiation therapy can cause</h3>
+          <p class="contrib-sub">Mechanistic mathematical modeling of radiation-induced carcinogenesis, particularly second cancers from radiotherapy</p>
+          <p>Standard low-dose linear and linear&ndash;quadratic models break down at therapeutic doses because they ignore cell killing, repopulation, and clonal expansion of initiated cells. My doctoral and early postdoctoral work built a multi-scale framework coupling short-term radiobiology (DNA damage, cell death, repopulation) with long-term carcinogenesis (initiation, promotion, clonal growth), reproducing the non-monotonic dose response seen in epidemiological data and informing second-cancer risk assessment in pediatric and adult radiotherapy planning.</p>
+          <p class="why"><strong>Why it matters:</strong> As cancer survival improves, more patients live long enough for their original radiotherapy to cause a second cancer years later. Quantifying that risk at the high treatment doses where conventional models break down helps clinicians choose plans that cure the first cancer while minimizing the chance of causing another, which matters most for children, who have the longest lifetime to express that risk.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Radiation-induced leukemia at doses relevant to radiation therapy: modeling mechanisms and estimating risks.</span>
+              <span class="me">Shuryak I</span>, Sachs RK, Hlatky L, Little MP, Hahnfeldt P, Brenner DJ. <span class="pub-venue"><em>J. Natl. Cancer Inst.</em> 98(24):1794&ndash;1806 (2006). <a href="https://pubmed.ncbi.nlm.nih.gov/17179481/" target="_blank" rel="noopener">PMID:17179481</a></span>
+              <br /><em class="takeaway">First mechanistic model of leukemia risk at therapeutic radiation doses, where standard low-dose extrapolations fail.</em>
+            </li>
+            <li>
+              <span class="pub-title">The balance between initiation and promotion in radiation-induced murine carcinogenesis.</span>
+              <span class="me">Shuryak I</span>, Ullrich RL, Sachs RK, Brenner DJ. <span class="pub-venue"><em>Radiat. Res.</em> 174(3):357&ndash;366 (2010). <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC3570813/" target="_blank" rel="noopener">PMC3570813</a></span>
+              <br /><em class="takeaway">Separates the roles of cell initiation and promotion, explaining the shape of radiation dose-response for cancer.</em>
+            </li>
+            <li>
+              <span class="pub-title">A new view of radiation-induced cancer: integrating short- and long-term processes. Part II: second cancer risk estimation.</span>
+              <span class="me">Shuryak I</span>, Hahnfeldt P, Hlatky L, Sachs RK, Brenner DJ. <span class="pub-venue"><em>Radiat. Environ. Biophys.</em> 48(3):275&ndash;286 (2009). <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC2714894/" target="_blank" rel="noopener">PMC2714894</a></span>
+              <br /><em class="takeaway">Provides a framework for estimating second-cancer risk after radiotherapy from first principles.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-5">
+          <h3>5. Estimating the cancer risk from medical imaging and treatment</h3>
+          <p class="contrib-sub">Quantification of cancer and cardiovascular risks from medical and diagnostic radiation exposures</p>
+          <p>The growth of diagnostic imaging and the rising number of radiotherapy survivors make biologically grounded, clinically actionable risk estimates increasingly important. My work showed how reduced patient life expectancy modifies lifetime cancer-risk projections, assessed whether adult-based cohorts can characterize cumulative risk from repeated CT scans, and connected mechanistic risk models to clinical decision-making.</p>
+          <p class="why"><strong>Why it matters:</strong> Hundreds of millions of CT scans are performed worldwide each year. Overstated risk estimates can frighten patients away from scans they need, while understated ones ignore real harm. Biologically grounded, clinically realistic estimates let patients and physicians weigh the benefits and risks of imaging and treatment sensibly.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Impact of reduced patient life expectancy on potential cancer risks from radiologic imaging.</span>
+              Brenner DJ, <span class="me">Shuryak I</span>, Einstein AJ. <span class="pub-venue"><em>Radiology</em> 261(1):193&ndash;198 (2011). <a href="https://pubmed.ncbi.nlm.nih.gov/21771956/" target="_blank" rel="noopener">PMID:21771956</a></span>
+              <br /><em class="takeaway">Shows that accounting for patients&rsquo; reduced life expectancy substantially lowers realistic estimates of imaging-related cancer risk.</em>
+            </li>
+            <li>
+              <span class="pub-title">Potential for adult-based epidemiological studies to characterize overall cancer risks associated with a lifetime of CT scans.</span>
+              <span class="me">Shuryak I</span>, Lubin JH, Brenner DJ. <span class="pub-venue"><em>Radiat. Res.</em> 181(6) (2014). <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4157352/" target="_blank" rel="noopener">PMC4157352</a></span>
+              <br /><em class="takeaway">Assesses whether adult epidemiological cohorts can realistically capture the cumulative cancer risk from a lifetime of CT imaging.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-6">
+          <h3>6. Estimating an individual&rsquo;s radiation dose after an accident</h3>
+          <p class="contrib-sub">Radiation biodosimetry: machine learning for individualized dose reconstruction</p>
+          <p>Classical biodosimetry relies on single biomarkers and assumes uniform whole-body exposure, both of which fail in realistic partial-body or mixed neutron&ndash;photon scenarios. I led studies developing machine-learning approaches that combine multiple radiation-responsive biomarkers (cytogenetic, protein, and gene-expression endpoints) into integrated dose-reconstruction models, adopted within the Columbia Center for High-Throughput Minimally-Invasive Radiation Biodosimetry, where I serve as Biostatistics Core Lead.</p>
+          <p class="why"><strong>Why it matters:</strong> After a nuclear accident or a radiological attack, hospitals would need to triage thousands of people by how much radiation each received. Reconstructing an individual&rsquo;s dose from a blood sample, even when only part of the body was exposed, is a core national-preparedness capability that decides who needs urgent treatment and who can be reassured and sent home.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Machine learning approach for quantitative biodosimetry of partial-body or total-body radiation exposures by combining radiation-responsive biomarkers.</span>
+              <span class="me">Shuryak I</span>, Nemzow L, Bacon BA, et al. <span class="pub-venue"><em>Scientific Reports</em> 13:949 (2023). <a href="https://doi.org/10.1038/s41598-023-28130-0" target="_blank" rel="noopener">doi:10.1038/s41598-023-28130-0</a></span>
+              <br /><em class="takeaway">Integrating several radiation-responsive biomarkers sharpens both partial- and total-body dose estimates.</em>
+            </li>
+            <li>
+              <span class="pub-title">A machine learning method for improving the accuracy of radiation biodosimetry by combining data from the dicentric chromosome and micronucleus assays.</span>
+              <span class="me">Shuryak I</span>, Royba E, Repin M, et al. <span class="pub-venue"><em>Scientific Reports</em> 12:21077 (2022). <a href="https://doi.org/10.1038/s41598-022-25453-2" target="_blank" rel="noopener">doi:10.1038/s41598-022-25453-2</a></span>
+              <br /><em class="takeaway">Fusing two cytogenetic assays with ML yields more accurate dose reconstruction than either assay alone.</em>
+            </li>
+          </ul>
+        </div>
+
+        <div class="contrib" id="contrib-7">
+          <h3>7. Understanding how life survives extreme radiation</h3>
+          <p class="contrib-sub">Mathematical modeling of the mechanisms of resistance to ionizing radiation</p>
+          <p>The radiation resistance of organisms such as <em>Deinococcus radiodurans</em>, tardigrades, and certain fungi was long understood only phenomenologically. I built quantitative models of how antioxidant defenses, DNA-repair capacity, and population-level cooperation jointly determine survival under acute and chronic irradiation. This work relates to ongoing efforts on manganese-based radioprotectors and to questions in astrobiology and radioecology.</p>
+          <p class="why"><strong>Why it matters:</strong> Knowing how organisms survive extreme radiation informs the search for life beyond Earth and the cleanup of contaminated environments. The same biology, manganese-based antioxidant chemistry and proteome protection, is now being turned into drugs that shield healthy tissue or sensitize tumors during radiotherapy.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Across the tree of life, radiation resistance is governed by antioxidant Mn&sup2;&#8314;, gauged by paramagnetic resonance.</span>
+              Sharma A, Gaidamakova EK, Matrosova VY, &hellip; <span class="me">Shuryak I</span>, &hellip; Daly MJ. <span class="pub-venue"><em>Proc. Natl. Acad. Sci. USA</em> 114(44):E9253&ndash;E9260 (2017). <a href="https://doi.org/10.1073/pnas.1713608114" target="_blank" rel="noopener">doi:10.1073/pnas.1713608114</a></span>
+              <br /><em class="takeaway">Links radiation resistance across many species to cellular antioxidant manganese, measurable by electron paramagnetic resonance.</em>
+            </li>
+            <li>
+              <span class="pub-title">Microbial cells can cooperate to resist high-level chronic ionizing radiation.</span>
+              <span class="me">Shuryak I</span>, Matrosova VY, Gaidamakova EK, Tkavc R, Grichenko O, Klimenkova P, Volpe RP, Daly MJ. <span class="pub-venue"><em>PLoS One</em> 12(12):e0189261 (2017). <a href="https://doi.org/10.1371/journal.pone.0189261" target="_blank" rel="noopener">doi:10.1371/journal.pone.0189261</a></span>
+              <br /><em class="takeaway">Shows that microbial populations can cooperate to survive chronic irradiation beyond what isolated cells tolerate.</em>
+            </li>
+            <li>
+              <span class="pub-title">Melanin is effective in protecting fast and slow growing fungi from various types of ionizing radiation.</span>
+              Pacelli C, Bryan RA, Onofri S, Selbmann L, <span class="me">Shuryak I</span>, Dadachova E. <span class="pub-venue"><em>Environ. Microbiol.</em> 19(4):1612&ndash;1624 (2017). <a href="https://doi.org/10.1111/1462-2920.13681" target="_blank" rel="noopener">doi:10.1111/1462-2920.13681</a></span>
+              <br /><em class="takeaway">Demonstrates that the pigment melanin shields diverse fungi against multiple radiation types.</em>
+            </li>
+            <li>
+              <span class="pub-title">Review of microbial resistance to chronic ionizing radiation exposure under environmental conditions.</span>
+              <span class="me">Shuryak I</span>. <span class="pub-venue"><em>J. Environ. Radioact.</em> 196:50&ndash;63 (2019). <a href="https://pubmed.ncbi.nlm.nih.gov/30388428/" target="_blank" rel="noopener">PMID:30388428</a></span>
+              <br /><em class="takeaway">Synthesizes the quantitative determinants of microbial radiation resistance under environmentally realistic chronic exposures.</em>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section id="software">
+        <h2><span class="num">03</span>Software &amp; Open Science</h2>
+        <ul class="plain">
+          <li><strong><a href="https://ishuryak.shinyapps.io/custom_bed_calculator/" target="_blank" rel="noopener">BED Calculator</a></strong>: an open web application for computing mechanistic biologically effective dose across fractionation schedules in <strong>head and neck cancer</strong> radiotherapy. The underlying model is fitted to head and neck cancer data and is intended for that setting, not for other tumor sites.</li>
+          <li><strong><a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">CAST (Causal Analysis of Survival Trajectories)</a></strong>: a causal machine learning method that estimates time-varying treatment effects in censored survival data, combining parametric and nonparametric modeling to produce smooth, interpretable effect trajectories over follow-up (capturing when, and for whom, a therapy offers the greatest benefit); presented across three NeurIPS 2025 workshops.</li>
+          <li>I share analysis code and data publicly wherever permissible, and work in secure high-performance computing environments (Columbia HPC, AWS).</li>
+        </ul>
+      </section>
+
+      <section id="talks">
+        <h2><span class="num">04</span>Talks &amp; Honors</h2>
+        <p><strong>Selected talks</strong></p>
+        <ul class="plain">
+          <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis of Survival Trajectories).&rdquo;</li>
+          <li>Martin Schneider Memorial Lectureship, University of Texas Medical Branch (March 2026): &ldquo;From Mechanistic Models to Causal ML: A New Framework for Precision Radiation Oncology.&rdquo;</li>
+          <li>AI Precision Health Institute (AIPHI) meeting, Hawaii (2026): presented the CAST framework for causal modeling of time-varying treatment effects.</li>
+          <li>University of Texas Medical Branch (Jan 2026): &ldquo;Integrating Mechanistic Modeling, Spatial Biology, and Causal Machine Learning to Advance and Optimize Cancer Radiotherapy.&rdquo;</li>
+          <li>NeurIPS 2025 (Dec 2025): &ldquo;CAST: Causal Modeling of Time-Varying Treatment Effects on Head and Neck Cancer,&rdquo; presented across three workshops (Uncovering Causality in Science; Learning from Time-Series for Health; AI for Science).</li>
+          <li>Columbia University, Biostatistics Masters Program (Nov 2025): guest lecture on advanced survival analysis and causal inference.</li>
+          <li>NASEM Gilbert W. Beebe Symposium (Mar 2025): integrating imaging, genomics, and clinical data for outcome prediction using statistical and causal ML.</li>
+          <li>International Radiobiology Conference on space radiation (India, Feb 2025): space radiation effects, dose-response modeling, and cancer risk using mechanistic and ML-based approaches.</li>
+          <li>Radiation Research Society Annual Meeting (Sep 2024): quantitative modeling of DNA damage and cellular toxicity under mixed radiation fields.</li>
+          <li>Columbia University Data Science Day (2022): &ldquo;Machine learning analysis of <sup>137</sup>Cs contamination of terrestrial plants after the Fukushima accident using the random forest algorithm.&rdquo;</li>
+        </ul>
+        <p><strong>Honors</strong></p>
+        <ul class="plain">
+          <li>Michael Fry Award, Radiation Research Society (2020)</li>
+          <li>Jack Fowler Award, Radiation Research Society (2014)</li>
+          <li>Radiation Research Editor&rsquo;s Award (2011)</li>
+        </ul>
+      </section>
+
+      <section id="contact">
+        <h2><span class="num">05</span>Contact</h2>
+        <div class="contact-box">
+          <p>I welcome collaborations in causal machine learning, mechanistic radiobiology, radiation epidemiology, and cancer radiotherapy modeling and optimization.</p>
+          <p style="margin:0;">
+            <strong>Igor Shuryak, MD, PhD</strong><br />
+            Center for Radiological Research, Department of Radiation Oncology<br />
+            Columbia University Irving Medical Center<br />
+            630 West 168th Street, New York, NY 10032<br />
+            <a href="mailto:is144@cumc.columbia.edu">is144@cumc.columbia.edu</a>
+          </p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p>&copy; <span id="yr">2026</span> Igor Shuryak. Personal academic website; views expressed are my own and do not represent Columbia University.</p>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('yr').textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
