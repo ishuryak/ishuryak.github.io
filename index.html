@@ -85,7 +85,6 @@
     section { padding: 34px 0; border-bottom: 1px solid var(--line); }
     section:last-of-type { border-bottom: none; }
     h2 { font-size: 1.7rem; margin: 0 0 16px; letter-spacing: -0.01em; }
-    h2 .num { color: var(--accent); font-variant-numeric: tabular-nums; margin-right: 10px; font-size: 1.1rem; vertical-align: 2px; }
     p { margin: 0 0 14px; }
     .lead { font-size: 1.2rem; }
 
@@ -125,6 +124,18 @@
     .contrib-pubs li:last-child { margin-bottom: 0; }
     .takeaway { color: var(--muted); font-size: 0.98rem; }
 
+    /* Back-to-top button (within contribution threads) */
+    .back-to-top { margin: 12px 0 0; }
+    .back-to-top a {
+      display: inline-block; background: var(--accent-soft); color: var(--accent);
+      border: 1px solid var(--line); border-radius: 999px;
+      padding: 5px 14px; font-size: 0.9rem; font-weight: 600;
+      transition: background 0.15s, border-color 0.15s;
+    }
+    .back-to-top a:hover, .back-to-top a:focus {
+      text-decoration: none; background: var(--accent); color: #fff; border-color: var(--accent);
+    }
+
     /* Lists */
     ul.plain { padding-left: 20px; margin: 0 0 16px; }
     ul.plain li { margin-bottom: 8px; }
@@ -150,7 +161,7 @@
 <body>
   <a class="skip" href="#main">Skip to main content</a>
 
-  <header class="hero">
+  <header class="hero" id="top">
     <div class="wrap hero-inner">
       <img class="headshot" src="headshot.jpg" width="500" height="500" alt="Portrait of Igor Shuryak" />
       <div class="hero-text">
@@ -179,7 +190,7 @@
     <div class="wrap">
 
       <section id="about">
-        <h2><span class="num">01</span>Background and Research Focus</h2>
+        <h2>Background and Research Focus</h2>
         <p class="lead">I am a computational radiation biologist and biomedical scientist at Columbia University, working at the intersection of <strong>mechanistic modeling of radiation effects, cancer radiotherapy modeling and optimization, causal inference, and machine learning</strong>.</p>
         <p>For more than fifteen years I have built quantitative models that connect biological mechanism to outcome: for cancer treatment response, survival, carcinogenesis, and other radiation effects. <strong>My current focus is integrating mechanistic radiobiological models with modern causal inference, moving from prediction (&ldquo;what will happen?&rdquo;) to intervention (&ldquo;what should we do?&rdquo;).</strong> Combining first-principles radiobiology with formal causal estimation remains uncommon, and it can sharpen how radiotherapy and radiation-risk decisions are made.</p>
         <p>I hold an M.D. from SUNY Downstate (Distinction in Research) and a Ph.D. (with distinction) in Environmental Health Sciences from Columbia University, where I developed new mechanistic models of radiation-induced carcinogenesis. I am the author of 135+ peer-reviewed publications (h-index 37, &gt;5,900 citations as of 2026; see <a href="https://scholar.google.com/citations?hl=en&amp;user=PFYxEhwAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a> for current metrics) and have helped secure and lead federally funded programs across the NIH, NASA, and the Department of Defense.</p>
@@ -197,7 +208,7 @@
       </section>
 
       <section id="contributions">
-        <h2><span class="num">02</span>Contributions to Science</h2>
+        <h2>Contributions to Science</h2>
         <p class="lead">Every one of these directions is fundamentally collaborative and depends on strong team effort, spanning clinicians, experimentalists, statisticians, and trainees. The threads below are framed around my own modeling and analysis, but the science belongs to these partnerships, and I am grateful to my collaborators and mentors in each of these areas.</p>
         <p>Select a thread to jump to its narrative and representative papers.</p>
         <div class="cards">
@@ -263,6 +274,7 @@
               <br /><em class="takeaway">Pools tumor-control data across thousands of patients to characterize how dose and fractionation shape stereotactic radiotherapy outcomes.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-2">
@@ -302,6 +314,7 @@
               <br /><em class="takeaway">Measures individual variation in DNA double-strand-break repair speed across a healthy population.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-3">
@@ -321,6 +334,7 @@
               <br /><em class="takeaway">Extends the continuous-distribution approach to radionuclide biokinetics across species.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-4">
@@ -345,6 +359,7 @@
               <br /><em class="takeaway">Provides a framework for estimating second-cancer risk after radiotherapy from first principles.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-5">
@@ -364,6 +379,7 @@
               <br /><em class="takeaway">Assesses whether adult epidemiological cohorts can realistically capture the cumulative cancer risk from a lifetime of CT imaging.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-6">
@@ -383,6 +399,7 @@
               <br /><em class="takeaway">Fusing two cytogenetic assays with ML yields more accurate dose reconstruction than either assay alone.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
         <div class="contrib" id="contrib-7">
@@ -412,11 +429,12 @@
               <br /><em class="takeaway">Synthesizes the quantitative determinants of microbial radiation resistance under environmentally realistic chronic exposures.</em>
             </li>
           </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
       </section>
 
       <section id="software">
-        <h2><span class="num">03</span>Software &amp; Open Science</h2>
+        <h2>Software &amp; Open Science</h2>
         <ul class="plain">
           <li><strong><a href="https://ishuryak.shinyapps.io/custom_bed_calculator/" target="_blank" rel="noopener">BED Calculator</a></strong>: an open web application for computing mechanistic biologically effective dose across fractionation schedules in <strong>head and neck cancer</strong> radiotherapy. The underlying model is fitted to head and neck cancer data and is intended for that setting, not for other tumor sites.</li>
           <li><strong><a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">CAST (Causal Analysis of Survival Trajectories)</a></strong>: a causal machine learning method that estimates time-varying treatment effects in censored survival data, combining parametric and nonparametric modeling to produce smooth, interpretable effect trajectories over follow-up (capturing when, and for whom, a therapy offers the greatest benefit); presented across three NeurIPS 2025 workshops.</li>
@@ -425,7 +443,7 @@
       </section>
 
       <section id="talks">
-        <h2><span class="num">04</span>Talks &amp; Honors</h2>
+        <h2>Talks &amp; Honors</h2>
         <p><strong>Selected talks</strong></p>
         <ul class="plain">
           <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis of Survival Trajectories).&rdquo;</li>
@@ -448,7 +466,7 @@
       </section>
 
       <section id="contact">
-        <h2><span class="num">05</span>Contact</h2>
+        <h2>Contact</h2>
         <div class="contact-box">
           <p>I welcome collaborations in causal machine learning, mechanistic radiobiology, radiation epidemiology, and cancer radiotherapy modeling and optimization.</p>
           <p style="margin:0;">
@@ -466,6 +484,7 @@
 
   <footer>
     <div class="wrap">
+      <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
       <p>&copy; <span id="yr">2026</span> Igor Shuryak. Personal academic website; views expressed are my own and do not represent Columbia University.</p>
     </div>
   </footer>
