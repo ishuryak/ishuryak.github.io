@@ -202,6 +202,7 @@
           <span class="pill">Survival analysis</span>
           <span class="pill">Equation discovery</span>
           <span class="pill">Precision radiotherapy</span>
+          <span class="pill">Space &amp; high-LET radiation</span>
           <span class="pill">Radioligand therapy</span>
           <span class="pill">Biodosimetry</span>
         </div>
@@ -221,22 +222,26 @@
             <p>Mechanistic models linking DNA double-strand-break repair and misrepair into chromosome aberrations to the curvature of the radiation dose-response and the linear&ndash;quadratic model used throughout radiotherapy.</p>
           </a>
           <a class="card" href="#contrib-3">
+            <h3>Modeling space radiation &amp; high-LET radiation effects</h3>
+            <p>Mechanistic and machine-learning models of space and high-LET radiation (galactic cosmic rays, heavy ions, protons, neutrons) across cancer induction, central-nervous-system effects, and particle radiotherapy.</p>
+          </a>
+          <a class="card" href="#contrib-4">
             <h3>Radiopharmaceutical pharmacokinetics modeling</h3>
             <p>Continuous-distribution models of radionuclide uptake and clearance that improve absorbed-dose estimation for targeted radionuclide and radioligand therapy.</p>
           </a>
-          <a class="card" href="#contrib-4">
+          <a class="card" href="#contrib-5">
             <h3>Radiation carcinogenesis &amp; second cancers</h3>
             <p>Multi-scale models coupling DNA damage, cell killing, and repopulation with initiation, promotion, and clonal growth to quantify second-cancer risk from radiotherapy.</p>
           </a>
-          <a class="card" href="#contrib-5">
+          <a class="card" href="#contrib-6">
             <h3>Risk from medical &amp; diagnostic radiation</h3>
             <p>Biologically grounded estimates of cancer and cardiovascular risk from diagnostic imaging and radiotherapy that account for a patient&rsquo;s realistic remaining life expectancy.</p>
           </a>
-          <a class="card" href="#contrib-6">
+          <a class="card" href="#contrib-7">
             <h3>Machine learning for radiation biodosimetry</h3>
             <p>Combining cytogenetic, protein, and gene-expression biomarkers into ML models that reconstruct an individual&rsquo;s dose after partial-body or mixed neutron&ndash;photon exposures, enabling medical triage in response to accidental or malicious mass radiation events.</p>
           </a>
-          <a class="card" href="#contrib-7">
+          <a class="card" href="#contrib-8">
             <h3>Mechanisms of radiation resistance</h3>
             <p>Quantitative models of radiation-resistance mechanisms (antioxidant defenses, DNA-repair capacity) in organisms that survive extreme radiation, informing radioprotection and astrobiology.</p>
           </a>
@@ -274,6 +279,7 @@
               <br /><em class="takeaway">Pools tumor-control data across thousands of patients to characterize how dose and fractionation shape stereotactic radiotherapy outcomes.</em>
             </li>
           </ul>
+          <p class="takeaway">&darr; Open-source implementations from this thread (the CAST framework and the head and neck BED calculator) are in the <a href="#software">Software &amp; Open Science</a> section below.</p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -318,7 +324,42 @@
         </div>
 
         <div class="contrib" id="contrib-3">
-          <h3>3. Modeling radiopharmaceutical pharmacokinetics</h3>
+          <h3>3. Modeling space radiation and high-LET radiation effects</h3>
+          <p class="contrib-sub">Mechanistic and machine-learning models of space and high-LET radiation across cancer induction, central-nervous-system effects, and particle radiotherapy</p>
+          <p>Space radiation (galactic cosmic rays and solar particles) and other high-LET sources, including heavy ions, protons, and neutrons, deposit energy in dense tracks that produce qualitatively different biological effects than low-LET X-rays and &gamma;-rays, with pronounced targeted and non-targeted (bystander) effects, distinct dose-response shapes, and elevated relative biological effectiveness. I build mechanistic and machine-learning models that translate radiation effects across linear energy transfer (LET), spanning carcinogenesis, cognitive and central-nervous-system dysfunction, and the relative biological effectiveness that governs proton and heavy-ion therapy. This work has been supported by NASA programs and has informed national assessments of crewed-mission radiation risk.</p>
+          <p class="why"><strong>Why it matters:</strong> Astronauts on deep-space missions face cancer and central-nervous-system risks from galactic cosmic rays that ground-based low-LET data cannot directly predict, and the same high-LET radiobiology underlies the fast-growing clinical use of proton and carbon-ion therapy. Mechanistic models that translate across LET and account for non-targeted effects are needed to set exposure limits, design shielding, and inform particle-therapy dosing.</p>
+          <ul class="contrib-pubs">
+            <li>
+              <span class="pub-title">Modeling space radiation induced cognitive dysfunction using targeted and non-targeted effects.</span>
+              <span class="me">Shuryak I</span>, Brenner DJ, Blattnig SR, Shukitt-Hale B, Rabin BM. <span class="pub-venue"><em>Scientific Reports</em> 11:8845 (2021). <a href="https://doi.org/10.1038/s41598-021-88486-z" target="_blank" rel="noopener">doi:10.1038/s41598-021-88486-z</a></span>
+              <br /><em class="takeaway">Models how heavy-ion space radiation impairs cognition, separating direct (targeted) damage from non-targeted effects.</em>
+            </li>
+            <li>
+              <span class="pub-title">Quantitative modeling of carcinogenesis induced by single beams or mixtures of space radiations using targeted and non-targeted effects.</span>
+              <span class="me">Shuryak I</span>, Sachs RK, Brenner DJ. <span class="pub-venue"><em>Scientific Reports</em> 11:23467 (2021). <a href="https://doi.org/10.1038/s41598-021-02883-y" target="_blank" rel="noopener">doi:10.1038/s41598-021-02883-y</a></span>
+              <br /><em class="takeaway">Predicts cancer risk from single ions and realistic galactic-cosmic-ray mixtures, incorporating non-targeted effects.</em>
+            </li>
+            <li>
+              <span class="pub-title">Scaling human cancer risks from low LET to high LET when dose-effect relationships are complex.</span>
+              <span class="me">Shuryak I</span>, Fornace AJ Jr, Datta K, Suman S, Kumar S, Sachs RK, Brenner DJ. <span class="pub-venue"><em>Radiat. Res.</em> 187(4):486&ndash;492 (2017). <a href="https://doi.org/10.1667/RR009CC.1" target="_blank" rel="noopener">doi:10.1667/RR009CC.1</a></span>
+              <br /><em class="takeaway">Provides a method to translate cancer risk from low-LET to high-LET radiation when the dose response is non-linear.</em>
+            </li>
+            <li>
+              <span class="pub-title">A practical approach for continuous in situ characterization of radiation quality factors in space.</span>
+              <span class="me">Shuryak I</span>, Slaba TC, Plante I, Poignant F, Blattnig SR, Brenner DJ. <span class="pub-venue"><em>Scientific Reports</em> 12:1453 (2022). <a href="https://doi.org/10.1038/s41598-022-04937-1" target="_blank" rel="noopener">doi:10.1038/s41598-022-04937-1</a></span>
+              <br /><em class="takeaway">Offers a way to characterize radiation quality factors continuously during a mission, improving real-time risk estimates.</em>
+            </li>
+            <li>
+              <span class="pub-title">Protons show greater relative biological effectiveness for mammary tumorigenesis with higher ER&alpha;- and HER2-positive tumors relative to &gamma;-rays in APC<sup>Min/+</sup> mice.</span>
+              Suman S, <span class="me">Shuryak I</span>, Kallakury B, Brenner DJ, Fornace AJ Jr, Johnson MD, Datta K. <span class="pub-venue"><em>Int. J. Radiat. Oncol. Biol. Phys.</em> 107(1):202&ndash;211 (2020). <a href="https://doi.org/10.1016/j.ijrobp.2020.01.031" target="_blank" rel="noopener">doi:10.1016/j.ijrobp.2020.01.031</a></span>
+              <br /><em class="takeaway">Quantifies how protons differ from &gamma;-rays in driving breast tumorigenesis, with implications for particle-therapy effectiveness.</em>
+            </li>
+          </ul>
+          <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
+        </div>
+
+        <div class="contrib" id="contrib-4">
+          <h3>4. Modeling radiopharmaceutical pharmacokinetics</h3>
           <p class="contrib-sub">Continuous-distribution models of radionuclide biokinetics for targeted radionuclide and radioligand therapy</p>
           <p>Targeted radionuclide therapy delivers radiation to the tumor from inside the body, so its effect depends on how the radiopharmaceutical distributes and clears over time. I developed methods that represent biokinetics as continuous probability distributions of rates, rather than a few discrete compartments, better capturing heterogeneous uptake and clearance and sharpening absorbed-dose estimation for radiopharmaceuticals.</p>
           <p class="why"><strong>Why it matters:</strong> Radioligand therapy is one of the fastest-growing areas of oncology. Realistic pharmacokinetic modeling of where the dose goes and how long it stays underpins both efficacy and normal-tissue safety in this emerging treatment class.</p>
@@ -337,8 +378,8 @@
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
-        <div class="contrib" id="contrib-4">
-          <h3>4. Predicting the second cancers that radiation therapy can cause</h3>
+        <div class="contrib" id="contrib-5">
+          <h3>5. Predicting the second cancers that radiation therapy can cause</h3>
           <p class="contrib-sub">Mechanistic mathematical modeling of radiation-induced carcinogenesis, particularly second cancers from radiotherapy</p>
           <p>Standard low-dose linear and linear&ndash;quadratic models break down at therapeutic doses because they ignore cell killing, repopulation, and clonal expansion of initiated cells. My doctoral and early postdoctoral work built a multi-scale framework coupling short-term radiobiology (DNA damage, cell death, repopulation) with long-term carcinogenesis (initiation, promotion, clonal growth), reproducing the non-monotonic dose response seen in epidemiological data and informing second-cancer risk assessment in pediatric and adult radiotherapy planning.</p>
           <p class="why"><strong>Why it matters:</strong> As cancer survival improves, more patients live long enough for their original radiotherapy to cause a second cancer years later. Quantifying that risk at the high treatment doses where conventional models break down helps clinicians choose plans that cure the first cancer while minimizing the chance of causing another, which matters most for children, who have the longest lifetime to express that risk.</p>
@@ -362,8 +403,8 @@
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
-        <div class="contrib" id="contrib-5">
-          <h3>5. Estimating the cancer risk from medical imaging and treatment</h3>
+        <div class="contrib" id="contrib-6">
+          <h3>6. Estimating the cancer risk from medical imaging and treatment</h3>
           <p class="contrib-sub">Quantification of cancer and cardiovascular risks from medical and diagnostic radiation exposures</p>
           <p>The growth of diagnostic imaging and the rising number of radiotherapy survivors make biologically grounded, clinically actionable risk estimates increasingly important. My work showed how reduced patient life expectancy modifies lifetime cancer-risk projections, assessed whether adult-based cohorts can characterize cumulative risk from repeated CT scans, and connected mechanistic risk models to clinical decision-making.</p>
           <p class="why"><strong>Why it matters:</strong> Hundreds of millions of CT scans are performed worldwide each year. Overstated risk estimates can frighten patients away from scans they need, while understated ones ignore real harm. Biologically grounded, clinically realistic estimates let patients and physicians weigh the benefits and risks of imaging and treatment sensibly.</p>
@@ -382,8 +423,8 @@
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
-        <div class="contrib" id="contrib-6">
-          <h3>6. Estimating an individual&rsquo;s radiation dose after an accident</h3>
+        <div class="contrib" id="contrib-7">
+          <h3>7. Estimating an individual&rsquo;s radiation dose after an accident</h3>
           <p class="contrib-sub">Radiation biodosimetry: machine learning for individualized dose reconstruction</p>
           <p>Classical biodosimetry relies on single biomarkers and assumes uniform whole-body exposure, both of which fail in realistic partial-body or mixed neutron&ndash;photon scenarios. I led studies developing machine-learning approaches that combine multiple radiation-responsive biomarkers (cytogenetic, protein, and gene-expression endpoints) into integrated dose-reconstruction models, adopted within the Columbia Center for High-Throughput Minimally-Invasive Radiation Biodosimetry, where I serve as Biostatistics Core Lead.</p>
           <p class="why"><strong>Why it matters:</strong> After a nuclear accident or a radiological attack, hospitals would need to triage thousands of people by how much radiation each received. Reconstructing an individual&rsquo;s dose from a blood sample, even when only part of the body was exposed, is a core national-preparedness capability that decides who needs urgent treatment and who can be reassured and sent home.</p>
@@ -402,8 +443,8 @@
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
-        <div class="contrib" id="contrib-7">
-          <h3>7. Understanding how life survives extreme radiation</h3>
+        <div class="contrib" id="contrib-8">
+          <h3>8. Understanding how life survives extreme radiation</h3>
           <p class="contrib-sub">Mathematical modeling of the mechanisms of resistance to ionizing radiation</p>
           <p>The radiation resistance of organisms such as <em>Deinococcus radiodurans</em>, tardigrades, and certain fungi was long understood only phenomenologically. I built quantitative models of how antioxidant defenses, DNA-repair capacity, and population-level cooperation jointly determine survival under acute and chronic irradiation. This work relates to ongoing efforts on manganese-based radioprotectors and to questions in astrobiology and radioecology.</p>
           <p class="why"><strong>Why it matters:</strong> Knowing how organisms survive extreme radiation informs the search for life beyond Earth and the cleanup of contaminated environments. The same biology, manganese-based antioxidant chemistry and proteome protection, is now being turned into drugs that shield healthy tissue or sensitize tumors during radiotherapy.</p>
