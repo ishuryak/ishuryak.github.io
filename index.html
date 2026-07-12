@@ -180,6 +180,7 @@
     <ul>
       <li><a href="#about">Background</a></li>
       <li><a href="#contributions">Research</a></li>
+      <li><a href="v2/index.html">Explore the models</a></li>
       <li><a href="#software">Software</a></li>
       <li><a href="#talks">Talks &amp; Honors</a></li>
       <li><a href="#contact">Contact</a></li>
@@ -211,7 +212,7 @@
       <section id="contributions">
         <h2>Contributions to Science</h2>
         <p class="lead">Every one of these directions is fundamentally collaborative and depends on strong team effort, spanning clinicians, experimentalists, statisticians, and trainees. The threads below are framed around my own modeling and analysis, but the science belongs to these partnerships, and I am grateful to my collaborators and mentors in each of these areas.</p>
-        <p>Select a thread to jump to its narrative and representative papers.</p>
+        <p>Select a thread to jump to its narrative and representative papers. Seven of these threads also have an <strong><a href="v2/index.html">interactive explorable</a></strong>, where you can drive the underlying published model yourself.</p>
         <div class="cards">
           <a class="card" href="#contrib-1">
             <h3>Mechanistic modeling + causal machine learning for radiotherapy</h3>
@@ -254,7 +255,7 @@
           <p class="why"><strong>Why it matters:</strong> About half of all cancer patients receive radiotherapy, yet most evidence describes average effects across trial populations. Causal machine learning offers flexible, data-driven estimation of individualized treatment effects, for both tumor control and toxicity, from clinical-trial and real-world data such as registries and electronic health records. Used carefully, with attention to confounding and the assumptions these methods require, it can help tailor dose and fractionation to individual patient profiles and extract treatment-relevant evidence from data already collected in the clinic.</p>
           <ul class="contrib-pubs">
             <li>
-              <span class="pub-title">Understanding the impact of radiotherapy fractionation on overall survival in a large head and neck squamous cell carcinoma dataset: combining mechanistic and machine learning models.</span>
+              <span class="pub-title">Understanding the impact of radiotherapy fractionation on overall survival in a large head and neck squamous cell carcinoma dataset: a comprehensive approach combining mechanistic and machine learning models.</span>
               <span class="me">Shuryak I</span>, Wang E, Brenner DJ. <span class="pub-venue"><em>Front. Oncol.</em> 14:1422211 (2024). <a href="https://doi.org/10.3389/fonc.2024.1422211" target="_blank" rel="noopener">doi:10.3389/fonc.2024.1422211</a></span>
               <br /><em class="takeaway">A hybrid mechanistic-plus-ML approach relates radiotherapy fractionation to survival beyond what either method captures alone.</em>
             </li>
@@ -280,6 +281,7 @@
             </li>
           </ul>
           <p class="takeaway">&darr; Open-source implementations from this thread (the CAST framework and the head and neck BED calculator) are in the <a href="#software">Software &amp; Open Science</a> section below.</p>
+          <p class="takeaway">&rarr; <a href="v2/index.html#bed"><strong>Explore it: drag a radiotherapy schedule and watch accelerated repopulation eat into the delivered dose, and see how CAST recovers a treatment effect that changes over time.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -320,6 +322,7 @@
               <br /><em class="takeaway">Measures individual variation in DNA double-strand-break repair speed across a healthy population.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#lq"><strong>Explore it: turn overdispersion up and down, and watch the high-dose tail of the cell-survival curve lift away from the classical linear-quadratic model.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -355,6 +358,7 @@
               <br /><em class="takeaway">Quantifies how protons differ from &gamma;-rays in driving breast tumorigenesis, with implications for particle-therapy effectiveness.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#hilet"><strong>Explore it: see why simply adding up the ions in a galactic-cosmic-ray mixture gives a physically impossible answer, and where relative biological effectiveness and the radiation effects ratio part company.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -375,6 +379,7 @@
               <br /><em class="takeaway">Extends the continuous-distribution approach to radionuclide biokinetics across species.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#pk"><strong>Explore it: compare a two-compartment fit against a continuous distribution of clearance rates, and watch the area under the retention curve, which is what sets the absorbed dose, move.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -400,6 +405,7 @@
               <br /><em class="takeaway">Provides a framework for estimating second-cancer risk after radiotherapy from first principles.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#cancer"><strong>Explore it: watch second-cancer risk rise, peak, and fall as dose climbs into the therapeutic range, and see how fractionation pushes that peak out to clinical doses.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -420,6 +426,7 @@
               <br /><em class="takeaway">Assesses whether adult epidemiological cohorts can realistically capture the cumulative cancer risk from a lifetime of CT imaging.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#ct"><strong>Explore it: see how much of a CT scan’s nominal cancer risk survives once a patient’s realistic remaining life expectancy is taken into account.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
 
@@ -435,7 +442,7 @@
               <br /><em class="takeaway">Integrating several radiation-responsive biomarkers sharpens both partial- and total-body dose estimates.</em>
             </li>
             <li>
-              <span class="pub-title">A machine learning method for improving the accuracy of radiation biodosimetry by combining data from the dicentric chromosome and micronucleus assays.</span>
+              <span class="pub-title">A machine learning method for improving the accuracy of radiation biodosimetry by combining data from the dicentric chromosomes and micronucleus assays.</span>
               <span class="me">Shuryak I</span>, Royba E, Repin M, et al. <span class="pub-venue"><em>Scientific Reports</em> 12:21077 (2022). <a href="https://doi.org/10.1038/s41598-022-25453-2" target="_blank" rel="noopener">doi:10.1038/s41598-022-25453-2</a></span>
               <br /><em class="takeaway">Fusing two cytogenetic assays with ML yields more accurate dose reconstruction than either assay alone.</em>
             </li>
@@ -470,6 +477,7 @@
               <br /><em class="takeaway">Synthesizes the quantitative determinants of microbial radiation resistance under environmentally realistic chronic exposures.</em>
             </li>
           </ul>
+          <p class="takeaway">&rarr; <a href="v2/index.html#resist"><strong>Explore it: switch off the inducible antioxidant defense and watch Deinococcus radiodurans go from surviving 12,000 Gy to dying at 230 Gy.</strong></a></p>
           <p class="back-to-top"><a href="#top">&uarr; Back to top</a></p>
         </div>
       </section>
@@ -478,7 +486,7 @@
         <h2>Software &amp; Open Science</h2>
         <ul class="plain">
           <li><strong><a href="https://ishuryak.shinyapps.io/custom_bed_calculator/" target="_blank" rel="noopener">BED Calculator</a></strong>: an open web application for computing mechanistic biologically effective dose across fractionation schedules in <strong>head and neck cancer</strong> radiotherapy. The underlying model is fitted to head and neck cancer data and is intended for that setting, not for other tumor sites.</li>
-          <li><strong><a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">CAST (Causal Analysis of Survival Trajectories)</a></strong>: a causal machine learning method that estimates time-varying treatment effects in censored survival data, combining parametric and nonparametric modeling to produce smooth, interpretable effect trajectories over follow-up (capturing when, and for whom, a therapy offers the greatest benefit); presented across three NeurIPS 2025 workshops.</li>
+          <li><strong><a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">CAST (Causal Analysis for Survival Trajectories)</a></strong>: a causal machine learning method that estimates time-varying treatment effects in censored survival data, combining parametric and nonparametric modeling to produce smooth, interpretable effect trajectories over follow-up (capturing when, and for whom, a therapy offers the greatest benefit); presented across three NeurIPS 2025 workshops.</li>
           <li>I share analysis code and data publicly wherever permissible, and work in secure high-performance computing environments (Columbia HPC, AWS).</li>
         </ul>
       </section>
@@ -487,7 +495,7 @@
         <h2>Talks &amp; Honors</h2>
         <p><strong>Selected talks</strong></p>
         <ul class="plain">
-          <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis of Survival Trajectories).&rdquo;</li>
+          <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis for Survival Trajectories).&rdquo;</li>
           <li>Martin Schneider Memorial Lectureship, University of Texas Medical Branch (March 2026): &ldquo;From Mechanistic Models to Causal ML: A New Framework for Precision Radiation Oncology.&rdquo;</li>
           <li>AI Precision Health Institute (AIPHI) meeting, Hawaii (2026): presented the CAST framework for causal modeling of time-varying treatment effects.</li>
           <li>University of Texas Medical Branch (Jan 2026): &ldquo;Integrating Mechanistic Modeling, Spatial Biology, and Causal Machine Learning to Advance and Optimize Cancer Radiotherapy.&rdquo;</li>

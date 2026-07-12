@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Igor Shuryak, MD, PhD &middot; Explore the Models</title>
+  <meta name="description" content="Interactive explorables from the research of Igor Shuryak, MD, PhD: mechanistic radiobiology, causal machine learning, and high-LET radiation. Every model and parameter is taken from a published paper." />
+  <meta name="author" content="Igor Shuryak" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a4d8c'/%3E%3Ctext x='50%25' y='50%25' dy='.34em' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='700' fill='white'%3EIS%3C/text%3E%3C/svg%3E" />
+  <link rel="stylesheet" href="assets/css/site.css" />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to main content</a>
+
+  <header class="hero" id="top">
+    <div class="wrap hero-inner">
+      <img class="headshot" src="../headshot.jpg" width="500" height="500" alt="Portrait of Igor Shuryak" />
+      <div class="hero-text">
+        <h1>Explore the models</h1>
+        <p class="affil">Igor Shuryak, MD, PhD &middot; Center for Radiological Research, Department of Radiation Oncology, Columbia University Irving Medical Center</p>
+        <div class="contact-row">
+          <a href="../index.html">&larr; Main site</a>
+          <span>&middot;</span>
+          <a href="mailto:is144@cumc.columbia.edu">is144@cumc.columbia.edu</a>
+          <span>&middot;</span>
+          <a href="https://scholar.google.com/citations?hl=en&amp;user=PFYxEhwAAAAJ&amp;view_op=list_works&amp;sortby=pubdate" target="_blank" rel="noopener">Google Scholar</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <nav class="toc" aria-label="Section navigation">
+    <ul>
+      <li><a href="#map">Research map</a></li>
+      <li><a href="#bed">Fractionation &amp; BED</a></li>
+      <li><a href="#hilet">High-LET radiation</a></li>
+      <li><a href="#cast">Causal ML (CAST)</a></li>
+      <li><a href="#lq">Dose-response curvature</a></li>
+      <li><a href="#cancer">Second cancers</a></li>
+      <li><a href="#resist">Radiation resistance</a></li>
+      <li><a href="#pk">Radiopharmaceuticals</a></li>
+      <li><a href="#ct">CT scan risk</a></li>
+      <li><a href="#provenance">Sources</a></li>
+    </ul>
+  </nav>
+
+  <main id="main">
+    <div class="wrap">
+
+      <section id="intro">
+        <p class="lead">Reading that a model exists is not the same as feeling what it does. Below are eight working models from my research. Drag the sliders and watch the biology change.</p>
+        <p>Every equation and every default parameter on this page is taken from a published, peer-reviewed paper, and each explorable names its source. Nothing here is fitted on patient data, and no unpublished result appears. Where a number could not be traced to a publication, the control that would have used it was removed rather than guessed.</p>
+        <noscript>
+          <p class="noscript"><strong>These explorables need JavaScript.</strong> The underlying science is described in full, without interaction, on the <a href="../index.html">main site</a>.</p>
+        </noscript>
+      </section>
+
+      <section id="map">
+        <h2>One research program, not eight topics</h2>
+        <p>The threads below share machinery. The same mathematical move (put a distribution on a rate, integrate it out, and a power law falls out) underlies both cell survival and radiopharmaceutical clearance. The same multi-scale initiation model underlies both second cancers and imaging risk. Seven of the eight threads now have a live explorable, outlined in blue. Click any box.</p>
+
+        <svg class="map" viewBox="0 0 1000 360" role="img" aria-label="Map of eight research threads and the mathematical machinery they share. DNA repair and radiopharmaceutical pharmacokinetics share a gamma-heterogeneity construction. High-LET radiation and carcinogenesis share non-targeted effects. Carcinogenesis and medical radiation risk share an initiation and promotion model. Seven of the eight threads have a live explorable below; biodosimetry is still in preparation.">
+          <!-- Shared-machinery links, routed outside the boxes so nothing overlaps. -->
+          <path class="edge" d="M140 78 C 62 78, 62 260, 140 260" />
+          <text class="edgelab" x="46" y="169" text-anchor="middle" transform="rotate(-90 46 169)">shared: gamma heterogeneity</text>
+
+          <path class="edge" d="M860 78 C 938 78, 938 260, 860 260" />
+          <text class="edgelab" x="956" y="169" text-anchor="middle" transform="rotate(90 956 169)">shared: non-targeted effects</text>
+
+          <!-- Medical risk and carcinogenesis share the initiation/promotion model.
+               Labeled in the prose above rather than here, to keep the figure uncluttered. -->
+          <path class="edge" d="M760 200 L 760 230" />
+
+          <!-- Feed-in links -->
+          <path class="edge" d="M340 88 L 400 118" />
+          <path class="edge" d="M500 160 L 500 240" />
+          <text class="edgelab" x="512" y="204" text-anchor="start">shared: ML on radiation biomarkers</text>
+
+          <g class="node live" tabindex="0" role="link" data-target="#bed" aria-label="Mechanistic modeling and causal machine learning for radiotherapy. Has a live explorable.">
+            <rect x="400" y="100" width="200" height="60" />
+            <text x="500" y="124" text-anchor="middle">Mechanistic models</text>
+            <text x="500" y="142" text-anchor="middle">+ causal ML</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#lq" aria-label="DNA repair and chromosome aberrations. Has a live explorable.">
+            <rect x="140" y="50" width="200" height="56" />
+            <text x="240" y="73" text-anchor="middle">DNA repair &amp;</text>
+            <text x="240" y="91" text-anchor="middle">chromosome aberrations</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#hilet" aria-label="Space and high-LET radiation. Has a live explorable.">
+            <rect x="660" y="50" width="200" height="56" />
+            <text x="760" y="73" text-anchor="middle">Space &amp; high-LET</text>
+            <text x="760" y="91" text-anchor="middle">radiation</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#resist" aria-label="Mechanisms of radiation resistance. Has a live explorable.">
+            <rect x="140" y="140" width="200" height="60" />
+            <text x="240" y="164" text-anchor="middle">Mechanisms of</text>
+            <text x="240" y="182" text-anchor="middle">radiation resistance</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#ct" aria-label="Risk from medical and diagnostic radiation. Has a live explorable.">
+            <rect x="660" y="140" width="200" height="60" />
+            <text x="760" y="164" text-anchor="middle">Medical &amp; diagnostic</text>
+            <text x="760" y="182" text-anchor="middle">radiation risk</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#pk" aria-label="Radiopharmaceutical pharmacokinetics. Has a live explorable.">
+            <rect x="140" y="230" width="200" height="60" />
+            <text x="240" y="254" text-anchor="middle">Radiopharmaceutical</text>
+            <text x="240" y="272" text-anchor="middle">pharmacokinetics</text>
+          </g>
+          <g class="node live" tabindex="0" role="link" data-target="#cancer" aria-label="Radiation carcinogenesis and second cancers. Has a live explorable.">
+            <rect x="660" y="230" width="200" height="60" />
+            <text x="760" y="254" text-anchor="middle">Carcinogenesis &amp;</text>
+            <text x="760" y="272" text-anchor="middle">second cancers</text>
+          </g>
+          <g class="node" tabindex="0" role="link" data-target="#provenance" aria-label="Machine learning for radiation biodosimetry. Explorable in preparation.">
+            <rect x="400" y="240" width="200" height="60" />
+            <text x="500" y="264" text-anchor="middle">ML for radiation</text>
+            <text x="500" y="282" text-anchor="middle">biodosimetry</text>
+          </g>
+        </svg>
+        <p class="maphint">Boxes outlined in blue have a live explorable below. Biodosimetry is still in preparation, and will be built the same way: from published equations and published parameters only.</p>
+      </section>
+
+      <!-- ============================ BED ============================ -->
+      <section id="bed">
+        <h2>Why finishing radiotherapy on time matters</h2>
+        <p>About half of all cancer patients receive radiotherapy, and the dose is almost never given all at once. It is split into fractions over several weeks, which spares normal tissue. But tumors are not passive during those weeks. After a lag of roughly four weeks, surviving tumor cells begin to <strong>repopulate</strong>, and they do it fast enough to eat into the dose being delivered. Every extra day of treatment then costs tumor control.</p>
+        <p>The biologically effective dose (BED) converts any schedule into a single comparable number. Drag the sliders and watch the penalty appear.</p>
+
+        <div class="widget">
+          <h4>Fractionation and biologically effective dose</h4>
+          <p class="sub">Head and neck squamous cell carcinoma. Published model and parameters.</p>
+
+          <div class="btnrow" role="group" aria-label="Preset schedules">
+            <button type="button" data-bed-preset="conv">Conventional 70 Gy / 35 fx</button>
+            <button type="button" data-bed-preset="hypo">Hypofractionated 55 Gy / 20 fx</button>
+          </div>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="bed-m">Number of fractions <span class="val" id="bed-m-val"></span></label>
+              <input type="range" id="bed-m" min="1" max="40" step="1" value="35" />
+            </div>
+            <div class="ctl">
+              <label for="bed-d">Dose per fraction <span class="val" id="bed-d-val"></span> Gy</label>
+              <input type="range" id="bed-d" min="1.2" max="4" step="0.05" value="2" />
+            </div>
+            <div class="ctl">
+              <label for="bed-gap">Treatment prolongation <span class="val" id="bed-gap-val"></span></label>
+              <input type="range" id="bed-gap" min="0" max="21" step="1" value="0" />
+            </div>
+            <div class="ctl">
+              <label for="bed-tk">Repopulation onset T<sub>k</sub> <span class="val" id="bed-tk-val"></span> days</label>
+              <input type="range" id="bed-tk" min="26.7" max="31.9" step="0.1" value="28.6" />
+            </div>
+            <div class="ctl">
+              <label for="bed-ab">α/β ratio <span class="val" id="bed-ab-val"></span> Gy</label>
+              <input type="range" id="bed-ab" min="7" max="13" step="0.5" value="10" />
+            </div>
+          </div>
+
+          <div id="bed-chart"></div>
+
+          <div class="readout">
+            <div><span class="k">Your schedule</span><span class="v" id="bed-sched"></span></div>
+            <div><span class="k">Treatment time</span><span class="v" id="bed-days"></span></div>
+            <div><span class="k">Effective dose</span><span class="v" id="bed-bed"></span></div>
+            <div><span class="k">Lost to repopulation</span><span class="v" id="bed-loss"></span></div>
+          </div>
+
+          <p class="caption">The grey dashed curve is the naive biologically effective dose, which assumes the tumor does nothing while you treat it. The blue curve is the published model, which lets the tumor repopulate. The two agree until treatment crosses the onset day, and then they diverge: past that point, each additional day of treatment is buying less than it appears to.</p>
+
+          <p class="note"><strong>Try this.</strong> Push the treatment-prolongation slider to two weeks, which is what a bad toxicity break or a machine failure does in practice. The effective dose falls by several Gy, even though the patient received every last prescribed fraction. That loss is why unplanned treatment gaps are taken so seriously in the clinic.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">BED_simple = m·d·(1 + d/(α/β))
+
+BED         = [ m·α·d·(d + α/β)/(α/β)  −  g·T  −  λ·max(0, T − T_k) ] / α</div>
+            <p>The repopulation term is a hard hinge, <code>max(0, T − T_k)</code>. Before the onset day it contributes nothing. After it, the tumor removes effective dose at rate λ for every additional day of treatment T.</p>
+            <table>
+              <tr><th>α</th><td>0.069 Gy⁻¹ (95% CI 0.065–0.075)</td></tr>
+              <tr><th>λ</th><td>0.035 day⁻¹ (95% CI 0.028–0.049)</td></tr>
+              <tr><th>T<sub>k</sub></th><td>28.6 days (95% CI 26.7–31.9); the slider is limited to this interval</td></tr>
+              <tr><th>α/β</th><td>10 Gy (fixed); the slider spans the published 7–13 Gy sensitivity range</td></tr>
+              <tr><th>g</th><td>0.0154 day⁻¹ (fixed background growth)</td></tr>
+            </table>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Equations: Shuryak I, Wang E, Brenner DJ. <em>Front Oncol</em> 14:1422211 (2024), <a href="https://doi.org/10.3389/fonc.2024.1422211" target="_blank" rel="noopener">doi:10.3389/fonc.2024.1422211</a>. Parameters: Shuryak I, Hall EJ, Brenner DJ. <em>Radiother Oncol</em> (2018), <a href="https://pubmed.ncbi.nlm.nih.gov/29534828/" target="_blank" rel="noopener">PMID 29534828</a>, Table 2. A full calculator for arbitrary schedules is available as the <a href="https://ishuryak.shinyapps.io/custom_bed_calculator/" target="_blank" rel="noopener">BED Calculator</a>.</p>
+        </div>
+      </section>
+
+      <!-- ============================ HIGH-LET ============================ -->
+      <section id="hilet">
+        <h2>Why you cannot just add up the ions</h2>
+        <p>An astronaut on a Mars mission is not hit by one kind of radiation. Galactic cosmic rays are a mixture: mostly protons, some helium, and a small but disproportionately damaging tail of heavy ions such as silicon and iron. We can only test one ion at a time in the laboratory. So the central question in space-radiation risk is: <strong>given what each ion does alone, what does the mixture do?</strong></p>
+        <p>The obvious answer, add up the effects, is wrong. Not approximately wrong. It gives an answer that is physically impossible, and the explorable below shows exactly how.</p>
+
+        <div class="widget">
+          <h4>Targeted and non-targeted effects across radiation quality</h4>
+          <p class="sub">Intestinal tumors in Apc<sup>1638N/+</sup> mice. Published model and fitted parameters for seven radiation types.</p>
+
+          <div class="btnrow" role="group" aria-label="View">
+            <button type="button" data-let-mode="dose" aria-pressed="true">Dose response</button>
+            <button type="button" data-let-mode="quality" aria-pressed="false">RBE vs RER</button>
+            <button type="button" data-let-mode="mixture" aria-pressed="false">The Mars mixture</button>
+          </div>
+
+          <div class="btnrow" id="let-ion-ctl" role="group" aria-label="Radiation types shown">
+            <button type="button" data-let-ion="gamma" aria-pressed="true">γ rays</button>
+            <button type="button" data-let-ion="H" aria-pressed="true">H</button>
+            <button type="button" data-let-ion="He" aria-pressed="false">⁴He</button>
+            <button type="button" data-let-ion="C" aria-pressed="false">¹²C</button>
+            <button type="button" data-let-ion="O" aria-pressed="false">¹⁶O</button>
+            <button type="button" data-let-ion="Si" aria-pressed="true">²⁸Si</button>
+            <button type="button" data-let-ion="Fe" aria-pressed="true">⁵⁶Fe</button>
+          </div>
+
+          <div class="controls" id="let-dose-ctl">
+            <div class="ctl">
+              <label for="let-dose">Dose <span class="val" id="let-dose-val"></span></label>
+              <input type="range" id="let-dose" min="0.001" max="1.4" step="0.001" value="0.05" />
+            </div>
+          </div>
+
+          <div id="let-chart"></div>
+
+          <div class="readout" id="let-readout">
+            <div><span class="k">Reference ion</span><span class="v" id="let-refion"></span></div>
+            <div><span class="k">RBE</span><span class="v" id="let-rbe"></span><span class="n">iso-effective dose ratio</span></div>
+            <div><span class="k">RER</span><span class="v" id="let-rer"></span><span class="n">same-dose effect ratio</span></div>
+            <div><span class="k">Gap</span><span class="v" id="let-gap"></span><span class="n">RBE minus RER</span></div>
+          </div>
+
+          <p class="note" id="let-quality-note" hidden><strong>Two ways to say "how much worse is this radiation?"</strong> RBE asks what dose of γ rays would do the same damage. RER asks, at the same dose, how much more damage this radiation does. They converge toward a common limit as the dose falls, and they close again at high dose. In between they diverge several-fold, and that in-between is precisely the range an astronaut occupies. Drag the dose slider from left to right and watch the gap open and then close again.</p>
+
+          <p class="note" id="let-mix-note" hidden><strong>The absurdity, in one line.</strong> Simply adding the ions predicts <strong id="mix-sea"></strong> excess tumors per mouse for the Mars mixture. But the mixture is mostly protons, and the most damaging component it contains, silicon, would produce only <strong id="mix-si"></strong> tumors if the <em>entire</em> dose were silicon. Simple additivity predicts a mixture that is worse than being hit by nothing but its own worst ingredient. The correct theory, incremental effect additivity, predicts <strong id="mix-iea"></strong>, which falls sensibly between the individual ion responses. The two answers differ by a factor of 2.6.</p>
+
+          <p class="caption">The dose-response curves rise steeply and then bend. That bend is the non-targeted effect: cells that were never hit still respond, to signals released by cells that were. It saturates quickly, which is why relative biological effectiveness is enormous at low dose and modest at high dose, and why laboratory data taken at high dose cannot be extrapolated down to the doses astronauts actually receive.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">M       = B + N·(1 − exp[−s·D]) + T·D          tumors per mouse
+
+μ_rad   = [ N·(1 − exp[−s·D]) + T·D ] · (1 + q(1+r))/(1 + q)     excess yield
+
+RER(I)  = μ_rad(D, I) / μ_rad(D, γ)            same dose, ratio of effects
+RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
+            <p><strong>T</strong> is the targeted (direct-traversal) term and <strong>N</strong> the non-targeted plateau, reached when every susceptible cell has responded to the signal. <strong>s</strong> = 38.66 Gy⁻¹ (95% CI 38.34–38.98) is the saturation rate, and it is shared by every radiation type. The background <strong>B</strong> and the variance term <strong>q</strong> are not free: they are derived from the fitted overdispersion parameter <em>r</em>. RBE has no closed form here (the exact solution needs the Lambert W function), so it is solved numerically.</p>
+            <table>
+              <tr><th>Radiation</th><th>LET (keV/µm)</th><th>T (Gy⁻¹)</th><th>N</th></tr>
+              <tr><td>γ rays</td><td>n/a</td><td>2.77 (2.47–3.04)</td><td>0.62 (0.33–0.87)</td></tr>
+              <tr><td>H</td><td>0.22</td><td>2.77 (shared)</td><td>0.89 (0.58–1.18)</td></tr>
+              <tr><td>⁴He</td><td>1.57</td><td>2.77 (shared)</td><td>1.34 (1.08–1.62)</td></tr>
+              <tr><td>¹²C</td><td>13</td><td>2.77 (shared)</td><td>2.87 (2.56–3.20)</td></tr>
+              <tr><td>¹⁶O</td><td>22</td><td>2.77 (shared)</td><td>2.68 (2.34–2.94)</td></tr>
+              <tr><td>²⁸Si</td><td>69</td><td>8.52 (8.20–8.85)</td><td>3.58 (3.28–3.90)</td></tr>
+              <tr><td>⁵⁶Fe</td><td>148</td><td>4.74 (4.42–5.07)</td><td>3.34 (3.05–3.63)</td></tr>
+            </table>
+            <p>The Mars-mission mixture, as published: H 0.311, ⁴He 0.109, ¹²C 0.029, ¹⁶O 0.029, ²⁸Si 0.022, ⁵⁶Fe 0.019 Gy, totalling 0.519 Gy. Incremental effect additivity integrates <code>dI/dD = Σ f_i · μ_i′(μ_i⁻¹(I))</code> along the mixture. This page solves that equation live in your browser, returning 4.74 excess tumors per mouse (incremental) against the published 4.74, and 12.34 (simple) against the published 12.33.</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Shuryak I, Sachs RK, Brenner DJ. <em>Sci Rep</em> 11:23467 (2021), <a href="https://doi.org/10.1038/s41598-021-02883-y" target="_blank" rel="noopener">doi:10.1038/s41598-021-02883-y</a>. Model, Table 1 parameters, and the Mars-mixture composition are all as published.</p>
+        </div>
+      </section>
+
+      <!-- ============================ CAST ============================ -->
+      <section id="cast">
+        <h2>When does a treatment actually help?</h2>
+        <p>A clinical trial usually reports one number: the average benefit. But treatment effects move over time. A therapy can help enormously in year one and not at all by year five, or do nothing early and everything late. A single hazard ratio flattens all of that into a point, and if the effect is not constant, that point can be misleading.</p>
+        <p><strong>CAST</strong> (Causal Analysis for Survival Trajectories) estimates the whole trajectory: how the benefit of a treatment rises, peaks, or reverses across follow-up. Below, the truth is known, because the data are simulated. That is the only setting in which you can actually check whether a method is right.</p>
+
+        <div class="widget">
+          <h4>Recovering a time-varying treatment effect under confounding</h4>
+          <p class="sub">Simulated data, so the true effect is known. No patient data are used.</p>
+
+          <div class="btnrow" role="group" aria-label="Shape of the true effect">
+            <button type="button" data-cast-shape="plateau" aria-pressed="true">Effect plateaus</button>
+            <button type="button" data-cast-shape="reversal" aria-pressed="false">Effect reverses</button>
+          </div>
+
+          <div class="btnrow" role="group" aria-label="Methods shown">
+            <button type="button" data-cast-method="naive" aria-pressed="true">Naive</button>
+            <button type="button" data-cast-method="cox" aria-pressed="true">Cox</button>
+            <button type="button" data-cast-method="rsf" aria-pressed="false">Random survival forest</button>
+            <button type="button" data-cast-method="csf" aria-pressed="false">Causal survival forest</button>
+            <button type="button" data-cast-method="cast" aria-pressed="true">CAST</button>
+          </div>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="cast-conf">Confounding strength <span class="val" id="cast-conf-val"></span></label>
+              <input type="range" id="cast-conf" min="0" max="2" step="0.5" value="1" />
+            </div>
+          </div>
+
+          <div id="cast-chart"></div>
+
+          <div class="readout">
+            <div><span class="k">Naive error</span><span class="v" id="cast-rmse-naive"></span><span class="n">RMSE vs truth</span></div>
+            <div><span class="k">CAST error</span><span class="v" id="cast-rmse-cast"></span><span class="n">RMSE vs truth</span></div>
+            <div><span class="k">Covariate imbalance</span><span class="v" id="cast-smd"></span><span class="n">standardised difference, age</span></div>
+            <div><span class="k">Proportional hazards</span><span class="v" id="cast-ph" style="font-size:1rem"></span></div>
+          </div>
+
+          <p class="note"><strong>Try this.</strong> Set the true effect to <em>reverses</em> and turn on Cox. The Cox model can report a perfectly respectable hazard ratio while completely missing that the benefit turns into a harm, because assuming proportional hazards assumes in advance that the effect does not change shape. Then push confounding to its maximum and watch the naive curve float away from the truth entirely, while CAST stays on it.</p>
+
+          <p class="caption">The black curve is the true treatment effect, which is knowable here only because the data were simulated. Colored curves are estimates. The shaded band is CAST's 95% interval, which accounts for the correlation between horizons rather than treating each follow-up time as an independent problem.</p>
+
+          <p class="source"><strong>Source.</strong> CAST (Causal Analysis for Survival Trajectories), <a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">arXiv:2505.06367</a>, presented across three NeurIPS 2025 workshops. Scenario data are precomputed simulations from the public CAST demonstration. Confounding strength snaps to the nearest simulated level (<span id="cast-level"></span>).</p>
+        </div>
+      </section>
+
+
+      <!-- ============================ OVERDISPERSION ============================ -->
+      <section id="lq">
+        <h2>Why the dose response is curved</h2>
+        <p>The linear-quadratic model is the workhorse of clinical radiotherapy: it is how every dose and fractionation schedule gets compared. It assumes lethal damage lands on cells at random, like raindrops, so the number of lethal lesions per cell follows a Poisson distribution.</p>
+        <p>Cells are not identical, though. If radiosensitivity varies from cell to cell, the lesion count is <strong>overdispersed</strong>, and the survival curve stops being what the textbook says. Drag the heterogeneity slider and watch the high-dose tail lift away from the classical curve.</p>
+
+        <div class="widget">
+          <h4>Overdispersion of lethal lesions</h4>
+          <p class="sub">Published model and fitted parameters. Heterogeneity is the parameter r.</p>
+
+          <div class="btnrow" role="group" aria-label="Panel">
+            <button type="button" data-lq-panel="cells" aria-pressed="true">Cell survival</button>
+            <button type="button" data-lq-panel="aberr" aria-pressed="false">Chromosome damage</button>
+          </div>
+
+          <div class="controls">
+            <div class="ctl" id="lq-cell-ctl">
+              <label for="lq-cell">Cell line</label>
+              <select id="lq-cell">
+                <option value="DU145">DU145 (prostate)</option>
+                <option value="U373MG">U373MG (glioma)</option>
+                <option value="CHOAA8">CHO AA8 (hamster)</option>
+                <option value="CP3">CP3 (prostate)</option>
+              </select>
+            </div>
+            <div class="ctl" id="lq-r-ctl">
+              <label for="lq-r">Heterogeneity r <span class="val" id="lq-r-val"></span></label>
+              <input type="range" id="lq-r" min="0" max="0.3" step="0.005" value="0.126" />
+            </div>
+          </div>
+
+          <div id="lq-chart"></div>
+
+          <div class="readout" id="lq-readout">
+            <div><span class="k">Published r for this line</span><span class="v" id="lq-fitted"></span></div>
+            <div><span class="k">Survival advantage</span><span class="v" id="lq-ratio"></span><span class="n">overdispersed vs classical</span></div>
+            <div><span class="k">Evaluated at</span><span class="v" id="lq-at"></span></div>
+          </div>
+
+          <p class="note" id="lq-aberr-note" hidden><strong>Iron ions are a straight line; gamma rays bend.</strong> Curvature in the dose response comes from damage that needs two separate radiation tracks to interact. A single iron-ion track is so densely ionizing that it does the whole job by itself, so its dose response has no curvature at all. This is why the linear-quadratic model, which was built for X-rays, cannot simply be carried over to particle therapy.</p>
+
+          <p class="note" id="lq-surv-note"><strong>Set r to zero</strong> and the blue curve collapses onto the classical grey one, which is the textbook linear-quadratic model. Raise r and the high-dose tail lifts: a heterogeneous population always contains resistant cells, and at high dose those are the only ones left. This matters precisely where radiotherapy operates.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">μ     = α·D + β·D²                 mean lethal lesions per cell
+
+SF    = 1 / [1 + μ·r]^(1/r)        overdispersed (negative binomial)
+SF    = exp(−μ)                    classical, recovered as r → 0</div>
+            <p>A negative binomial is what you get when the Poisson mean is itself gamma-distributed, which is exactly what happens when radiosensitivity varies between cells. So r is not a fudge factor: it is the variance of the cell population.</p>
+            <p>Published fits: DU145 α = 0.16, β = 0.028, r = 0.126. U373MG α = 0.08, β = 0.047, r = 0.241. CHO AA8 α = 0.18, β = 0.019, <strong>r = 0.000</strong> (this line really is Poisson, and the honest thing is to show it). Independent cytogenetic estimates in human lymphocytes give r = 0.138 (95% CI 0.020 to 0.301).</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Shuryak I, Cornforth MN. <em>Int J Radiat Biol</em> 97(1):50&ndash;59 (2021), <a href="https://doi.org/10.1080/09553002.2020.1784489" target="_blank" rel="noopener">doi:10.1080/09553002.2020.1784489</a>. Chromosome panel: Cornforth M, Shuryak I, Loucas B. <em>Transl Cancer Res</em> (2017), <a href="https://doi.org/10.21037/tcr.2017.05.16" target="_blank" rel="noopener">doi:10.21037/tcr.2017.05.16</a>. The cell-survival data behind the published fits were digitized from Garcia et al., <em>Phys Med Biol</em> 51:2813 (2006), and are not replotted here.</p>
+        </div>
+      </section>
+
+      <!-- ============================ SECOND CANCERS ============================ -->
+      <section id="cancer">
+        <h2>Why more dose is not always more cancer</h2>
+        <p>Radiotherapy cures cancer with doses of 50 to 70 Gy. Radiation also causes cancer. So a natural fear is that treatment doses must cause enormous numbers of second cancers, since the standard low-dose models say risk climbs in proportion to dose.</p>
+        <p>They are wrong, and the reason is that at therapeutic doses radiation is also <em>killing</em> the cells it might otherwise have transformed. Risk rises, peaks, and comes back down. But there is a twist: fractionating the dose lets the surviving cells repopulate between treatments, which pushes the peak out to exactly the doses used in the clinic.</p>
+
+        <div class="widget">
+          <h4>Excess relative risk of a radiation-induced second cancer</h4>
+          <p class="sub">Published multi-scale model: initiation, promotion, cell killing, and repopulation between fractions.</p>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="ca-site">Cancer site</label>
+              <select id="ca-site">
+                <option value="lung">Lung</option>
+                <option value="breast">Breast</option>
+                <option value="thyroid">Thyroid</option>
+                <option value="stomach">Stomach</option>
+                <option value="bladder">Bladder</option>
+              </select>
+            </div>
+            <div class="ctl">
+              <label for="ca-dpf">Dose per fraction <span class="val" id="ca-dpf-val"></span></label>
+              <input type="range" id="ca-dpf" min="1" max="10" step="0.5" value="2" />
+            </div>
+            <div class="ctl">
+              <label for="ca-age">Age at exposure <span class="val" id="ca-age-val"></span></label>
+              <input type="range" id="ca-age" min="10" max="70" step="1" value="30" />
+            </div>
+            <div class="ctl">
+              <label for="ca-fu">Years since exposure <span class="val" id="ca-fu-val"></span></label>
+              <input type="range" id="ca-fu" min="10" max="50" step="1" value="25" />
+            </div>
+          </div>
+
+          <div id="ca-chart"></div>
+
+          <div class="readout">
+            <div><span class="k">Risk peaks at</span><span class="v" id="ca-peak"></span></div>
+            <div><span class="k">Peak excess risk</span><span class="v" id="ca-peakerr"></span></div>
+            <div><span class="k">Linear model would say</span><span class="v" id="ca-lnt"></span></div>
+            <div><span class="k">Overstated by</span><span class="v" id="ca-over"></span></div>
+          </div>
+
+          <p class="caption">The grey dashed line is what a linear no-threshold extrapolation predicts. The orange curve is a single acute dose. The blue curve is a fractionated course, where cells repopulate between fractions. Fractionation does not just shift the peak, it raises it: repopulation rescues pre-malignant cells that a single large dose would have sterilized.</p>
+
+          <p class="note"><strong>Why this matters for a real patient.</strong> A linear extrapolation from atomic-bomb-survivor data overstates the peak risk severalfold at therapeutic doses. That is not a license for complacency, because the risk it overstates is still real and still substantial, which is itself the surprise: the model predicts that excess risk remains large even at 40 to 50 Gy, and the epidemiology of second cancers agrees. The clinical decision is a trade-off, not a formality, and it matters most for children, who have the longest time left to express the risk.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">ERR = (Q1·Q2 + Q3)/Q4 − 1
+
+Q1 = (1 + Y·D) / [1 + Y·D·(1 − exp(−δ·Ty))]                 promotion
+Q2 = [(exp(b·Tx) − 1)·Sf(Z,D) + b·X·ISf(D)]·exp(b·Ty)        initiation, niche survival
+Q3 = exp(b·Ty) − 1        Q4 = exp(b·(Tx + Ty)) − 1</div>
+            <p>X is radiation-induced initiation, Y is promotion, Z the carrying capacity of a stem-cell niche, and α and β the cell-killing terms. Tx is age at exposure and Ty years since. For a fractionated course, the surviving stem cells regrow logistically between fractions, dn/dt = λ·n·(1 − n/m), and both Sf and ISf are evaluated over the whole schedule. With a single fraction the whole thing collapses back to the acute expressions, which is the check used to verify this implementation.</p>
+            <p>Lung parameters: X = 0.860 y/Gy, Y = 0.387 /Gy, δ = 9.49 × 10⁻³ /y, log₁₀Z = 4.99, α = 0.25 /Gy, β = 0.025 /Gy², λ = 0.05 /day, b = 0.460 /y.</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Shuryak I, Hahnfeldt P, Hlatky L, Sachs RK, Brenner DJ. A new view of radiation-induced cancer: integrating short- and long-term processes. <em>Radiat Environ Biophys</em> 48(3):263&ndash;274 (Part I) and 48(3):275&ndash;286 (Part II), 2009. Parameters from Part II, Tables 1 and 2.</p>
+        </div>
+      </section>
+
+      <!-- ============================ RADIATION RESISTANCE ============================ -->
+      <section id="resist">
+        <h2>How life survives extreme radiation</h2>
+        <p>A dose of 5 Gy kills a human. <em>Deinococcus radiodurans</em> shrugs off <strong>12,000 Gy</strong>. For decades the assumption was that it must have extraordinary DNA repair. It does not: its genome is shattered into hundreds of fragments like anyone else's.</p>
+        <p>What it has is chemistry. Small-molecule manganese antioxidant complexes protect the <em>proteins</em>, including the repair enzymes, so the repair machinery still works after the genome has been destroyed. Protect the mechanic, and the car gets rebuilt.</p>
+
+        <div class="widget">
+          <h4>The antioxidant defense, and one law across the tree of life</h4>
+          <p class="sub">Published mechanistic model, and the published survey of 21 organisms.</p>
+
+          <div class="btnrow" role="group" aria-label="Panel">
+            <button type="button" data-dr-panel="survival" aria-pressed="true">Survival curve</button>
+            <button type="button" data-dr-panel="tree" aria-pressed="false">Across the tree of life</button>
+          </div>
+
+          <div class="controls" id="dr-k23-ctl">
+            <div class="ctl">
+              <label for="dr-k23">Inducible antioxidant defense k₂₃ <span class="val" id="dr-k23-val"></span></label>
+              <input type="range" id="dr-k23" min="0" max="10" step="0.1" value="8" />
+            </div>
+          </div>
+
+          <div id="dr-chart"></div>
+
+          <div class="readout" id="dr-readout">
+            <div><span class="k">D₁₀ with defense</span><span class="v" id="dr-d10"></span><span class="n">dose killing 90%</span></div>
+            <div><span class="k">D₁₀ with defense off</span><span class="v" id="dr-d10off"></span></div>
+            <div><span class="k">The defense is worth</span><span class="v" id="dr-fold"></span></div>
+          </div>
+
+          <p class="note" id="dr-surv-note"><strong>Drag the defense to zero.</strong> Survival collapses to a plain exponential and D₁₀ falls from about 12,000 Gy to about 230 Gy. The entire shoulder of the curve, the thing that makes this organism famous, <em>is</em> the inducible antioxidant defense. Nothing about DNA repair changed.</p>
+
+          <p class="note" id="dr-tree-note" hidden><strong>One law, twenty-one organisms, from bacteria to human cells.</strong> The x-axis is how many DNA double-strand breaks a cell can survive; the y-axis is how much of its manganese sits in small-molecule antioxidant complexes, measured by electron paramagnetic resonance. A single Hill curve fits the lot (R² = 0.78). Now look at the ringed point, top right. It is not one organism but three: <em>Deinococcus radiodurans</em>, its sodA⁻ knockout, and <em>Deinococcus geothermalis</em>, tabulated identically and plotted on top of one another. Knocking out superoxide dismutase, the enzyme everyone assumed was responsible, changes nothing at all. That is the point.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">S     = exp( −c₈·D·exp[ −k₂₃·exp(−k₁·D) ] )        acute survival, D in kGy
+
+f_H   = κ·(DSB_D₁₀)ⁿ / [1 + κ·(DSB_D₁₀)ⁿ]           the Hill law across species
+DSB_D₁₀ = D₁₀(Gy) × DSB yield(per Mbp per Gy) × genome size(Mbp)</div>
+            <p>k₂₃ is the inducible antioxidant defense and k₁ its dose dependence. With the published constants (c₈ = 10 breaks per cell per kGy, k₂₃ = 8.0, k₁ = 0.058 /kGy) the model gives D₁₀ = 12.1 kGy, against the measured 12.0 kGy. Set k₂₃ = 0 and survival becomes exp(−c₈·D), giving D₁₀ = 0.23 kGy.</p>
+            <p>f_H is the fraction of cellular Mn²⁺ held in small-molecule antioxidant complexes, from electron paramagnetic resonance. Published fit: n = 1.5, κ = 0.01; the linearized form gives n = 1.7 ± 0.2. Regression R² = 0.78, Pearson r = 0.883 (p = 5.5 × 10⁻⁷).</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Model: Shuryak I, Brenner DJ. <em>Radiat Environ Biophys</em> (2010), <a href="https://doi.org/10.1007/s00411-010-0305-1" target="_blank" rel="noopener">doi:10.1007/s00411-010-0305-1</a>, and <em>J Theor Biol</em> 261(2):305&ndash;317 (2009). Survey of 21 organisms: Sharma A, Gaidamakova EK, &hellip; Shuryak I, &hellip; Daly MJ. <em>PNAS</em> 114(44):E9253&ndash;E9260 (2017), <a href="https://doi.org/10.1073/pnas.1713608114" target="_blank" rel="noopener">doi:10.1073/pnas.1713608114</a>, Table 1.</p>
+        </div>
+      </section>
+
+
+      <!-- ============================ RADIOPHARMACEUTICALS ============================ -->
+      <section id="pk">
+        <h2>Where the dose actually goes</h2>
+        <p>Radioligand therapy delivers radiation from <em>inside</em> the body. The tumor dose is not set by a machine, it is set by how long the radiopharmaceutical lingers, which means the absorbed dose is the <strong>area under the retention curve</strong>. Get the shape of that curve wrong and you get the dose wrong.</p>
+        <p>The standard approach fits one or two exponentials, which is the same as assuming the body has one or two well-mixed compartments each clearing at a single rate. Real tissue is not like that: uptake and clearance vary continuously from cell to cell. Modeling that spread directly, instead of forcing it into compartments, changes the area under the curve.</p>
+
+        <div class="widget">
+          <h4>Discrete compartments versus a continuous distribution of rates</h4>
+          <p class="sub">¹⁸⁸Re-labeled antibody in melanoma xenografts. Published models and fitted parameters; a star marks the models the data actually favor.</p>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="pk-tissue">Tissue</label>
+              <select id="pk-tissue">
+                <option value="blood">Blood</option>
+                <option value="kidneys">Kidneys</option>
+                <option value="liver">Liver</option>
+                <option value="marrow">Bone marrow</option>
+                <option value="lungs">Lungs</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="btnrow" role="group" aria-label="Models shown">
+            <button type="button" data-pk-model="ME" aria-pressed="false">1 compartment</button>
+            <button type="button" data-pk-model="BE" aria-pressed="true">2 compartments</button>
+            <button type="button" data-pk-model="SE" aria-pressed="true">Stretched exponential</button>
+            <button type="button" data-pk-model="MSE" aria-pressed="false">Modified stretched</button>
+            <button type="button" data-pk-model="SSE" aria-pressed="true">Simplified stretched</button>
+          </div>
+
+          <div id="pk-chart"></div>
+
+          <div class="readout">
+            <div><span class="k">Two-compartment integral</span><span class="v" id="pk-be"></span><span class="n">sets the absorbed dose</span></div>
+            <div><span class="k">Best-supported model</span><span class="v" id="pk-best" style="font-size:1rem"></span></div>
+            <div><span class="k">Model-averaged integral</span><span class="v" id="pk-avg"></span><span class="n">relative to 2 compartments</span></div>
+            <div><span class="k">Dose difference</span><span class="v" id="pk-gap"></span></div>
+          </div>
+
+          <p class="caption">On these logarithmic axes a single exponential is a straight line falling off a cliff. The continuous-rate models bend: a population of clearance rates always leaves a slow tail, because the slowest compartments are the last ones standing. That tail is where the absorbed dose hides.</p>
+
+          <p class="note"><strong>The consequence.</strong> For blood, averaging across the models the data actually support gives a time integral about 12% larger than the two-compartment fit alone. Since absorbed dose is proportional to that integral, committing to a compartment model because it is conventional quietly understates the dose. In a therapy whose whole safety case rests on the dose to normal tissue, that is not a rounding error.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <div class="eq">g(t)  = exp[ −(ln2 / τ₀)·t ]           physical decay, τ₀ = 1014 min (¹⁸⁸Re)
+
+2 compartments   g(t)·( w·exp[−t/τ₃] + (1−w)·exp[−t/τ₄] )
+stretched exp.   g(t)·exp[ −(t/τ₅)^γ ]
+modified str.    g(t)·exp[ 1 − (1 + t/τ₆)^γ ]</div>
+            <p>A stretched exponential is what you get when the clearance rate is not one number but a distribution: integrate a gamma-distributed rate out of a simple exponential and a power-law tail falls out. This is the <em>same mathematical move</em> that produces the overdispersed survival curve in the dose-response explorable above. Two apparently unrelated problems, one construction.</p>
+            <p>Every curve and every integral on this panel is computed live from the paper's model definitions and its Table 2 parameters, integrated from zero to infinity with the decay factor included.</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Shuryak I, Dadachova E. New approaches for modeling radiopharmaceutical pharmacokinetics using continuous distributions of rates. <em>J Nucl Med</em> 56(10):1622&ndash;1628 (2015), <a href="https://doi.org/10.2967/jnumed.115.160515" target="_blank" rel="noopener">doi:10.2967/jnumed.115.160515</a>. Extended to human and animal biokinetics in <em>Sci Rep</em> 9:1218 (2019), <a href="https://doi.org/10.1038/s41598-018-38046-9" target="_blank" rel="noopener">doi:10.1038/s41598-018-38046-9</a>.</p>
+        </div>
+      </section>
+
+
+      <!-- ============================ CT RISK ============================ -->
+      <section id="ct">
+        <h2>What is one CT scan actually worth?</h2>
+        <p>Hundreds of millions of CT scans are performed every year, and the standard way to describe their risk is a lifetime cancer risk computed for a <em>healthy</em> person of the patient's age. But the person in the scanner is usually not healthy. That is why they are being scanned.</p>
+        <p>Radiation-induced cancer takes decades to appear. A patient who will not live those decades cannot express the risk. Ignoring that does not make the estimate conservative, it makes it wrong, and it can frighten patients away from a scan they need.</p>
+
+        <div class="widget">
+          <h4>Lifetime risk, adjusted for realistic remaining life expectancy</h4>
+          <p class="sub">Published patient groups. The risk shown is relative to the nominal estimate for a healthy person of the same age.</p>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="ct-scenario">Patient</label>
+              <select id="ct-scenario">
+                <option value="colon0">Colon cancer, stage 0 or I, age 70</option>
+                <option value="colon4">Colon cancer, stage IV, age 70</option>
+                <option value="cabg55">After coronary bypass, age 55</option>
+                <option value="cabg75">After coronary bypass, age 75</option>
+              </select>
+            </div>
+          </div>
+
+          <div id="ct-chart"></div>
+
+          <div class="readout">
+            <div><span class="k">Age</span><span class="v" id="ct-age"></span></div>
+            <div><span class="k">Risk is overstated by</span><span class="v" id="ct-red"></span></div>
+            <div><span class="k">Realistic risk</span><span class="v" id="ct-left"></span><span class="n">of the nominal figure</span></div>
+          </div>
+
+          <p class="caption" id="ct-note"></p>
+
+          <p class="note"><strong>Compare the two colon-cancer patients.</strong> Same age, same scan, same dose. For the patient with early disease the nominal risk estimate is close to right, overstating it by only about 8%. For the patient with metastatic disease it overstates the risk by about 92%: the radiation risk has all but vanished, because the competing risk has not.</p>
+          <p class="note"><strong>Now compare the two bypass patients, because this one is counterintuitive.</strong> The <em>younger</em> patient gets the bigger correction, not the older one. A 55-year-old after bypass surgery has lost a great deal of life expectancy relative to a healthy 55-year-old, so the adjustment is large. By 75, a healthy person's remaining life is short anyway, so having had bypass surgery changes the comparison much less.</p>
+
+          <details class="math">
+            <summary>Show the math</summary>
+            <p>The published quantity is a ratio: this patient's lifetime radiation-associated cancer risk, divided by the risk for a healthy person of the same age and sex. Both are lifetime integrals of the excess risk weighted by the probability of surviving to express it, using empirical life tables and disease-specific survival curves rather than a closed-form model. The radiation dose and the dose-and-dose-rate effectiveness factor cancel out of the ratio entirely, which is why the answer is a pure percentage and does not depend on how big the scan was.</p>
+            <p>For a 65-year-old having coronary CT angiography after bypass surgery, the published ratio is 0.58 (95% CI 0.52 to 0.64).</p>
+            <p>Because the underlying life tables are empirical, there is nothing here to re-derive in a browser: the scenarios above are the ones the paper reports, and nothing is interpolated between them.</p>
+          </details>
+
+          <p class="source"><strong>Source.</strong> Brenner DJ, Shuryak I, Einstein AJ. Impact of reduced patient life expectancy on potential cancer risks from radiologic imaging. <em>Radiology</em> 261(1):193&ndash;198 (2011), <a href="https://pubmed.ncbi.nlm.nih.gov/21771956/" target="_blank" rel="noopener">PMID 21771956</a>. See also Shuryak I, Lubin JH, Brenner DJ. <em>Radiat Res</em> 181(6) (2014), <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC4157352/" target="_blank" rel="noopener">PMC4157352</a>.</p>
+        </div>
+      </section>
+
+      <section id="provenance">
+        <h2>Where these numbers come from</h2>
+        <p>Every model on this page is built from its published paper. Each equation and each default parameter is taken from a peer-reviewed publication, and no unpublished result and no patient-level data appears anywhere on this site. Where a control would have required a quantity that no paper reports, the control was removed rather than filled in with a plausible guess.</p>
+        <p>Full provenance, listing each explorable against the paper supplying its equations and each of its default parameters, is in <a href="PROVENANCE.md">PROVENANCE.md</a>.</p>
+        <p>A biodosimetry explorable is in preparation, and will be built to the same standard.</p>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <p><a href="#top">&uarr; Back to top</a> &middot; <a href="../index.html">Main site</a></p>
+      <p>&copy; <span id="yr">2026</span> Igor Shuryak. Personal academic website; views expressed are my own and do not represent Columbia University. This page contains only published, aggregate, and simulated information. No patient-level data are used.</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { bedExplorer, hiLetExplorer, castExplorer, researchMap,
+             lqExplorer, cancerExplorer, resistExplorer, pkExplorer, ctExplorer } from './assets/js/widgets.js';
+    document.getElementById('yr').textContent = new Date().getFullYear();
+    researchMap();
+    bedExplorer();
+    hiLetExplorer();
+    castExplorer();
+    lqExplorer();
+    cancerExplorer();
+    resistExplorer();
+    pkExplorer();
+    ctExplorer();
+  </script>
+</body>
+</html>

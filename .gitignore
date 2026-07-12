@@ -1,0 +1,16 @@
+# Internal planning and verification notes. Not part of the published site.
+PLAN_*.md
+SOURCE_TABLE_*.md
+
+# Data and analysis artifacts. Nothing patient-level ever belongs in this repo.
+*.csv
+*.rds
+*.RDS
+*.xlsx
+*.dta
+*.sav
+
+# OS junk
+.DS_Store
+Thumbs.db
+~$*
