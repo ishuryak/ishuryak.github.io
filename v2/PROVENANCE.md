@@ -62,13 +62,31 @@ to show.
 
 ## Explorable 3. CAST trajectory explorer
 
-**Method.** CAST (Causal Analysis of Survival Trajectories), arXiv:2505.06367, presented
+**Method.** CAST (Causal Analysis for Survival Trajectories), arXiv:2505.06367, presented
 across three NeurIPS 2025 workshops.
 
 **Data.** Precomputed simulation scenarios from the public CAST demonstration site
 (`NeurIPS_2025/cast_demo_website/docs/data/scenarios.json`, copied verbatim). The data are
 simulated, so the true treatment effect is known and every method can be scored against it.
 No patient data are involved.
+
+## Explorable 3a. From the average effect to the individual effect
+
+**No published number, no study data, and no equation from any paper is used here.** This
+panel is a deliberate concept illustration. A synthetic cohort of n = 1000 patients is
+generated in the browser from a fixed seed: each patient has a standardized predictive marker
+and an independent unpredictable component, both standard normal. The three sliders set the
+average effect (μ), the total spread of individual effects (τ), and the share of that spread
+the marker can explain (ρ), so the individual effect is `μ + √ρ·τ·marker + √(1−ρ)·τ·noise`
+and each patient's true effect is therefore known.
+
+Because the object is a teaching illustration rather than a measurement, it carries no
+parameter that needs a published source: every quantity shown (the average, the fraction who
+benefit or are harmed, and the benefit of treating the half with the highest predicted effect)
+is computed directly from the simulated effects on screen. It uses no patient-level data and
+reproduces no result from any restricted or unpublished project. The "predicted responders"
+readout is the same benefit-ranking logic that the CAST panel (Explorable 3) reports as an
+AUTOC on its own simulated scenarios.
 
 ## Explorable 4. Why the dose response is curved
 

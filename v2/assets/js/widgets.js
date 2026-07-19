@@ -174,7 +174,7 @@ export function hiLetExplorer() {
         { type: 'line', x: D, y: sea, color: C.ink, width: 3,
           label: 'Simple effect additivity (SEA): just add the ions' },
         { type: 'line', x: D, y: iea, color: C.blue, width: 3,
-          label: 'Incremental effect additivity (IEA): the correct theory' },
+          label: 'Incremental effect additivity (IEA): a mechanistically motivated alternative' },
       ],
       caption: 'Predicted excess tumors for a Mars-mission ion mixture: simple versus incremental effect additivity.',
     });
@@ -229,6 +229,144 @@ export function hiLetExplorer() {
 }
 
 /* =================================================================
+ * Widget 3a. From the average effect to the individual effect
+ * Illustrative synthetic cohort generated in the browser. No study data
+ * and no published estimates: a concept demonstration that a single
+ * average hides a distribution of individual effects, and that only the
+ * predictable part of that variation can be targeted in advance.
+ * ================================================================= */
+
+/* Small seeded PRNG (mulberry32) so the synthetic cohort is fixed across
+   redraws and only the sliders move the picture. */
+function mulberry32(seed) {
+  return function () {
+    seed |= 0; seed = (seed + 0x6D2B79F5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/* Survival-probability differences shown as signed percentage points.
+   Round to the displayed precision before choosing the sign, so a value that
+   rounds to zero never prints as "−0.0". */
+const fmtPP = (v) => { const pp = Math.round(v * 1000) / 10; return `${pp >= 0 ? '+' : '−'}${Math.abs(pp).toFixed(1)} pp`; };
+
+/* Deterministic synthetic cohort: a standardized predictive marker and an
+   independent unpredictable component, drawn once from a fixed seed. Exported as
+   pure functions so the data-generating process can be tested without a DOM
+   (see tests/cate.test.mjs). */
+export function cateCohort(N, seed) {
+  const rng = mulberry32(seed);
+  const gauss = () => {                          // Box-Muller standard normal
+    let u = 0, v = 0;
+    while (u === 0) u = rng();
+    while (v === 0) v = rng();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * v);
+  };
+  const standardize = (a) => {
+    const mean = a.reduce((s, x) => s + x, 0) / a.length;
+    const sd = Math.sqrt(a.reduce((s, x) => s + (x - mean) ** 2, 0) / a.length) || 1;
+    return a.map((x) => (x - mean) / sd);
+  };
+  return {
+    N,
+    marker: standardize(Array.from({ length: N }, gauss)),   // predictive, actionable
+    noise:  standardize(Array.from({ length: N }, gauss)),   // unpredictable residual
+  };
+}
+
+/* Individual effects and summary readouts for one (mu, tau, rho) setting.
+   ITE = mu + sqrt(rho)*tau*marker + sqrt(1-rho)*tau*noise. Because marker and
+   noise are each standardized to sample mean 0, the sample ATE equals mu
+   exactly. Ranking by the predictable part `pred` and scoring the treated top
+   half on the true effect is the targeting / AUTOC analogue. */
+export function cateReadouts(cohort, mu, tau, rho) {
+  const { N, marker, noise } = cohort;
+  const mean = (a) => a.reduce((s, x) => s + x, 0) / a.length;
+  const sP = Math.sqrt(rho) * tau;               // predictable spread
+  const sU = Math.sqrt(1 - rho) * tau;           // unpredictable spread
+  const pred = marker.map((mi) => mu + sP * mi);       // what a model could predict
+  const ite  = pred.map((p, i) => p + sU * noise[i]);  // the true individual effect
+  const order = pred.map((_, i) => i).sort((a, b) => pred[b] - pred[a]);
+  const top = order.slice(0, Math.round(N / 2));
+  const ate = mean(ite);
+  const targeted = mean(top.map((i) => ite[i]));
+  return {
+    pred, ite, ate, targeted,
+    gain: targeted - ate,
+    pBenefit: ite.filter((v) => v > 0).length / N,
+    pHarm:    ite.filter((v) => v < 0).length / N,
+  };
+}
+
+export function cateExplorer() {
+  const chart = $('cate-chart');
+  if (!chart) return;
+
+  const cohort = cateCohort(1000, 20250712);
+  const N = cohort.N;
+
+  function draw() {
+    const mu  = parseFloat($('cate-mu').value);    // average benefit (ATE)
+    const tau = parseFloat($('cate-tau').value);   // total heterogeneity SD
+    const rho = parseFloat($('cate-rho').value);   // predictable share, 0..1
+
+    const { ite, ate, targeted, gain, pBenefit, pHarm } = cateReadouts(cohort, mu, tau, rho);
+
+    /* Histogram of individual effects, split at zero (harm red / benefit green). */
+    const lo = Math.min(...ite), hi = Math.max(...ite);
+    const span = (hi - lo) || 1;
+    const nb = 22, bw = span / nb;
+    const counts = new Array(nb).fill(0);
+    ite.forEach((v) => {
+      let k = Math.floor((v - lo) / bw);
+      if (k >= nb) k = nb - 1; if (k < 0) k = 0;
+      counts[k]++;
+    });
+    const benX = [], benY = [], harmX = [], harmY = [];
+    counts.forEach((c, k) => {
+      const center = lo + bw * (k + 0.5);
+      (center >= 0 ? (benX.push(center), benY.push(c)) : (harmX.push(center), harmY.push(c)));
+    });
+
+    /* Only emit a bar series when it has bins: an empty x array would make
+       plot.js take Math.min/Math.max of nothing and corrupt the x-domain. */
+    const series = [];
+    if (harmX.length) series.push({ type: 'bar', x: harmX, y: harmY, color: C.red, bw: bw * 0.9, label: 'Harmed (effect below zero)' });
+    if (benX.length)  series.push({ type: 'bar', x: benX,  y: benY,  color: C.green, bw: bw * 0.9, label: 'Helped (effect above zero)' });
+    series.push({ type: 'vline', at: 0,   color: C.ink,  dash: '4 3', label: 'No effect' });
+    series.push({ type: 'vline', at: ate, color: C.blue, dash: '2 0', label: 'Trial average (ATE)' });
+
+    render(chart, {
+      xlabel: 'Individual treatment effect (survival difference)',
+      ylabel: 'Number of patients', ymin: 0,
+      series,
+      caption: 'Distribution of individual treatment effects across the synthetic cohort; the blue line is the single trial average a study would report.',
+    });
+
+    $('cate-dgp').textContent =
+      `Synthetic cohort: n = ${N}. Each patient's true effect is known because the data are simulated.`;
+    $('cate-ate').textContent = fmtPP(ate);
+    $('cate-benefit').textContent = `${Math.round(pBenefit * 100)}%`;
+    $('cate-harm').textContent = `${Math.round(pHarm * 100)}%`;
+    const gpp = Math.round(gain * 1000) / 10;   // gain in pp, at display precision
+    $('cate-target').textContent = `${fmtPP(targeted)} (${gpp >= 0 ? '+' : '−'}${Math.abs(gpp).toFixed(1)} vs all)`;
+
+    $('cate-caption').innerHTML = tau < 1e-6
+      ? 'With no variation between patients, everyone experiences the average effect: the distribution is a single spike and there is no one to single out.'
+      : rho < 0.05
+        ? `The effect genuinely varies between patients, but here that variation is essentially unpredictable, so ranking patients by predicted benefit and treating the top half recovers almost none of it: targeting adds only ${fmtPP(gain)} over treating everyone.`
+        : `Treating the half of patients with the highest <em>predicted</em> benefit yields an average effect of ${fmtPP(targeted)}, a gain of ${fmtPP(gain)} over the ${fmtPP(ate)} from treating everyone. Only the predictable part of the variation can be captured this way.`;
+  }
+
+  slider('cate-mu', draw, (v) => fmtPP(parseFloat(v)));
+  slider('cate-tau', draw, (v) => `±${(Math.abs(parseFloat(v)) * 100).toFixed(1)} pp`);
+  slider('cate-rho', draw, (v) => `${Math.round(parseFloat(v) * 100)}%`);
+  draw();
+}
+
+/* =================================================================
  * Widget 3. CAST trajectory explorer
  * Reskin of the public NeurIPS 2025 demo (arXiv 2505.06367).
  * Data: precomputed simulation scenarios. No patient data.
@@ -257,13 +395,36 @@ export async function castExplorer() {
   };
   const on = new Set(['naive', 'cox', 'cast']);
 
+  const RMSE_ORDER = ['naive', 'cox', 'rsf', 'tlearner', 'csf', 'cast'];
+  const RMSE_LABEL = { naive: 'Naive', cox: 'Cox', rsf: 'Random forest', tlearner: 'T-learner', csf: 'Causal forest', cast: 'CAST' };
+  const RMSE_COLOR = { naive: C.red, cox: C.gold, rsf: C.green, tlearner: C.purple, csf: C.teal, cast: C.blue };
+
+  /* E-value (VanderWeele & Ding) for a hazard ratio under a common outcome: the minimum
+     strength, on the risk-ratio scale, that an unmeasured confounder would need with both
+     treatment and outcome to explain the association away. */
+  const evalueHR = (hr, lo, hi) => {
+    const approxRR = (h) => (1 - Math.pow(0.5, Math.sqrt(h))) / (1 - Math.pow(0.5, Math.sqrt(1 / h)));
+    const ev = (rr) => { const r = rr < 1 ? 1 / rr : rr; return r + Math.sqrt(r * (r - 1)); };
+    return { point: ev(approxRR(hr)), ci: (lo <= 1 && hi >= 1) ? 1 : ev(approxRR(hr < 1 ? hi : lo)) };
+  };
+
+  /* Number of horizons whose 95% band contains the known simulated truth. */
+  const cover = (lo, hi, truth) => truth.reduce((c, t, i) => c + (lo[i] <= t && t <= hi[i] ? 1 : 0), 0);
+
   function draw() {
     const shape = document.querySelector('[data-cast-shape][aria-pressed=true]').dataset.castShape;
     const conf = parseFloat($('cast-conf').value);
     /* Snap to the nearest precomputed confounding level. */
     const level = data.conf_grid.reduce((a, b) =>
       Math.abs(b - conf) < Math.abs(a - conf) ? b : a);
-    const key = `${shape}_conf${level.toFixed(2)}`;
+    /* Second axis: unmeasured confounding, present only in the augmented data file. */
+    const hasU = Array.isArray(data.unmeas_grid);
+    $('cast-unmeas-ctl').hidden = !hasU;
+    const uconf = hasU ? parseFloat($('cast-unmeas').value) : 0;
+    const umLevel = hasU ? data.unmeas_grid.reduce((a, b) =>
+      Math.abs(b - uconf) < Math.abs(a - uconf) ? b : a) : 0;
+    const key = hasU ? `${shape}_conf${level.toFixed(2)}_unmeas${umLevel.toFixed(2)}`
+                     : `${shape}_conf${level.toFixed(2)}`;
     const s = data.scenarios[key];
     if (!s) return;
 
@@ -296,6 +457,60 @@ export async function castExplorer() {
       ? `violated (p = ${s.cox.ph_p.toFixed(3)})`
       : `not rejected (p = ${s.cox.ph_p.toFixed(2)})`;
     $('cast-level').textContent = level.toFixed(2);
+
+    /* Item 1: the data-generating process behind this scenario. */
+    const md = s.meta;
+    $('cast-dgp').textContent =
+      `Simulated cohort: n = ${md.n} · ${Math.round(md.event_rate * 100)}% had an event · ` +
+      `${Math.round(md.treated_frac * 100)}% treated · confounding level ${level.toFixed(2)}.`;
+
+    /* Item 3: all-method RMSE strip, worst first, so the causal methods cluster at the short end. */
+    const rm = s.rmse, maxR = Math.max(...RMSE_ORDER.map((k) => rm[k]));
+    $('cast-rmse').innerHTML =
+      '<div class="rmse-title">Error vs known truth (RMSE, shorter is better)</div><ul>' +
+      RMSE_ORDER.slice().sort((a, b) => rm[b] - rm[a]).map((k) =>
+        `<li><span class="rlab">${RMSE_LABEL[k]}</span>` +
+        `<span class="rbar"><i style="width:${(rm[k] / maxR * 100).toFixed(1)}%;background:${RMSE_COLOR[k]}"></i></span>` +
+        `<span class="rval">${rm[k].toFixed(3)}</span></li>`).join('') + '</ul>';
+
+    /* Item 3: 95% band coverage at this confounding level (causal survival forest shown alongside). */
+    const nH = s.truth.length;
+    $('cast-cov').textContent =
+      `${cover(s.cast.lo, s.cast.hi, s.truth)}/${nH} · CSF ${cover(s.csf.lo, s.csf.hi, s.truth)}/${nH}`;
+
+    /* Item 2: positivity / propensity overlap. */
+    const ov = s.overlap;
+    $('cast-overlap').textContent = `${ov.min.toFixed(2)}–${ov.max.toFixed(2)}`;
+    $('cast-overlap-n').textContent = ov.pct_extreme > 0
+      ? `PS range; ${(ov.pct_extreme * 100).toFixed(1)}% near 0 or 1, positivity strained`
+      : 'propensity range; support looks adequate';
+
+    /* Item 4 (minimal): E-value for the Cox hazard ratio. */
+    const evH = evalueHR(s.cox.hr, s.cox.lo, s.cox.hi);
+    $('cast-eval').textContent = evH.point.toFixed(2);
+    $('cast-eval-n').textContent = evH.ci <= 1
+      ? `HR ${s.cox.hr.toFixed(2)}; CI already includes no effect`
+      : `HR ${s.cox.hr.toFixed(2)}; CI-limit E-value ${evH.ci.toFixed(2)}`;
+
+    /* Item 6: aggregate AUTOC benefit-ranking (augmented data only). */
+    const aOk = s.autoc && Number.isFinite(s.autoc.est);
+    $('cast-autoc-card').hidden = !aOk;
+    if (aOk) {
+      $('cast-autoc').textContent = s.autoc.est.toFixed(3);
+      $('cast-autoc-n').textContent = `targeting value ± ${s.autoc.se.toFixed(3)}`;
+    }
+
+    /* Item 4 (full): empirical robustness to the withheld latent factor. */
+    const rOk = s.robustness && Array.isArray(s.robustness.shift);
+    $('cast-robust-card').hidden = !rOk;
+    if (rOk) {
+      const sh = s.robustness.shift.filter(Number.isFinite);
+      const mx = sh.reduce((m, v) => Math.abs(v) > Math.abs(m) ? v : m, 0);
+      const evs = (s.robustness.evalue || []).filter(Number.isFinite);
+      const evTxt = evs.length ? `; E-value ${Math.max(...evs).toFixed(2)}` : '';
+      $('cast-robust').textContent = `${(mx * 100).toFixed(1)} pp`;
+      $('cast-robust-n').textContent = `max horizon shift if latent factor ignored${evTxt}`;
+    }
   }
 
   document.querySelectorAll('[data-cast-shape]').forEach((btn) => {
@@ -314,6 +529,7 @@ export async function castExplorer() {
     });
   });
   slider('cast-conf', draw, (v) => Number(v).toFixed(2));
+  slider('cast-unmeas', draw, (v) => Number(v).toFixed(2));
   draw();
 }
 

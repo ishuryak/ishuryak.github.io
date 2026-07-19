@@ -1,0 +1,10 @@
+{
+  "name": "utmb-explorables",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Interactive radiobiology/oncology explorables. Vanilla ES modules, no build step, no runtime dependencies. `type: module` lets Node import the same assets/js/*.js the browser loads, for the adversarial test suite in tests/.",
+  "scripts": {
+    "test": "node tests/run.mjs"
+  }
+}

@@ -277,7 +277,9 @@ export const survivalPoisson = (D, a, b) => Math.exp(-(a * D + b * D * D));
 /* ------------------------------------------------------------------ *
  * Chromosome aberrations: gamma rays vs iron ions
  * Cornforth M, Shuryak I, Loucas B. Transl Cancer Res (2017).
- * Fraction of human lymphocytes free of lethal aberrations, Y = c + a*D + b*D^2.
+ * Fraction of human lymphocytes free of lethal aberrations. a and b are the linear and
+ * quadratic coefficients of the mean lethal-aberration yield Y = a*D + b*D^2; the fraction
+ * free is the Poisson zero class exp(-Y) (the small background constant c is not carried).
  * Iron is purely exponential (beta = 0); gamma rays are curved.
  * ------------------------------------------------------------------ */
 export const ABERRATION = {

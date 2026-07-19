@@ -34,6 +34,7 @@
       <li><a href="#map">Research map</a></li>
       <li><a href="#bed">Fractionation &amp; BED</a></li>
       <li><a href="#hilet">High-LET radiation</a></li>
+      <li><a href="#cate">Individual effects</a></li>
       <li><a href="#cast">Causal ML (CAST)</a></li>
       <li><a href="#lq">Dose-response curvature</a></li>
       <li><a href="#cancer">Second cancers</a></li>
@@ -234,7 +235,7 @@ BED         = [ m·α·d·(d + α/β)/(α/β)  −  g·T  −  λ·max(0, T − 
 
           <p class="note" id="let-quality-note" hidden><strong>Two ways to say "how much worse is this radiation?"</strong> RBE asks what dose of γ rays would do the same damage. RER asks, at the same dose, how much more damage this radiation does. They converge toward a common limit as the dose falls, and they close again at high dose. In between they diverge several-fold, and that in-between is precisely the range an astronaut occupies. Drag the dose slider from left to right and watch the gap open and then close again.</p>
 
-          <p class="note" id="let-mix-note" hidden><strong>The absurdity, in one line.</strong> Simply adding the ions predicts <strong id="mix-sea"></strong> excess tumors per mouse for the Mars mixture. But the mixture is mostly protons, and the most damaging component it contains, silicon, would produce only <strong id="mix-si"></strong> tumors if the <em>entire</em> dose were silicon. Simple additivity predicts a mixture that is worse than being hit by nothing but its own worst ingredient. The correct theory, incremental effect additivity, predicts <strong id="mix-iea"></strong>, which falls sensibly between the individual ion responses. The two answers differ by a factor of 2.6.</p>
+          <p class="note" id="let-mix-note" hidden><strong>The absurdity, in one line.</strong> Simply adding the ions predicts <strong id="mix-sea"></strong> excess tumors per mouse for the Mars mixture. But the mixture is mostly protons, and the most damaging component it contains, silicon, would produce only <strong id="mix-si"></strong> tumors if the <em>entire</em> dose were silicon. Simple additivity predicts a mixture that is worse than being hit by nothing but its own worst ingredient. Incremental effect additivity, a mechanistically motivated alternative, predicts <strong id="mix-iea"></strong>, which falls sensibly between the individual ion responses. The two answers differ by a factor of 2.6. Incremental effect additivity is not the last word: like every mixture-synergy formalism it rests on assumptions, here that each component adds its effect at the margin along the exposure, and how best to predict mixed-field risk is still an active research question.</p>
 
           <p class="caption">The dose-response curves rise steeply and then bend. That bend is the non-targeted effect: cells that were never hit still respond, to signals released by cells that were. It saturates quickly, which is why relative biological effectiveness is enormous at low dose and modest at high dose, and why laboratory data taken at high dose cannot be extrapolated down to the doses astronauts actually receive.</p>
 
@@ -265,6 +266,50 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
       </section>
 
       <!-- ============================ CAST ============================ -->
+      <!-- ============================ AVERAGE vs INDIVIDUAL ============================ -->
+      <section id="cate">
+        <h2>The average patient does not exist</h2>
+        <p>A clinical trial reports one number: the average benefit. But two patients with the same diagnosis can respond in opposite directions to the same treatment. When the benefit is spread unevenly, the average blends people who gain a great deal, people who gain nothing, and sometimes people who are harmed (a worse outcome with treatment than without it, not a drug side effect), into a single figure. The clinically useful object is not that average, it is the <em>distribution</em> of individual effects behind it, and within that distribution, the question of <em>who</em> benefits.</p>
+        <p>The panel below makes this concrete on an illustrative synthetic cohort. Nothing here is study data: it is a transparent simulation generated in your browser, which is the one setting where each patient's true effect is actually known, so we can see both the average and everything it hides.</p>
+
+        <div class="widget">
+          <h4>From the average effect to the individual effect</h4>
+          <p class="sub">Illustrative simulation generated in your browser. No patient data, no study estimates. Effects are absolute differences in survival probability, shown in percentage points on an illustrative scale.</p>
+
+          <div class="controls">
+            <div class="ctl">
+              <label for="cate-mu">Average benefit <span class="val" id="cate-mu-val"></span></label>
+              <input type="range" id="cate-mu" min="-0.04" max="0.20" step="0.01" value="0.06" />
+            </div>
+            <div class="ctl">
+              <label for="cate-tau">How much benefit varies between patients <span class="val" id="cate-tau-val"></span></label>
+              <input type="range" id="cate-tau" min="0" max="0.16" step="0.01" value="0.09" />
+            </div>
+            <div class="ctl">
+              <label for="cate-rho">How much of that variation is predictable <span class="val" id="cate-rho-val"></span></label>
+              <input type="range" id="cate-rho" min="0" max="1" step="0.05" value="0.6" />
+            </div>
+          </div>
+
+          <div id="cate-chart"></div>
+          <p class="dgp" id="cate-dgp"></p>
+
+          <div class="readout">
+            <div><span class="k">Average benefit</span><span class="v" id="cate-ate"></span><span class="n">the single trial number</span></div>
+            <div><span class="k">Who benefits</span><span class="v" id="cate-benefit"></span><span class="n">have a positive effect</span></div>
+            <div><span class="k">Who is harmed</span><span class="v" id="cate-harm"></span><span class="n">have a negative effect</span></div>
+            <div><span class="k">Treat the top-predicted half</span><span class="v" id="cate-target" style="font-size:1.05rem"></span><span class="n" id="cate-target-n">average benefit in the treated half</span></div>
+          </div>
+
+          <p class="caption" id="cate-caption"></p>
+
+          <p class="note"><strong>Try this.</strong> Slide <em>how much benefit varies</em> to zero: the distribution collapses to a spike, every patient is the average, and there is no one to single out. Now widen it again and move <em>how much of that variation is predictable</em> from zero up to one. Only the predictable part can be acted on, and the ranking here uses each patient's true predictable effect, so the gain shown is the ceiling a perfect predictor could reach, not what a model fitted to real data would recover. When the variation is unpredictable, some patients still benefit far more than others, but you cannot tell in advance which, so treating the "predicted responders" is no better than treating everyone. That gap, between knowing that effects vary and being able to <em>target</em> them, is the whole problem individualized-effect estimation exists to solve.</p>
+
+          <p class="source"><strong>Source.</strong> A concept illustration, not a study. Individual effects are drawn from a transparent model in your browser, so each simulated patient's true effect is known and the average, the spread, and the benefit of targeting can all be read directly. The point it makes, that a single average hides a distribution and that only its predictable part is actionable, motivates the individualized and benefit-ranking methods in the next panel, where the effect also moves over time.</p>
+        </div>
+      </section>
+
+
       <section id="cast">
         <h2>When does a treatment actually help?</h2>
         <p>A clinical trial usually reports one number: the average benefit. But treatment effects move over time. A therapy can help enormously in year one and not at all by year five, or do nothing early and everything late. A single hazard ratio flattens all of that into a point, and if the effect is not constant, that point can be misleading.</p>
@@ -292,14 +337,27 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
               <label for="cast-conf">Confounding strength <span class="val" id="cast-conf-val"></span></label>
               <input type="range" id="cast-conf" min="0" max="2" step="0.5" value="1" />
             </div>
+            <div class="ctl" id="cast-unmeas-ctl" hidden>
+              <label for="cast-unmeas">Unmeasured confounding <span class="val" id="cast-unmeas-val"></span></label>
+              <input type="range" id="cast-unmeas" min="0" max="1.5" step="0.75" value="0" />
+            </div>
           </div>
 
           <div id="cast-chart"></div>
+          <p class="dgp" id="cast-dgp"></p>
+
+          <div class="rmse-strip" id="cast-rmse" aria-label="Error by method, root mean squared error against the known simulated truth"></div>
+          <p class="caption">No method wins everywhere: Cox is near-optimal when hazards are proportional (the plateau), while the causal survival forest and CAST come into their own when the effect changes shape (the reversal), where a single hazard ratio misleads. CAST adds a smooth trajectory and a joint uncertainty band across horizons.</p>
 
           <div class="readout">
             <div><span class="k">Naive error</span><span class="v" id="cast-rmse-naive"></span><span class="n">RMSE vs truth</span></div>
             <div><span class="k">CAST error</span><span class="v" id="cast-rmse-cast"></span><span class="n">RMSE vs truth</span></div>
+            <div><span class="k">95% band coverage</span><span class="v" id="cast-cov" style="font-size:1.05rem"></span><span class="n">horizons within band, this level</span></div>
+            <div><span class="k">Propensity overlap</span><span class="v" id="cast-overlap" style="font-size:1.05rem"></span><span class="n" id="cast-overlap-n">positivity check</span></div>
             <div><span class="k">Covariate imbalance</span><span class="v" id="cast-smd"></span><span class="n">standardised difference, age</span></div>
+            <div><span class="k">Cox HR E-value</span><span class="v" id="cast-eval"></span><span class="n" id="cast-eval-n">robustness to unmeasured confounding</span></div>
+            <div id="cast-robust-card" hidden><span class="k">CAST robustness</span><span class="v" id="cast-robust" style="font-size:1.05rem"></span><span class="n" id="cast-robust-n">shift if the latent factor is ignored</span></div>
+            <div id="cast-autoc-card" hidden><span class="k">Benefit ranking (AUTOC)</span><span class="v" id="cast-autoc"></span><span class="n" id="cast-autoc-n">targeting value, ± SE</span></div>
             <div><span class="k">Proportional hazards</span><span class="v" id="cast-ph" style="font-size:1rem"></span></div>
           </div>
 
@@ -605,12 +663,13 @@ modified str.    g(t)·exp[ 1 − (1 + t/τ₆)^γ ]</div>
   </footer>
 
   <script type="module">
-    import { bedExplorer, hiLetExplorer, castExplorer, researchMap,
+    import { bedExplorer, hiLetExplorer, cateExplorer, castExplorer, researchMap,
              lqExplorer, cancerExplorer, resistExplorer, pkExplorer, ctExplorer } from './assets/js/widgets.js';
     document.getElementById('yr').textContent = new Date().getFullYear();
     researchMap();
     bedExplorer();
     hiLetExplorer();
+    cateExplorer();
     castExplorer();
     lqExplorer();
     cancerExplorer();

@@ -1,0 +1,147 @@
+# =====================================================================
+# Simulation parameter registry for the "From the average effect to the
+# individual effect" explorable (v2/index.html #cate; cateExplorer in
+# assets/js/widgets.js). The widget is a DELIBERATE ILLUSTRATION: it draws a
+# synthetic cohort in the browser to show that a single average hides a
+# distribution of individual treatment effects, and that only the predictable
+# part of that variation can be targeted in advance.
+#
+# There is no literature value here BY DESIGN: the panel makes no empirical
+# claim and reproduces no result from any paper or restricted project. Every
+# driving quantity is therefore registered as an acknowledged user_supplied
+# illustrative assumption, or as a value derived from those assumptions. That is
+# exactly the honest classification the audit exists to force: no guessed number
+# is dressed up as a measurement.
+# =====================================================================
+
+project:
+  name: "UTMB website — individual-effect explorable (illustrative)"
+  contact_email: "is144@cumc.columbia.edu"
+
+references_dir: "References"     # unused: no literature parameters in this DGP
+seed_policy: "fixed"
+
+parameters:
+
+  - id: cohort_size
+    description: "Number of synthetic patients drawn per redraw"
+    units: "patients"
+    source: user_supplied
+    value: 1000
+    distribution: {family: constant, params: {value: 1000}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [200, 2000]
+      assumption_ack: true
+
+  - id: rng_seed
+    description: "Fixed PRNG seed (mulberry32) so the cohort is stable across redraws"
+    units: "dimensionless"
+    source: user_supplied
+    value: 20250712
+    distribution: {family: constant, params: {value: 20250712}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [0, 4294967295]
+      assumption_ack: true
+
+  - id: mean_benefit
+    description: "Average treatment effect (survival-probability difference); slider default"
+    units: "survival-probability difference"
+    source: user_supplied
+    value: 0.06
+    distribution: {family: uniform, params: {low: -0.04, high: 0.20}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [-0.04, 0.20]
+      assumption_ack: true
+
+  - id: heterogeneity_sd
+    description: "Total standard deviation of individual effects across patients; slider default"
+    units: "survival-probability difference"
+    source: user_supplied
+    value: 0.09
+    distribution: {family: uniform, params: {low: 0.0, high: 0.16}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [0.0, 0.16]
+      assumption_ack: true
+
+  - id: predictable_share
+    description: "Fraction of the effect variance explained by the observed marker; slider default"
+    units: "fraction"
+    source: user_supplied
+    value: 0.6
+    distribution: {family: uniform, params: {low: 0.0, high: 1.0}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [0.0, 1.0]
+      assumption_ack: true
+
+  - id: marker
+    description: "Standardized predictive marker per patient (the actionable, observable axis)"
+    units: "z-score"
+    source: user_supplied
+    value: 0.0
+    distribution: {family: normal, params: {mean: 0.0, sd: 1.0}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [-4.0, 4.0]
+      assumption_ack: true
+
+  - id: noise
+    description: "Standardized unpredictable component of the individual effect (unobservable)"
+    units: "z-score"
+    source: user_supplied
+    value: 0.0
+    distribution: {family: normal, params: {mean: 0.0, sd: 1.0}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [-4.0, 4.0]
+      assumption_ack: true
+
+  - id: target_top_fraction
+    description: "Fraction of patients treated when targeting by predicted benefit (top-ranked half)"
+    units: "fraction"
+    source: user_supplied
+    value: 0.5
+    distribution: {family: constant, params: {value: 0.5}}
+    user_supplied:
+      provided_by: "Igor Shuryak"
+      date: "2026-07-19"
+      range: [0.5, 0.5]
+      assumption_ack: true
+
+  # The individual effect is assembled in code as
+  #   ITE = mean_benefit + sqrt(predictable_share)*heterogeneity_sd*marker
+  #                      + sqrt(1 - predictable_share)*heterogeneity_sd*noise
+  # (assets/js/widgets.js cateExplorer; PROVENANCE.md Explorable 3a). The square
+  # roots cannot be written in the registry's product/sum-only derived grammar, so
+  # the variance-level decomposition below is what is machine-checked here: the
+  # predictable variance is predictable_share x total variance, which is the exact
+  # relation the methods audit verified.
+
+  - id: total_variance
+    description: "Total variance of the individual treatment effect across patients"
+    units: "survival-probability difference squared"
+    source: derived
+    derived:
+      formula: "heterogeneity_sd * heterogeneity_sd"
+      upstream: [heterogeneity_sd]
+      rationale: "Variance is the square of the total effect spread."
+
+  - id: predictable_variance
+    description: "Variance of the effect attributable to the observed marker"
+    units: "survival-probability difference squared"
+    source: derived
+    derived:
+      formula: "predictable_share * heterogeneity_sd * heterogeneity_sd"
+      upstream: [predictable_share, heterogeneity_sd]
+      rationale: "The predictable component carries a fraction (predictable_share) of the total variance, so its variance is predictable_share x total variance."
