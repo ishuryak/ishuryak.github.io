@@ -4,8 +4,19 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Igor Shuryak, MD, PhD &middot; Explore the Models</title>
-  <meta name="description" content="Interactive explorables from the research of Igor Shuryak, MD, PhD: mechanistic radiobiology, causal machine learning, and high-LET radiation. Every model and parameter is taken from a published paper." />
+  <meta name="description" content="Interactive, source-documented explorables from the research program of Igor Shuryak, MD, PhD, spanning mechanistic radiobiology, causal machine learning, and radiation risk." />
   <meta name="author" content="Igor Shuryak" />
+  <link rel="canonical" href="https://ishuryak.github.io/v2/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="Igor Shuryak, MD, PhD · Explore the Models" />
+  <meta property="og:description" content="Interactive, source-documented explorables in mechanistic radiobiology, causal machine learning, and radiation risk." />
+  <meta property="og:url" content="https://ishuryak.github.io/v2/" />
+  <meta property="og:image" content="https://ishuryak.github.io/headshot.jpg" />
+  <meta property="og:image:alt" content="Portrait of Igor Shuryak, MD, PhD" />
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Igor Shuryak, MD, PhD · Explore the Models" />
+  <meta name="twitter:description" content="Interactive, source-documented explorables in mechanistic radiobiology, causal machine learning, and radiation risk." />
+  <meta name="twitter:image" content="https://ishuryak.github.io/headshot.jpg" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a4d8c'/%3E%3Ctext x='50%25' y='50%25' dy='.34em' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='700' fill='white'%3EIS%3C/text%3E%3C/svg%3E" />
   <link rel="stylesheet" href="assets/css/site.css" />
 </head>
@@ -49,8 +60,8 @@
     <div class="wrap">
 
       <section id="intro">
-        <p class="lead">Reading that a model exists is not the same as feeling what it does. Below are eight working models from my research. Drag the sliders and watch the biology change.</p>
-        <p>Every equation and every default parameter on this page is taken from a published, peer-reviewed paper, and each explorable names its source. Nothing here is fitted on patient data, and no unpublished result appears. Where a number could not be traced to a publication, the control that would have used it was removed rather than guessed.</p>
+        <p class="lead">Reading that a model exists is not the same as feeling what it does. Below are nine interactive explorables across eight research threads. Drag the sliders and watch the biology change.</p>
+        <p>Seven panels recompute published models from their cited equations and parameters. The individual-effect panel is an explicitly labeled concept simulation, and the CAST panel uses precomputed synthetic scenarios to compare estimators against known truth. No patient-level data are used. Published inputs, illustrative assumptions, and simulation-derived quantities are distinguished in each source note and in the provenance record.</p>
         <noscript>
           <p class="noscript"><strong>These explorables need JavaScript.</strong> The underlying science is described in full, without interaction, on the <a href="../index.html">main site</a>.</p>
         </noscript>
@@ -128,7 +139,7 @@
         <p>The biologically effective dose (BED) converts any schedule into a single comparable number. Drag the sliders and watch the penalty appear.</p>
 
         <div class="widget">
-          <h4>Fractionation and biologically effective dose</h4>
+          <h3>Fractionation and biologically effective dose</h3>
           <p class="sub">Head and neck squamous cell carcinoma. Published model and parameters.</p>
 
           <div class="btnrow" role="group" aria-label="Preset schedules">
@@ -198,7 +209,7 @@ BED         = [ m·α·d·(d + α/β)/(α/β)  −  g·T  −  λ·max(0, T − 
         <p>The obvious answer, add up the effects, is wrong. Not approximately wrong. It gives an answer that is physically impossible, and the explorable below shows exactly how.</p>
 
         <div class="widget">
-          <h4>Targeted and non-targeted effects across radiation quality</h4>
+          <h3>Targeted and non-targeted effects across radiation quality</h3>
           <p class="sub">Intestinal tumors in Apc<sup>1638N/+</sup> mice. Published model and fitted parameters for seven radiation types.</p>
 
           <div class="btnrow" role="group" aria-label="View">
@@ -273,7 +284,7 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
         <p>The panel below makes this concrete on an illustrative synthetic cohort. Nothing here is study data: it is a transparent simulation generated in your browser, which is the one setting where each patient's true effect is actually known, so we can see both the average and everything it hides.</p>
 
         <div class="widget">
-          <h4>From the average effect to the individual effect</h4>
+          <h3>From the average effect to the individual effect</h3>
           <p class="sub">Illustrative simulation generated in your browser. No patient data, no study estimates. Effects are absolute differences in survival probability, shown in percentage points on an illustrative scale.</p>
 
           <div class="controls">
@@ -316,7 +327,7 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
         <p><strong>CAST</strong> (Causal Analysis for Survival Trajectories) estimates the whole trajectory: how the benefit of a treatment rises, peaks, or reverses across follow-up. Below, the truth is known, because the data are simulated. That is the only setting in which you can actually check whether a method is right.</p>
 
         <div class="widget">
-          <h4>Recovering a time-varying treatment effect under confounding</h4>
+          <h3>Recovering a time-varying treatment effect under confounding</h3>
           <p class="sub">Simulated data, so the true effect is known. No patient data are used.</p>
 
           <div class="btnrow" role="group" aria-label="Shape of the true effect">
@@ -347,25 +358,25 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
           <p class="dgp" id="cast-dgp"></p>
 
           <div class="rmse-strip" id="cast-rmse" aria-label="Error by method, root mean squared error against the known simulated truth"></div>
-          <p class="caption">No method wins everywhere: Cox is near-optimal when hazards are proportional (the plateau), while the causal survival forest and CAST come into their own when the effect changes shape (the reversal), where a single hazard ratio misleads. CAST adds a smooth trajectory and a joint uncertainty band across horizons.</p>
+          <p class="caption">No method wins everywhere in these finite simulated samples. Cox is often strongest when proportional-hazards assumptions align with the plateau scenario; flexible survival estimators can reveal a reversal that one hazard ratio obscures. CAST adds a smooth trajectory with covariance-aware, pointwise 95% intervals at the displayed horizons.</p>
 
           <div class="readout">
             <div><span class="k">Naive error</span><span class="v" id="cast-rmse-naive"></span><span class="n">RMSE vs truth</span></div>
             <div><span class="k">CAST error</span><span class="v" id="cast-rmse-cast"></span><span class="n">RMSE vs truth</span></div>
-            <div><span class="k">95% band coverage</span><span class="v" id="cast-cov" style="font-size:1.05rem"></span><span class="n">horizons within band, this level</span></div>
+            <div><span class="k">Pointwise interval check</span><span class="v" id="cast-cov" style="font-size:1.05rem"></span><span class="n">horizons containing truth; descriptive, not simultaneous coverage</span></div>
             <div><span class="k">Propensity overlap</span><span class="v" id="cast-overlap" style="font-size:1.05rem"></span><span class="n" id="cast-overlap-n">positivity check</span></div>
             <div><span class="k">Covariate imbalance</span><span class="v" id="cast-smd"></span><span class="n">standardised difference, age</span></div>
             <div><span class="k">Cox HR E-value</span><span class="v" id="cast-eval"></span><span class="n" id="cast-eval-n">robustness to unmeasured confounding</span></div>
-            <div id="cast-robust-card" hidden><span class="k">CAST robustness</span><span class="v" id="cast-robust" style="font-size:1.05rem"></span><span class="n" id="cast-robust-n">shift if the latent factor is ignored</span></div>
-            <div id="cast-autoc-card" hidden><span class="k">Benefit ranking (AUTOC)</span><span class="v" id="cast-autoc"></span><span class="n" id="cast-autoc-n">targeting value, ± SE</span></div>
+            <div id="cast-robust-card" hidden><span class="k">CSF latent-factor sensitivity</span><span class="v" id="cast-robust" style="font-size:1.05rem"></span><span class="n" id="cast-robust-n">maximum CSF shift, omit versus include latent factor</span></div>
+            <div id="cast-autoc-card" hidden><span class="k">AUTOC null diagnostic</span><span class="v" id="cast-autoc"></span><span class="n" id="cast-autoc-n">expected approximately zero without effect modification</span></div>
             <div><span class="k">Proportional hazards</span><span class="v" id="cast-ph" style="font-size:1rem"></span></div>
           </div>
 
-          <p class="note"><strong>Try this.</strong> Set the true effect to <em>reverses</em> and turn on Cox. The Cox model can report a perfectly respectable hazard ratio while completely missing that the benefit turns into a harm, because assuming proportional hazards assumes in advance that the effect does not change shape. Then push confounding to its maximum and watch the naive curve float away from the truth entirely, while CAST stays on it.</p>
+          <p class="note"><strong>Try this.</strong> Set the true effect to <em>reverses</em> and turn on Cox. The Cox model can report a single hazard ratio while missing that benefit later becomes harm, because proportional hazards constrains the effect's shape. Then increase confounding and compare the unadjusted curve with the adjusted trajectory estimators. Sampling variation remains visible, and no estimator is uniformly best across these scenarios.</p>
 
-          <p class="caption">The black curve is the true treatment effect, which is knowable here only because the data were simulated. Colored curves are estimates. The shaded band is CAST's 95% interval, which accounts for the correlation between horizons rather than treating each follow-up time as an independent problem.</p>
+          <p class="caption">The black curve is the true treatment effect, knowable here only because the data were simulated. Colored curves are estimates. The shaded region shows covariance-aware pointwise 95% intervals from the smooth CAST fit. It is not a simultaneous or joint-coverage band. Because this data-generating process has no covariate-level treatment-effect modification, the population AUTOC target is zero; its displayed estimate is a null diagnostic, not evidence of benefit ranking.</p>
 
-          <p class="source"><strong>Source.</strong> CAST (Causal Analysis for Survival Trajectories), <a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">arXiv:2505.06367</a>, presented across three NeurIPS 2025 workshops. Scenario data are precomputed simulations from the public CAST demonstration. Confounding strength snaps to the nearest simulated level (<span id="cast-level"></span>).</p>
+          <p class="source"><strong>Source.</strong> CAST (Causal Analysis for Survival Trajectories), <a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">arXiv:2505.06367</a>, presented across three NeurIPS 2025 workshops. The bundled scenarios are precomputed simulations; their snapshot hashes, diagnostic definitions, and limitations are documented in <a href="CAST_SIMULATION_METHOD.md">CAST_SIMULATION_METHOD.md</a>. Confounding strength snaps to the nearest simulated level (<span id="cast-level"></span>).</p>
         </div>
       </section>
 
@@ -377,7 +388,7 @@ RBE(I)  = D_γ / D  such that  μ_rad(D_γ, γ) = μ_rad(D, I)</div>
         <p>Cells are not identical, though. If radiosensitivity varies from cell to cell, the lesion count is <strong>overdispersed</strong>, and the survival curve stops being what the textbook says. Drag the heterogeneity slider and watch the high-dose tail lift away from the classical curve.</p>
 
         <div class="widget">
-          <h4>Overdispersion of lethal lesions</h4>
+          <h3>Overdispersion of lethal lesions</h3>
           <p class="sub">Published model and fitted parameters. Heterogeneity is the parameter r.</p>
 
           <div class="btnrow" role="group" aria-label="Panel">
@@ -434,7 +445,7 @@ SF    = exp(−μ)                    classical, recovered as r → 0</div>
         <p>They are wrong, and the reason is that at therapeutic doses radiation is also <em>killing</em> the cells it might otherwise have transformed. Risk rises, peaks, and comes back down. But there is a twist: fractionating the dose lets the surviving cells repopulate between treatments, which pushes the peak out to exactly the doses used in the clinic.</p>
 
         <div class="widget">
-          <h4>Excess relative risk of a radiation-induced second cancer</h4>
+          <h3>Excess relative risk of a radiation-induced second cancer</h3>
           <p class="sub">Published multi-scale model: initiation, promotion, cell killing, and repopulation between fractions.</p>
 
           <div class="controls">
@@ -497,7 +508,7 @@ Q3 = exp(b·Ty) − 1        Q4 = exp(b·(Tx + Ty)) − 1</div>
         <p>What it has is chemistry. Small-molecule manganese antioxidant complexes protect the <em>proteins</em>, including the repair enzymes, so the repair machinery still works after the genome has been destroyed. Protect the mechanic, and the car gets rebuilt.</p>
 
         <div class="widget">
-          <h4>The antioxidant defense, and one law across the tree of life</h4>
+          <h3>The antioxidant defense, and one law across the tree of life</h3>
           <p class="sub">Published mechanistic model, and the published survey of 21 organisms.</p>
 
           <div class="btnrow" role="group" aria-label="Panel">
@@ -546,7 +557,7 @@ DSB_D₁₀ = D₁₀(Gy) × DSB yield(per Mbp per Gy) × genome size(Mbp)</div>
         <p>The standard approach fits one or two exponentials, which is the same as assuming the body has one or two well-mixed compartments each clearing at a single rate. Real tissue is not like that: uptake and clearance vary continuously from cell to cell. Modeling that spread directly, instead of forcing it into compartments, changes the area under the curve.</p>
 
         <div class="widget">
-          <h4>Discrete compartments versus a continuous distribution of rates</h4>
+          <h3>Discrete compartments versus a continuous distribution of rates</h3>
           <p class="sub">¹⁸⁸Re-labeled antibody in melanoma xenografts. Published models and fitted parameters; a star marks the models the data actually favor.</p>
 
           <div class="controls">
@@ -606,7 +617,7 @@ modified str.    g(t)·exp[ 1 − (1 + t/τ₆)^γ ]</div>
         <p>Radiation-induced cancer takes decades to appear. A patient who will not live those decades cannot express the risk. Ignoring that does not make the estimate conservative, it makes it wrong, and it can frighten patients away from a scan they need.</p>
 
         <div class="widget">
-          <h4>Lifetime risk, adjusted for realistic remaining life expectancy</h4>
+          <h3>Lifetime risk, adjusted for realistic remaining life expectancy</h3>
           <p class="sub">Published patient groups. The risk shown is relative to the nominal estimate for a healthy person of the same age.</p>
 
           <div class="controls">
@@ -647,8 +658,8 @@ modified str.    g(t)·exp[ 1 − (1 + t/τ₆)^γ ]</div>
 
       <section id="provenance">
         <h2>Where these numbers come from</h2>
-        <p>Every model on this page is built from its published paper. Each equation and each default parameter is taken from a peer-reviewed publication, and no unpublished result and no patient-level data appears anywhere on this site. Where a control would have required a quantity that no paper reports, the control was removed rather than filled in with a plausible guess.</p>
-        <p>Full provenance, listing each explorable against the paper supplying its equations and each of its default parameters, is in <a href="PROVENANCE.md">PROVENANCE.md</a>.</p>
+        <p>Published-model panels use equations and parameters from their cited papers. The individual-effect panel instead uses registered illustrative assumptions, and the CAST panel uses bundled synthetic scenarios generated specifically for method comparison. No patient-level data appear anywhere on this site.</p>
+        <p>Full provenance distinguishes published inputs, user-supplied teaching assumptions, and simulation-derived diagnostics in <a href="PROVENANCE.md">PROVENANCE.md</a>. CAST-specific generation details and limitations are recorded in <a href="CAST_SIMULATION_METHOD.md">CAST_SIMULATION_METHOD.md</a>.</p>
         <p>A biodosimetry explorable is in preparation, and will be built to the same standard.</p>
       </section>
 

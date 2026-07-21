@@ -1,56 +1,66 @@
-# Personal website — Igor Shuryak, MD, PhD
+# Personal website - Igor Shuryak, MD, PhD
 
-A single self-contained `index.html` (HTML + CSS in one file, no build step, no
-dependencies). It works on GitHub Pages, Columbia personal hosting, or any
-static host. Open `index.html` locally in a browser to preview.
+A dependency-free static academic website for GitHub Pages or any conventional static host.
+The repository contains two linked experiences:
 
-## Deploy free on GitHub Pages (recommended)
+- `index.html`: the main academic profile and research overview.
+- `v2/`: nine interactive explorables spanning eight research threads.
 
-1. Create a free account at https://github.com if you do not have one.
-2. Create a **new public repository** named exactly **`ishuryak.github.io`**
-   (replace `ishuryak` with your GitHub username). Using this exact name makes
-   the site live at the root URL `https://ishuryak.github.io`.
-3. Upload **both** `index.html` and `headshot.jpg` to the repository (the page
-   will show a broken image if the photo is missing):
-   - Web route: on the repo page, **Add file → Upload files**, drag in
-     `index.html` **and** `headshot.jpg`, then **Commit changes**.
-   - Or via command line from this folder:
-     ```bash
-     cd website
-     git init
-     git add index.html headshot.jpg
-     git commit -m "Personal website"
-     git branch -M main
-     git remote add origin https://github.com/ishuryak/ishuryak.github.io.git
-     git push -u origin main
-     ```
-4. In the repo, go to **Settings → Pages**. Under **Build and deployment →
-   Source**, select **Deploy from a branch**, branch **main**, folder **/ (root)**,
-   then **Save**.
-5. Wait 1–2 minutes. The site is live at **https://ishuryak.github.io**.
+The v2 page uses vanilla JavaScript modules and bundled synthetic data. There is no build
+step, analytics code, cookie, form, external runtime library, or patient-level dataset.
 
-### Custom domain (optional, ~$10–15/year for the domain only)
-Buy a domain (e.g. `shuryak.org`), add it under **Settings → Pages → Custom
-domain**, and create the DNS records GitHub shows. Hosting stays free; you only
-pay the domain registrar.
+## Local preview
 
-## Deploy free on Columbia hosting (alternative, gives a columbia.edu URL)
-Columbia offers free static web space to affiliates. Request/enable personal web
-space via CUIT (https://www.cuit.columbia.edu/web-publishing), then upload
-`index.html` to your web directory. The page would appear under a
-`columbia.edu/~<uni>` style URL. You can host on both — they are the same file.
+Serve the repository root over HTTP so module scripts and the CAST JSON can load:
 
-## Editing the content
-Everything is in `index.html`. To update:
-- **Publications:** edit the `<ol class="pubs">` list.
-- **Google Scholar link:** two `href="https://scholar.google.com/citations?user="`
-  placeholders — paste your full Scholar profile URL into both.
-- **Research themes / About / Talks:** edit the matching `<section>`.
-No rebuild needed; save and re-upload (or `git commit` + `git push`).
+```bash
+cd website
+python3 -m http.server 8000
+```
 
-## Notes
-- The footer carries a personal-site disclaimer (required so the page is not
-  read as an official Columbia site).
-- The page contains only public, aggregate information — no patient-level data.
-- Accessibility basics are built in (skip link, semantic headings, alt-friendly
-  markup, high-contrast colors) to meet Columbia's website accessibility policy.
+Then open `http://localhost:8000/` for the main site or
+`http://localhost:8000/v2/` for the interactive site. Opening the main HTML file directly
+can display the profile, but the v2 module and data fetches require HTTP.
+
+## Tests
+
+The explorable calculations and bundled CAST artifact have a dependency-free adversarial
+test suite:
+
+```bash
+cd v2
+npm test
+```
+
+Every `tests/*.test.mjs` module is discovered automatically. GitHub Actions runs the same
+suite for pushes and pull requests.
+
+## Deploy on GitHub Pages
+
+1. Push the **entire repository contents**, including `v2/`, `headshot.jpg`, `robots.txt`,
+   and `sitemap.xml`, to the `main` branch of the GitHub Pages repository.
+2. In **Settings -> Pages**, choose **Deploy from a branch**, branch `main`, folder `/`.
+3. The main page will be available at the site root and the explorables at `/v2/`.
+
+Uploading only `index.html` and `headshot.jpg` is not sufficient because the main page links
+to the v2 assets and data.
+
+## Provenance and editing
+
+- Edit academic profile content in `index.html`.
+- Edit explorable presentation in `v2/index.html` and `v2/assets/`.
+- Map published equations and parameters in `v2/PROVENANCE.md`.
+- Record illustrative CATE assumptions in `v2/sim_registry.yaml`.
+- Record CAST snapshot hashes and diagnostic limitations in
+  `v2/CAST_SIMULATION_METHOD.md`.
+
+Published inputs, teaching assumptions, and simulation-derived quantities must remain
+visibly distinct. If the CAST JSON or generator changes, update its hashes, rerun the test
+suite, and review the scientific labels before deployment.
+
+## Privacy and accessibility
+
+The site contains public academic information plus aggregate or synthetic results. It uses
+semantic headings, keyboard-visible focus, reduced-motion support, responsive charts, and
+light/dark palettes. The footer makes clear that this is a personal academic site rather
+than an official Columbia University publication.

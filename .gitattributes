@@ -1,0 +1,15 @@
+# New text files use LF. Preserve the six established CRLF artifacts so this
+# maintenance change does not hide its semantic edits inside an all-lines diff.
+* text=auto eol=lf
+v2/index.html -text whitespace=cr-at-eol
+v2/PROVENANCE.md -text whitespace=cr-at-eol
+v2/assets/css/site.css -text whitespace=cr-at-eol
+v2/assets/data/cast_scenarios.json -text whitespace=cr-at-eol
+v2/assets/js/models.js -text whitespace=cr-at-eol
+v2/assets/js/widgets.js -text whitespace=cr-at-eol
+
+*.jpg binary
+*.jpeg binary
+*.png binary
+*.gif binary
+*.pdf binary

@@ -1,72 +1,66 @@
-# Interactive site (v2)
+# Interactive research explorables
 
-An additive second version of the personal website, carrying interactive explorables for
-the research threads. The original `../index.html` is untouched and still deploys at the
-site root. This version lives at `/v2/`.
+This directory is the interactive companion to the main academic site. It contains nine
+explorables across eight research threads: seven panels that recompute published models, one
+illustrative individual-effect simulation, and one CAST method-comparison simulation.
 
-## What is here
+## Structure
 
 | Path | Purpose |
 |---|---|
-| `index.html` | The page. Research map plus eight explorables. |
-| `assets/js/plot.js` | Declarative SVG plotting core (about 200 lines). No dependencies. |
-| `assets/js/models.js` | The published model equations, in JavaScript. Every constant is cited. |
-| `assets/js/widgets.js` | One module per explorable, plus the research map. |
-| `assets/css/site.css` | Styling, light and dark, responsive. |
-| `assets/data/cast_scenarios.json` | Precomputed CAST simulation scenarios (simulated data, no PHI). |
-| `PROVENANCE.md` | Every equation and default parameter mapped to its published source. |
+| `index.html` | Research map, controls, explanatory text, and source notes. |
+| `assets/js/plot.js` | Dependency-free declarative SVG plotting core. |
+| `assets/js/models.js` | Published model equations and constants. |
+| `assets/js/widgets.js` | Interactive controllers and readouts. |
+| `assets/css/site.css` | Responsive light/dark styling. |
+| `assets/data/cast_scenarios.json` | Twenty-four precomputed synthetic CAST scenarios. |
+| `PROVENANCE.md` | Published inputs and simulation classifications. |
+| `CAST_SIMULATION_METHOD.md` | CAST snapshot hashes, definitions, and limitations. |
+| `sim_registry.yaml` | Registered assumptions for the CATE teaching simulation. |
+| `tests/` | Automatically discovered adversarial tests. |
 
-Total weight is well under 1 MB. There is no build step, no bundler, and no external
-library or CDN. Deploy the folder as-is.
+The folder has no runtime dependencies, bundler, CDN, analytics, or patient-level data.
+Deploy it as ordinary static files.
 
-## Running it locally
+## Run locally
 
-**Serve it over HTTP. Opening `index.html` from the filesystem does not work.** The page
-loads its JavaScript as an ES module, and browsers block module scripts from `file://`
-(null origin), so every explorable comes up blank. The CAST scenario file is fetched, and
-`fetch` is blocked from `file://` for the same reason.
+Serve the repository root rather than opening the file directly:
+
+```bash
+cd website
+python3 -m http.server 8000
+# http://localhost:8000/v2/
+```
+
+Browsers block ES modules and the CAST `fetch` request from a `file://` origin.
+
+## Test
 
 ```bash
 cd website/v2
-python3 -m http.server 8000
-# then open http://localhost:8000
+npm test
 ```
 
-## Deploying
+The runner discovers every `tests/*.test.mjs` file. Tests cover all nine panels, including
+the complete CAST scenario grid, trajectory dimensions, interval ordering, recalculated
+RMSE values, overlap diagnostics, CSF latent-factor shifts, AUTOC sign/uncertainty, and the
+pinned data hash.
 
-The folder is already deployable. On GitHub Pages it will appear at `/v2/` with no
-configuration. To promote it to the site root once approved:
+## Scientific labeling rule
 
-```bash
-git mv v2/index.html index.html      # and update the relative asset paths
-```
+Do not collapse the site's three evidence categories:
 
-Until then, both versions coexist and the live site is never broken.
+1. **Published-model panels:** equations and defaults trace to cited papers.
+2. **CATE teaching panel:** assumptions are user supplied, illustrative, and registered.
+3. **CAST comparison panel:** estimates and diagnostics come from bundled synthetic
+   scenarios; their definitions and limits are documented separately.
 
-## The rule this site is built on
+In particular, CAST displays covariance-aware **pointwise** 95% intervals, the latent-factor
+sensitivity card compares CSF fits rather than CAST fits, and AUTOC is a null diagnostic
+because the current CAST DGP has no covariate-level treatment-effect modification.
 
-Every equation, default parameter, and quoted number traces to a published, peer-reviewed
-paper or an already-public artifact. Where a control would have needed a quantity that no
-paper reports, the control was removed rather than guessed. See `PROVENANCE.md`.
+## Remaining research-map item
 
-No patient-level data is used anywhere. No unpublished result appears.
-
-## Verification performed
-
-- The JavaScript implementations were checked numerically against the published values.
-  The incremental-effect-additivity solver returns 4.74 excess tumors per mouse for the
-  Mars mixture against the published 4.74, and simple additivity returns 12.34 against
-  the published 12.33.
-- The radiation effects ratio converges to the analytic low-dose limit. Relative biological
-  effectiveness approaches the same limit from above, and still sits about 10% over it at
-  the 1 mGy left edge of the plotted dose axis, so the two are close there but not equal.
-- The biologically-effective-dose model was checked to apply no repopulation penalty
-  before the onset day, and to lose effective dose once treatment runs past it.
-- Every page rendered and inspected in a browser at desktop and phone widths, in light and
-  dark themes.
-
-## Adding the remaining explorables
-
-Seven of the eight research threads now have a live explorable. Biodosimetry is the one still
-to build. It needs a source-verified model in `models.js`, a widget in `widgets.js`, a section
-in `index.html`, and an entry in `PROVENANCE.md`. The plotting core should not need to change.
+Seven of the eight research threads have at least one live explorable. Biodosimetry remains
+the unimplemented thread; the ninth panel is the additional CATE teaching explorable within
+the causal-ML thread.

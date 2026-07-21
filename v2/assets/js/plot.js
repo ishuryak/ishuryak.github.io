@@ -86,8 +86,12 @@ export function render(host, spec) {
 
   const all = [];
   for (const s of spec.series || []) {
-    all.push(...vals(s.x));
-    if (s.type === 'bar') { all.push(Math.min(...s.x) - 0.6, Math.max(...s.x) + 0.6); }
+    const xs = vals(s.x);
+    all.push(...xs);
+    if (s.type === 'bar' && xs.length) {
+      const halfWidth = (s.bw ?? 0.34) / 2;
+      all.push(Math.min(...xs) - halfWidth, Math.max(...xs) + halfWidth);
+    }
     if (s.type === 'vline') all.push(...vals(s.at));
   }
   const xlim = spec.xlim || [Math.min(...all), Math.max(...all)];
@@ -119,6 +123,7 @@ export function render(host, spec) {
     preserveAspectRatio: 'xMidYMid meet', role: 'img',
     'aria-label': spec.caption || `${spec.ylabel} versus ${spec.xlabel}`,
   });
+  svg.appendChild(el('title', {}, spec.caption || `${spec.ylabel} versus ${spec.xlabel}`));
 
   const xt = spec.xticks ? spec.xticks.map((t) => t.at)
     : spec.xlog ? logTicks(xlim[0], xlim[1]) : ticks(xlim[0], xlim[1]);

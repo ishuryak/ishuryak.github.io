@@ -316,24 +316,32 @@ export function cateExplorer() {
 
     /* Histogram of individual effects, split at zero (harm red / benefit green). */
     const lo = Math.min(...ite), hi = Math.max(...ite);
-    const span = (hi - lo) || 1;
-    const nb = 22, bw = span / nb;
+    const collapsed = Math.abs(hi - lo) < 1e-12;
+    const span = hi - lo;
+    const nb = collapsed ? 1 : 22;
+    /* A collapsed distribution is one bar centered on the actual effect. Its
+       display width is illustrative only; it must not move the bar away from mu. */
+    const bw = collapsed ? Math.max(0.01, Math.abs(lo) * 0.1) : span / nb;
     const counts = new Array(nb).fill(0);
     ite.forEach((v) => {
+      if (collapsed) { counts[0]++; return; }
       let k = Math.floor((v - lo) / bw);
       if (k >= nb) k = nb - 1; if (k < 0) k = 0;
       counts[k]++;
     });
-    const benX = [], benY = [], harmX = [], harmY = [];
+    const benX = [], benY = [], harmX = [], harmY = [], neutralX = [], neutralY = [];
     counts.forEach((c, k) => {
-      const center = lo + bw * (k + 0.5);
-      (center >= 0 ? (benX.push(center), benY.push(c)) : (harmX.push(center), harmY.push(c)));
+      const center = collapsed ? lo : lo + bw * (k + 0.5);
+      if (Math.abs(center) < 1e-12) { neutralX.push(center); neutralY.push(c); }
+      else if (center > 0) { benX.push(center); benY.push(c); }
+      else { harmX.push(center); harmY.push(c); }
     });
 
     /* Only emit a bar series when it has bins: an empty x array would make
        plot.js take Math.min/Math.max of nothing and corrupt the x-domain. */
     const series = [];
     if (harmX.length) series.push({ type: 'bar', x: harmX, y: harmY, color: C.red, bw: bw * 0.9, label: 'Harmed (effect below zero)' });
+    if (neutralX.length) series.push({ type: 'bar', x: neutralX, y: neutralY, color: C.gray, bw: bw * 0.9, label: 'No individual effect' });
     if (benX.length)  series.push({ type: 'bar', x: benX,  y: benY,  color: C.green, bw: bw * 0.9, label: 'Helped (effect above zero)' });
     series.push({ type: 'vline', at: 0,   color: C.ink,  dash: '4 3', label: 'No effect' });
     series.push({ type: 'vline', at: ate, color: C.blue, dash: '2 0', label: 'Trial average (ATE)' });
@@ -432,7 +440,7 @@ export async function castExplorer() {
       { type: 'line', x: H, y: s.truth, color: C.ink, width: 3.2, label: 'True effect (known, simulated)' },
     ];
     if (on.has('cast') && s.cast) {
-      series.push({ type: 'band', x: H, y0: s.cast.lo, y1: s.cast.hi, color: C.blue, label: 'CAST 95% band' });
+      series.push({ type: 'band', x: H, y0: s.cast.lo, y1: s.cast.hi, color: C.blue, label: 'CAST pointwise 95% intervals' });
     }
     for (const [k, m] of Object.entries(METHODS)) {
       if (!on.has(k)) continue;
@@ -462,7 +470,8 @@ export async function castExplorer() {
     const md = s.meta;
     $('cast-dgp').textContent =
       `Simulated cohort: n = ${md.n} · ${Math.round(md.event_rate * 100)}% had an event · ` +
-      `${Math.round(md.treated_frac * 100)}% treated · confounding level ${level.toFixed(2)}.`;
+      `${Math.round(md.treated_frac * 100)}% treated · confounding level ${level.toFixed(2)} · ` +
+      'no covariate-level treatment-effect modification.';
 
     /* Item 3: all-method RMSE strip, worst first, so the causal methods cluster at the short end. */
     const rm = s.rmse, maxR = Math.max(...RMSE_ORDER.map((k) => rm[k]));
@@ -473,7 +482,8 @@ export async function castExplorer() {
         `<span class="rbar"><i style="width:${(rm[k] / maxR * 100).toFixed(1)}%;background:${RMSE_COLOR[k]}"></i></span>` +
         `<span class="rval">${rm[k].toFixed(3)}</span></li>`).join('') + '</ul>';
 
-    /* Item 3: 95% band coverage at this confounding level (causal survival forest shown alongside). */
+    /* Descriptive pointwise interval check at this confounding level (CSF alongside).
+       This is not a simultaneous-coverage probability. */
     const nH = s.truth.length;
     $('cast-cov').textContent =
       `${cover(s.cast.lo, s.cast.hi, s.truth)}/${nH} · CSF ${cover(s.csf.lo, s.csf.hi, s.truth)}/${nH}`;
@@ -492,15 +502,17 @@ export async function castExplorer() {
       ? `HR ${s.cox.hr.toFixed(2)}; CI already includes no effect`
       : `HR ${s.cox.hr.toFixed(2)}; CI-limit E-value ${evH.ci.toFixed(2)}`;
 
-    /* Item 6: aggregate AUTOC benefit-ranking (augmented data only). */
+    /* AUTOC null diagnostic (augmented data only). The DGP has no covariate-level
+       treatment-effect modification, so the population targeting value is zero. */
     const aOk = s.autoc && Number.isFinite(s.autoc.est);
     $('cast-autoc-card').hidden = !aOk;
     if (aOk) {
       $('cast-autoc').textContent = s.autoc.est.toFixed(3);
-      $('cast-autoc-n').textContent = `targeting value ± ${s.autoc.se.toFixed(3)}`;
+      $('cast-autoc-n').textContent = `estimate ± ${s.autoc.se.toFixed(3)}; expected ≈ 0 in this DGP`;
     }
 
-    /* Item 4 (full): empirical robustness to the withheld latent factor. */
+    /* Empirical CSF sensitivity to the withheld latent factor. This compares
+       per-horizon CSF estimates and is deliberately not labeled CAST robustness. */
     const rOk = s.robustness && Array.isArray(s.robustness.shift);
     $('cast-robust-card').hidden = !rOk;
     if (rOk) {
@@ -509,7 +521,7 @@ export async function castExplorer() {
       const evs = (s.robustness.evalue || []).filter(Number.isFinite);
       const evTxt = evs.length ? `; E-value ${Math.max(...evs).toFixed(2)}` : '';
       $('cast-robust').textContent = `${(mx * 100).toFixed(1)} pp`;
-      $('cast-robust-n').textContent = `max horizon shift if latent factor ignored${evTxt}`;
+      $('cast-robust-n').textContent = `max CSF horizon shift, omit vs include latent factor${evTxt}`;
     }
   }
 

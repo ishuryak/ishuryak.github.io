@@ -1,11 +1,13 @@
 # Provenance
 
-Every equation, default parameter, and quoted number on this site is taken from a published,
-peer-reviewed paper or an already-public artifact. No unpublished result and no patient-level
-data appears anywhere on this site.
+This record distinguishes three kinds of input: equations and parameters from published,
+peer-reviewed papers; explicitly registered assumptions used only in teaching simulations;
+and quantities computed from bundled synthetic scenarios. No patient-level data appear
+anywhere on this site.
 
-Each explorable below is listed against the paper supplying its equations and each of its
-default parameters.
+Each published-model explorable is listed against the paper supplying its equations and
+default parameters. The two simulation panels are labeled separately and document their
+assumptions, generators, diagnostics, and limitations.
 
 ## Explorable 1. Fractionation and biologically effective dose
 
@@ -65,10 +67,26 @@ to show.
 **Method.** CAST (Causal Analysis for Survival Trajectories), arXiv:2505.06367, presented
 across three NeurIPS 2025 workshops.
 
-**Data.** Precomputed simulation scenarios from the public CAST demonstration site
-(`NeurIPS_2025/cast_demo_website/docs/data/scenarios.json`, copied verbatim). The data are
-simulated, so the true treatment effect is known and every method can be scored against it.
-No patient data are involved.
+**Data.** The bundled `assets/data/cast_scenarios.json` contains 24 precomputed synthetic
+scenarios: two time-trajectory shapes, four measured-confounding levels, and three latent-
+confounding levels, evaluated at five follow-up horizons. It was copied byte-for-byte from
+the companion CAST generator snapshot produced on 2026-07-18. Its SHA-256 digest is
+`21ad1acfcaa9dbc46c62924602d882c6a7e94fb9a66dc51373796817fffb18c6`.
+The true treatment effect is known because the cohorts are simulated; no patient data are
+involved. Generator-file hashes and the complete diagnostic definitions are recorded in
+`CAST_SIMULATION_METHOD.md`.
+
+**Uncertainty.** CAST smooths the per-horizon causal-survival-forest estimates with a
+quadratic trajectory using the shrunk cross-horizon covariance matrix. The displayed
+intervals are covariance-aware **pointwise** 95% intervals. They are not a simultaneous
+or joint-coverage band.
+
+**Additional diagnostics.** The latent-factor sensitivity card compares causal survival
+forest estimates that omit versus include the simulated latent factor; it is not a CAST
+refit. The Cox E-value is labeled separately. The DGP has no covariate-level treatment-
+effect modification, so the population AUTOC target is zero. The reported AUTOC estimate
+is therefore a null diagnostic with sampling uncertainty, not a demonstrated benefit-
+ranking result.
 
 ## Explorable 3a. From the average effect to the individual effect
 
@@ -84,9 +102,10 @@ Because the object is a teaching illustration rather than a measurement, it carr
 parameter that needs a published source: every quantity shown (the average, the fraction who
 benefit or are harmed, and the benefit of treating the half with the highest predicted effect)
 is computed directly from the simulated effects on screen. It uses no patient-level data and
-reproduces no result from any restricted or unpublished project. The "predicted responders"
-readout is the same benefit-ranking logic that the CAST panel (Explorable 3) reports as an
-AUTOC on its own simulated scenarios.
+reproduces no result from any restricted project. Its oracle ranking illustrates the idea of
+actionable effect modification. That is conceptually related to AUTOC, but it must not be
+read as validating the CAST panel's AUTOC estimate: the CAST DGP contains no such effect
+modification and uses AUTOC as a null diagnostic.
 
 ## Explorable 4. Why the dose response is curved
 

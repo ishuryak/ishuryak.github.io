@@ -6,6 +6,7 @@
   <title>Igor Shuryak, MD, PhD &middot; Mechanistic &amp; Causal Machine Learning for Radiation Oncology</title>
   <meta name="description" content="Igor Shuryak, MD, PhD, at Columbia University integrating mechanistic radiobiology with causal inference and machine learning for radiation oncology, moving from prediction to intervention." />
   <meta name="author" content="Igor Shuryak" />
+  <link rel="canonical" href="https://ishuryak.github.io/" />
 
   <!-- Favicon: inline SVG monogram (no external file needed) -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230a4d8c'/%3E%3Ctext x='50%25' y='50%25' dy='.34em' text-anchor='middle' font-family='Arial,Helvetica,sans-serif' font-size='30' font-weight='700' fill='white'%3EIS%3C/text%3E%3C/svg%3E" />
@@ -24,6 +25,25 @@
   <meta name="twitter:description" content="Integrating mechanistic radiobiology with causal inference and machine learning for radiation oncology, from prediction to intervention." />
   <meta name="twitter:image" content="https://ishuryak.github.io/headshot.jpg" />
 
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Igor Shuryak",
+    "honorificSuffix": "MD, PhD",
+    "url": "https://ishuryak.github.io/",
+    "image": "https://ishuryak.github.io/headshot.jpg",
+    "jobTitle": "Associate Professor",
+    "affiliation": {
+      "@type": "Organization",
+      "name": "Columbia University Irving Medical Center"
+    },
+    "sameAs": [
+      "https://scholar.google.com/citations?user=PFYxEhwAAAAJ"
+    ]
+  }
+  </script>
+
   <style>
     :root {
       --ink: #16202b;
@@ -37,6 +57,10 @@
     }
     * { box-sizing: border-box; }
     html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      * { transition: none !important; }
+    }
     body {
       margin: 0;
       color: var(--ink);
@@ -82,7 +106,7 @@
     nav.toc a { color: var(--muted); }
     nav.toc a:hover { color: var(--accent); }
 
-    section { padding: 34px 0; border-bottom: 1px solid var(--line); }
+    section { padding: 34px 0; border-bottom: 1px solid var(--line); scroll-margin-top: 90px; }
     section:last-of-type { border-bottom: none; }
     h2 { font-size: 1.7rem; margin: 0 0 16px; letter-spacing: -0.01em; }
     p { margin: 0 0 14px; }

@@ -2,6 +2,7 @@
   --ink: #16202b;
   --muted: #51606e;
   --accent: #0a4d8c;
+  --accent-contrast: #ffffff;
   --accent-soft: #eaf1f8;
   --line: #d9e0e7;
   --bg: #ffffff;
@@ -13,7 +14,7 @@
 }
 @media (prefers-color-scheme: dark) {
   :root {
-    --ink: #e6ecf2; --muted: #9fb0be; --accent: #6bb0ea; --accent-soft: #16283a;
+    --ink: #e6ecf2; --muted: #9fb0be; --accent: #6bb0ea; --accent-contrast: #10171e; --accent-soft: #16283a;
     --line: #2c3a47; --bg: #10171e; --bg-alt: #161f28;
     --warn-bg: #2a2415; --warn-line: #8a6d25;
     --series-gray: #93a3b1;
@@ -33,8 +34,9 @@ body {
 a { color: var(--accent); text-decoration: none; }
 a:hover, a:focus { text-decoration: underline; }
 .wrap { max-width: var(--max); margin: 0 auto; padding: 0 24px; }
-.skip { position: absolute; left: -999px; background: var(--accent); color: #fff; padding: 10px 16px; z-index: 100; }
+.skip { position: absolute; left: -999px; background: var(--accent); color: var(--accent-contrast); padding: 10px 16px; z-index: 100; }
 .skip:focus { left: 8px; top: 8px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
 
 /* Header */
 header.hero { background: linear-gradient(180deg, var(--bg-alt) 0%, var(--bg) 100%); border-bottom: 1px solid var(--line); padding: 36px 0 28px; }
@@ -79,7 +81,7 @@ p { margin: 0 0 14px; }
 
 /* Widget shell */
 .widget { background: var(--bg-alt); border: 1px solid var(--line); border-radius: 12px; padding: 20px 22px; margin: 18px 0 20px; }
-.widget > h4 { margin: 0 0 4px; font-size: 1.06rem; color: var(--accent); }
+.widget > h3 { margin: 0 0 4px; font-size: 1.06rem; color: var(--accent); }
 .widget .sub { color: var(--muted); font-size: .95rem; margin: 0 0 14px; }
 .controls { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 12px 20px; margin-bottom: 16px; }
 .ctl label { display: block; font-size: .87rem; font-weight: 600; margin-bottom: 3px; }
@@ -91,7 +93,7 @@ p { margin: 0 0 14px; }
 .btnrow button { border: 1px solid var(--line); background: var(--bg); color: var(--ink); border-radius: 999px;
   padding: 5px 13px; font: inherit; font-size: .87rem; font-weight: 600; cursor: pointer; transition: all .15s; }
 .btnrow button:hover { border-color: var(--accent); color: var(--accent); }
-.btnrow button[aria-pressed=true] { background: var(--accent); border-color: var(--accent); color: #fff; }
+.btnrow button[aria-pressed=true] { background: var(--accent); border-color: var(--accent); color: var(--accent-contrast); }
 
 .chart { width: 100%; height: auto; display: block; }
 .chart .grid { stroke: var(--line); stroke-width: 1; opacity: .6; }
