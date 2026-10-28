@@ -203,10 +203,10 @@
   <nav class="toc" aria-label="Section navigation">
     <ul>
       <li><a href="#about">Background</a></li>
+      <li><a href="#ml-papers">ML Papers</a></li>
       <li><a href="#contributions">Research</a></li>
       <li><a href="v2/index.html">Explore the models</a></li>
       <li><a href="#software">Software</a></li>
-      <li><a href="#ml-papers">ML Papers</a></li>
       <li><a href="#talks">Talks &amp; Honors</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
@@ -232,6 +232,33 @@
           <span class="pill">Radioligand therapy</span>
           <span class="pill">Biodosimetry</span>
         </div>
+      </section>
+
+      <section id="ml-papers">
+        <h2>Machine Learning Conference &amp; Workshop Papers</h2>
+        <p>Peer-reviewed papers accepted at machine learning and health informatics venues, newest first.</p>
+        <ol class="pubs">
+          <li>
+            <span class="pub-title">Setting a Dose versus Observing One: Continuous Dose&ndash;Response Estimation under Right-Censoring.</span>
+            Goerg GM, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2026 Workshop on World Models for High-Stakes Health (WMHS), Atlanta (2026). <a href="https://wmhs-neurips.github.io/WMHS/" target="_blank" rel="noopener">Workshop website</a>; OpenReview page to follow when the workshop releases accepted papers.</span>
+            <br /><em class="takeaway">Introduces PSPS-CS, a neural mixture-of-experts model that estimates dose&ndash;response curves for censored survival outcomes under confounding and finds patient subgroups automatically. In simulations it was competitive but not best in every scenario, and in the RADCURE head and neck cohort the data supported no dose contrast.</em>
+          </li>
+          <li>
+            <span class="pub-title">Auditing and Enforcing Calendar-Shift Invariance in Clinical Prediction Models.</span>
+            Ren WM, Yang E, Tran V, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2026 Trust-AI-Eval Workshop (TAE), Sydney (2026), poster. <a href="https://openreview.net/forum?id=kdsohtPZ7O" target="_blank" rel="noopener">OpenReview</a></span>
+            <br /><em class="takeaway">Shows that privacy date-shifting in public clinical datasets can make an individual patient&rsquo;s prediction depend on arbitrary weekday placement, and proposes shift-invariant features that keep the predictive value of weekly clinic schedules.</em>
+          </li>
+          <li>
+            <span class="pub-title">Estimating Continuous Chemotherapy Effect Trajectories in Head and Neck Squamous Cell Carcinoma.</span>
+            Yang E, Vasishtha R, Hope A, Kachnic LA, Wang E, <span class="me">Shuryak I</span>. <span class="pub-venue"><em>Proceedings of the 17th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics (ACM-BCB 2026)</em>, Rende (Calabria), Italy, pp. 1&ndash;6 (2026). <a href="https://doi.org/10.1145/3807503.3819798" target="_blank" rel="noopener">doi:10.1145/3807503.3819798</a></span>
+            <br /><em class="takeaway">Applies CAST to 2,651 patients in the RADCURE cohort to estimate how the survival effect of adding chemotherapy to radiotherapy rises, peaks and declines over follow-up, at the population and individual levels.</em>
+          </li>
+          <li>
+            <span class="pub-title">CAST: Causal Modeling of Time-Varying Treatment Effects on Head and Neck Cancer.</span>
+            Yang E, Vasishtha R, Dad LK, Kachnic LA, Hope A, Wang E, Wu X, Yuan Y, Brenner DJ, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2025, San Diego, poster at three workshops: Uncovering Causality in Science (CauScien) <a href="https://openreview.net/forum?id=ifYGBjxzWv" target="_blank" rel="noopener">OpenReview</a>; Learning from Time Series for Health (TS4H) <a href="https://openreview.net/forum?id=xAkJcV5Pvh" target="_blank" rel="noopener">OpenReview</a>; AI for Science (AI4Science) <a href="https://openreview.net/forum?id=gzYp8yijUd" target="_blank" rel="noopener">OpenReview</a>. Preprint: <a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">arXiv:2505.06367</a></span>
+            <br /><em class="takeaway">Introduces CAST, an extension of causal survival forests that estimates treatment effects as continuous trajectories over time rather than at a single fixed horizon.</em>
+          </li>
+        </ol>
       </section>
 
       <section id="contributions">
@@ -516,43 +543,32 @@
         </ul>
       </section>
 
-      <section id="ml-papers">
-        <h2>Machine Learning Conference &amp; Workshop Papers</h2>
-        <p>Peer-reviewed papers accepted at machine learning and health informatics venues, newest first.</p>
-        <ol class="pubs">
-          <li>
-            <span class="pub-title">Setting a Dose versus Observing One: Continuous Dose&ndash;Response Estimation under Right-Censoring.</span>
-            Goerg GM, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2026 Workshop on World Models for High-Stakes Health (WMHS), Atlanta (2026). <a href="https://wmhs-neurips.github.io/WMHS/" target="_blank" rel="noopener">Workshop website</a>; OpenReview page to follow when the workshop releases accepted papers.</span>
-          </li>
-          <li>
-            <span class="pub-title">Auditing and Enforcing Calendar-Shift Invariance in Clinical Prediction Models.</span>
-            Ren WM, Yang E, Tran V, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2026 Trust-AI-Eval Workshop (TAE), Sydney (2026), poster. <a href="https://openreview.net/forum?id=kdsohtPZ7O" target="_blank" rel="noopener">OpenReview</a></span>
-          </li>
-          <li>
-            <span class="pub-title">Estimating Continuous Chemotherapy Effect Trajectories in Head and Neck Squamous Cell Carcinoma.</span>
-            Yang E, Vasishtha R, Hope A, Kachnic LA, Wang E, <span class="me">Shuryak I</span>. <span class="pub-venue"><em>Proceedings of the 17th ACM International Conference on Bioinformatics, Computational Biology and Health Informatics (ACM-BCB 2026)</em>, Rende (Calabria), Italy, pp. 1&ndash;6 (2026). <a href="https://doi.org/10.1145/3807503.3819798" target="_blank" rel="noopener">doi:10.1145/3807503.3819798</a></span>
-          </li>
-          <li>
-            <span class="pub-title">CAST: Causal Modeling of Time-Varying Treatment Effects on Head and Neck Cancer.</span>
-            Yang E, Vasishtha R, Dad LK, Kachnic LA, Hope A, Wang E, Wu X, Yuan Y, Brenner DJ, <span class="me">Shuryak I</span>. <span class="pub-venue">NeurIPS 2025, poster at three workshops: Uncovering Causality in Science (CauScien) <a href="https://openreview.net/forum?id=ifYGBjxzWv" target="_blank" rel="noopener">OpenReview</a>; Learning from Time Series for Health (TS4H) <a href="https://openreview.net/forum?id=xAkJcV5Pvh" target="_blank" rel="noopener">OpenReview</a>; AI for Science (AI4Science) <a href="https://openreview.net/forum?id=gzYp8yijUd" target="_blank" rel="noopener">OpenReview</a>. Preprint: <a href="https://arxiv.org/abs/2505.06367" target="_blank" rel="noopener">arXiv:2505.06367</a></span>
-          </li>
-        </ol>
-      </section>
-
       <section id="talks">
         <h2>Talks &amp; Honors</h2>
         <p><strong>Selected talks</strong></p>
         <ul class="plain">
-          <li>ACM Conference on Bioinformatics, Computational Biology and Health Informatics (ACM-BCB 2026), University of Calabria, Rende, Italy (June&ndash;July 2026): &ldquo;Estimating Continuous Chemotherapy Effect Trajectories in Head and Neck Squamous Cell Carcinoma.&rdquo;</li>
-          <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis for Survival Trajectories).&rdquo;</li>
-          <li>Martin Schneider Memorial Lectureship, University of Texas Medical Branch (March 2026): &ldquo;From Mechanistic Models to Causal ML: A New Framework for Precision Radiation Oncology.&rdquo;</li>
-          <li>AI Precision Health Institute (AIPHI) meeting, Hawaii (2026): presented the CAST framework for causal modeling of time-varying treatment effects.</li>
-          <li>University of Texas Medical Branch (Jan 2026): &ldquo;Integrating Mechanistic Modeling, Spatial Biology, and Causal Machine Learning to Advance and Optimize Cancer Radiotherapy.&rdquo;</li>
-          <li>NeurIPS 2025 (Dec 2025): &ldquo;CAST: Causal Modeling of Time-Varying Treatment Effects on Head and Neck Cancer,&rdquo; presented across three workshops (Uncovering Causality in Science; Learning from Time-Series for Health; AI for Science).</li>
-          <li>Columbia University, Biostatistics Masters Program (Nov 2025): guest lecture on advanced survival analysis and causal inference.</li>
-          <li>NASEM Gilbert W. Beebe Symposium (Mar 2025): integrating imaging, genomics, and clinical data for outcome prediction using statistical and causal ML.</li>
-          <li>International Radiobiology Conference on space radiation (India, Feb 2025): space radiation effects, dose-response modeling, and cancer risk using mechanistic and ML-based approaches.</li>
+          <li>AI Precision Health Institute (AI-PHI) seminar, University of Hawai&#x02BB;i Cancer Center, Honolulu (Oct 2026): &ldquo;How do you know a causal model is right? Validating treatment-effect estimates when there is no observable ground truth.&rdquo;</li>
+          <li>Radiation Research Society 72nd Annual Meeting, Waikoloa, Hawai&#x02BB;i (Oct 2026), invited oral presentation: &ldquo;Temporal dynamics of radiotherapy and chemotherapy response in lower-grade gliomas using causal machine learning.&rdquo;</li>
+          <li>ACM Conference on Bioinformatics, Computational Biology and Health Informatics (ACM-BCB 2026), University of Calabria, Rende, Italy (June&ndash;July 2026): &ldquo;Estimating Continuous Chemotherapy Effect Trajectories in Head and Neck Squamous Cell Carcinoma&rdquo; (talk and poster).</li>
+          <li>Prediction Modelling Group seminar, King&rsquo;s College London (NIHR Maudsley Biomedical Research Centre) (June 2026): &ldquo;Estimating Temporal Treatment Effect Trajectories with CAST (Causal Analysis for Survival Trajectories),&rdquo; co-presented with Everest Yang.</li>
+          <li>AI Precision Health Institute (AI-PHI) Affinity Group, University of Hawai&#x02BB;i Cancer Center (April 2026): &ldquo;Modeling Time-Varying Treatment Effects in HNSCC and Gliomas,&rdquo; co-presented with Everest Yang.</li>
+          <li>Martin Schneider Memorial Lectureship, University of Texas Medical Branch, Galveston (March 2026): &ldquo;From Mechanistic Models to Causal ML: A New Framework for Precision Radiation Oncology.&rdquo;</li>
+          <li>Radiation Oncology Grand Rounds, Columbia University Irving Medical Center (Jan 2026): &ldquo;Integrating Mechanistic Modeling and Causal Machine Learning to Advance and Optimize Cancer Radiotherapy.&rdquo;</li>
+          <li>University of Texas Medical Branch, Galveston (Jan 2026): &ldquo;Integrating Mechanistic Modeling, Spatial Biology, and Causal Machine Learning to Advance and Optimize Cancer Radiotherapy.&rdquo;</li>
+          <li>NeurIPS 2025, San Diego (Dec 2025): &ldquo;CAST: Causal Modeling of Time-Varying Treatment Effects on Head and Neck Cancer,&rdquo; posters at three workshops (Uncovering Causality in Science; Learning from Time Series for Health; AI for Science).</li>
+          <li>Columbia University, Biostatistics Masters Program (Nov 2025): guest lecture &ldquo;Causal Machine Learning for Survival Analysis.&rdquo;</li>
+          <li>Night Science Workshop: Causal Inference and Reinforcement Learning, New York (July 2025): &ldquo;Integrating Mechanistic and Machine Learning Models for Prediction of Clinical Outcomes.&rdquo;</li>
+          <li>Department of Therapeutic Radiology, Yale School of Medicine, New Haven (April 2025): &ldquo;Integrating Mechanistic and Machine Learning Models for Prediction of Clinical Outcomes.&rdquo;</li>
+          <li>NASEM Gilbert W. Beebe Symposium on AI and ML Applications in Radiation Therapy, Medical Diagnostics, and Occupational Health and Safety, Washington, DC (March 2025): &ldquo;Integrating mechanistic modeling with machine learning to evaluate radiotherapy and chemotherapy outcomes in head and neck cancer.&rdquo;</li>
+          <li>International Radiobiology Conference on Biological Effects of Space Radiation, INMAS-DRDO, New Delhi, India (Feb&ndash;March 2025): &ldquo;Mechanistically motivated mathematical modeling of space radiation effects on cancer and cognitive function.&rdquo;</li>
+          <li>Radiation Effects Research Foundation (RERF), Hiroshima, Japan (Sep 2024): &ldquo;Causal Machine Learning Analysis of Leukemia and Solid Tumor Incidence and Mortality in Japanese Atomic Bomb Survivors.&rdquo;</li>
+          <li>Japanese Radiation Research Society (JRRS) symposium, Biodosimetry/Machine-Learning session, Kitakyushu, Japan (Sep 2024): &ldquo;Using Machine Learning to Integrate Biomarkers in Radiation Biodosimetry and Uncover Causal Links in Radiation-Related Health Outcomes.&rdquo;</li>
           <li>Radiation Research Society Annual Meeting (Sep 2024): quantitative modeling of DNA damage and cellular toxicity under mixed radiation fields.</li>
+        </ul>
+        <p><strong>Selected posters</strong></p>
+        <ul class="plain">
+          <li>ASTRO 68th Annual Meeting, Boston (Sep 2026): &ldquo;Survival Benefits of Radiation Dose Escalation in Locally Advanced NSCLC: A Causal Forest Analysis of the National Cancer Database.&rdquo;</li>
+          <li>ASTRO 67th Annual Meeting, San Francisco (Sep&ndash;Oct 2025): &ldquo;Integrating Mechanistic and Machine Learning Models to Assess Radiotherapy Fractionation Impact on Head and Neck Cancer Survival.&rdquo;</li>
           <li>Columbia University Data Science Day (2022): &ldquo;Machine learning analysis of <sup>137</sup>Cs contamination of terrestrial plants after the Fukushima accident using the random forest algorithm.&rdquo;</li>
         </ul>
         <p><strong>Honors</strong></p>
